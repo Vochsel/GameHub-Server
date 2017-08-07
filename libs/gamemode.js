@@ -1,6 +1,8 @@
+const EventEmitter = require('events');
+
 const Debug = require('./debug.js');
 
-class GameMode {
+class GameMode extends EventEmitter {
     constructor(a_name) {
         /* ---------- GameMode Debug Info ---------- */
         Debug.SetLogPrefix("GM");
@@ -16,11 +18,8 @@ class GameMode {
         //Array of all stages for this GameMode
         this.stages = new Array();
 
-        //Array of all states for this GameMode
-        this.states = new Array();
-
         //Current stage index
-        this.currentStageIdx = -1;
+        this.currentStageIdx = -1;        
 
         /* ---------- GameMode Debug Info ---------- */
         Debug.Log("Created GameMode - " + this.name, "green");
@@ -30,7 +29,7 @@ class GameMode {
     // -- Creates and resets all properties to default values
     reset() {
         //Current stage index
-        this.currentStageIdx = -1;
+        this.currentStageIdx = 0;
     }
 
     // -- Starts GameMode
@@ -40,6 +39,9 @@ class GameMode {
         Debug.Log("Starting GameMode: " + this.name, "green");
 
         this.currentStageIdx = 0;
+
+        //Emit event 'on start'
+        this.emit("start");
 
         // -- Closing GM Debug Information
         Debug.ResetLogPrefix();
@@ -51,8 +53,8 @@ class GameMode {
         Debug.SetLogPrefix("GM");
         Debug.Log("Stoping GameMode: " + this.name, "green");
 
-        //Reset all internal values to 
-        //this.reset();
+        //Emit event 'on stop'
+        this.emit("stop");
 
         // -- Closing GM Debug Information
         Debug.ResetLogPrefix();

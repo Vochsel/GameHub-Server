@@ -1,6 +1,8 @@
+const EventEmitter = require('events');
+
 const Debug = require('./debug.js');
 
-class Stage {
+class Stage extends EventEmitter {
 
     constructor(a_name) {
         /* ---------- Stage Debug Info ---------- */
@@ -23,12 +25,25 @@ class Stage {
     }
 
     reset() {        
-        //Current state
-        this.currentStateIdx = -1;
+        //Reset current state to 0
+        this.currentStateIdx = 0;
+
+        //Emit event 'on reset'
+        this.emit("reset");
     }
 
-    start() {
-        this.currentStateIdx = 0;
+    // -- Called when stage is entered
+    enter() {
+        this.reset();
+
+        //Emit event 'on enter'
+        this.emit("enter");
+    }
+
+    // -- Called when stage is exited
+    exit() {
+        //Emit event 'on exit'
+        this.emit("exit");
     }
 
     // -- Get current state from index if available
