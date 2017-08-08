@@ -1,0 +1,14 @@
+<h1>Game.Hub</h1>
+
+<script>
+    var host = window.location.hostname;
+    var port = window.location.port;
+
+    //Initialization logic
+    ws = new WebSocket("ws://" + host + ":" + port);
+    ws.addEventListener("open", function(e) {
+        console.log("Connected to %s:%s", host, port);
+        ws.send("sdsdsd");
+    });
+
+</script>
