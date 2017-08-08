@@ -3,10 +3,25 @@ const EventEmitter = require('events');
 const Debug = require('../debug.js');
 
 class DeviceManager {
+
+    // -- Constructor
     constructor() {
+        //Create device map
         this.devices = new Map();
+
+        //Start device status checker
+        var self = this;
+        setInterval(function validateDevices() { 
+
+            //Loop through all devices and check status
+            self.devices.forEach(function(element) {
+                element.checkStatus();
+            }, self);
+
+        }, 3000);
     }
 
+    // -- Add device
     addDevice(a_uid, a_remoteAddress, a_socket) {
         //Create new device
         //var newDevice = new Device(a_uid, a_remoteAddress, a_socket);
@@ -23,8 +38,9 @@ class DeviceManager {
         return newDevice;
     }
 
+    // -- Remove device by uid
     removeDevice(a_uid) {
-
+        //Remove Device
     }
 
     // -- Emit to specific device with id
@@ -50,10 +66,6 @@ class DeviceManager {
         }, this);
     }
 
-    // -- Callback on recieve client message
-    /*recieve(a_socket, a_message) {
-
-    }*/
 }
 
 class Device extends EventEmitter {
@@ -72,6 +84,18 @@ class Device extends EventEmitter {
 
     sendMessage(a_message) {
         this.socket.send(a_message);
+    }
+
+    recieveMessage(a_message) {
+        Debug.Log("[GH DM] " + a_message, "blue");
+    }
+
+    //Check if device is alive
+    checkStatus() {
+        if(this.socket.isAlive === false) return this.socket.terminate();
+
+        this.socket.isAlive = false;
+        this.socket.ping('', false, true);
     }
 }
 

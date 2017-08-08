@@ -41,6 +41,7 @@ class GHSocketServer extends WebSocketServer {
 
         //Call WebSocketServer super
         super(a_options, a_cb);
+
         // -- Assign Event Callbacks
         
         //WSS has started listening
@@ -52,7 +53,7 @@ class GHSocketServer extends WebSocketServer {
         //On Socket Error
         this.on("error", function(a_err) {
             Debug.Log("[GH Socket Server] Server error", "yellow");
-            Debug.Log(a_err, "yellow");
+            Debug.Log("[GH Web Server] " + a_err, "yellow");
         })
 
         //Client has connected
@@ -63,9 +64,18 @@ class GHSocketServer extends WebSocketServer {
             const connIP = a_socket._socket.remoteAddress;
             
             //Add device
-            GH.deviceManager.addDevice(connIP, connIP, a_socket);
-        });
+            var newDevice = GH.deviceManager.addDevice(connIP, connIP, a_socket);
 
+            a_socket.on('message', newDevice.recieveMessage);
+
+            //Set socket is alive
+            a_socket.isAlive = true;
+
+            //Setup pong function to check if alive
+            a_socket.on('pong', function(s) {
+                a_socket.isAlive = true;
+            });
+        });
     }
 }
 
