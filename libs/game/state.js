@@ -2,6 +2,7 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
+const Utils         = require('../gamehub.js');
 const Utils         = require('../utilities/utils.js');
 const Debug         = require('../utilities/debug.js');
 
@@ -67,6 +68,16 @@ class State extends EventEmitter {
         Debug.SetLogPrefix("State");
         
         Debug.Log("Executing state " + this.name, "cyan");
+
+        //Distribute views to all devices
+        var self = this;
+        GH.deviceManager.devices.forEach(function(device) {
+            for(var i = 0; i < self.views.length; i++) {
+                var view = self.views[i];
+                device.sendView(view);
+            }
+        }, this);
+
         Debug.ResetLogPrefix();        
     }
 }

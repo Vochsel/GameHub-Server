@@ -29,6 +29,18 @@ class Device extends EventEmitter {
         this.socket.send(a_message);
     }
 
+    sendView(a_view) {
+        //TODO: Maybe move this check to state.js -> execute
+        //Check if type matches
+        if(this.type === a_view.type || a_view.type === "default") {
+            //Check if role matches
+            if(this.role === a_view.role || a_view.role === "default") {
+                //Send message
+                this.sendMessage(a_view.data);
+            }
+        }
+    }
+
     //Check if device is alive
     checkStatus() {
         if(this.socket.isAlive === false) {
