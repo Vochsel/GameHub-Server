@@ -1,11 +1,11 @@
 /* Internal Dependencies */
-var Debug           = require('./libs/debug.js');
-var Utils           = require('./libs/utils.js');
+var Debug           = require('./libs/utilities/debug.js');
+var Utils           = require('./libs/utilities/utils.js');
 
 var GH = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
-var GameModeManager = require('./libs/gamemode.js').GameModeManager;
+var GameModeManager = require('./libs/game/gamemode.js').GameModeManager;
 
 var TestGM          = require('./tests/TestGM/TestGM.js');
 

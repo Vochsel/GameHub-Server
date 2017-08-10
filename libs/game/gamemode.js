@@ -1,7 +1,9 @@
-const EventEmitter = require('events');
-var GH = require('./gamehub.js');
+/* External Dependencies */
+const EventEmitter  = require('events');
 
-const Debug = require('./debug.js');
+/* Internal Dependencies */
+const GH            = require('../gamehub.js');
+const Debug         = require('../utilities/debug.js');
 
 class GameMode extends EventEmitter {
     constructor(a_name) {

@@ -4,9 +4,9 @@ const WebSocketServer   = require('ws').Server;
 
 /* Internal Dependencies */
 const GH                = require('../gamehub.js');
-const Debug             = require('../debug.js');
-const Message           = require('../message.js');
-const Device            = require('../device.js');
+const Debug             = require('../utilities/debug.js');
+const Message           = require('../utilities/message.js');
+const Device            = require('../utilities/device.js');
 
 class ServerManager {
     constructor() {

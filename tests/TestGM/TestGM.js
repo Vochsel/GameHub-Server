@@ -1,6 +1,7 @@
-var GameMode = require('../../libs/gamemode.js').GameMode;
-var Stage = require('../../libs/stage.js');
-var State = require('../../libs/state.js');
+/* Internal Dependencies */
+var GameMode    = require('../../libs/game/gamemode.js').GameMode;
+var Stage       = require('../../libs/game/stage.js');
+var State       = require('../../libs/game/state.js');
 
 class TestGM extends GameMode {
     constructor(a_name) {

@@ -2,9 +2,9 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
-const Debug         = require('../debug.js');
-const Message       = require('../message.js');
-const Device        = require('../device.js');
+const Debug         = require('../utilities/debug.js');
+const Message       = require('../utilities/message.js');
+const Device        = require('../utilities/device.js');
 
 class DeviceManager {
 

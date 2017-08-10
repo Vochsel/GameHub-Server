@@ -2,7 +2,7 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
-const Debug         = require('./debug.js');
+const Debug         = require('../utilities/debug.js');
 
 class State extends EventEmitter {
     constructor(a_name) {
