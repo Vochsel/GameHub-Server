@@ -1,15 +1,12 @@
-const Express = require('express');
-const WebSocketServer = require('ws').Server;
+/* External Dependencies */
+const Express           = require('express');
+const WebSocketServer   = require('ws').Server;
 
-var GH = require('../gamehub.js');
-
-//const GH = require('../gamehub.js');
-
-const Debug = require('../debug.js');
-
-const Message = require('../message.js');
-
-const Device = require('../device.js');
+/* Internal Dependencies */
+const GH                = require('../gamehub.js');
+const Debug             = require('../debug.js');
+const Message           = require('../message.js');
+const Device            = require('../device.js');
 
 class ServerManager {
     constructor() {
@@ -81,7 +78,8 @@ class GHSocketServer extends WebSocketServer {
                 newDevice.emit("leave");
                 GH.activeGameMode.emit("deviceLeft", newDevice);
 
-                Debug.Log("Connection closed!!", "yellow");
+                Debug.Log("Connection closed, removing device", "yellow");
+                GH.deviceManager.removeDevice(newDevice);
             })
 
             a_socket.send(new Message("text", "HEEYYYY").stringify());

@@ -1,10 +1,10 @@
-const EventEmitter = require('events');
+/* External Dependencies */
+const EventEmitter  = require('events');
 
-const Debug = require('../debug.js');
-
-const Message = require('../message.js');
-
-const Device = require('../device.js');
+/* Internal Dependencies */
+const Debug         = require('../debug.js');
+const Message       = require('../message.js');
+const Device        = require('../device.js');
 
 class DeviceManager {
 
@@ -18,9 +18,9 @@ class DeviceManager {
         setInterval(function validateDevices() { 
 
             //Loop through all devices and check status
-            self.devices.forEach(function(element, key) {
-                var isAlive = element.checkStatus();
-                if(!isAlive) self.devices.delete(key);
+            self.devices.forEach(function(device, key) {
+                var isAlive = device.checkStatus();
+                if(!isAlive) self.removeDevice(key);
             }, self);
 
         }, 3000);
@@ -33,6 +33,7 @@ class DeviceManager {
         var newDevice = new Device(a_socket);
 
         var uid = this.devices.size;
+        newDevice.uid = uid;
 
         //Push new device into device array
         this.devices.set(uid /*newDevice.uid*/, newDevice);
@@ -43,9 +44,33 @@ class DeviceManager {
         return newDevice;
     }
 
-    // -- Remove device by uid
-    removeDevice(a_uid) {
-        //Remove Device
+    // -- Remove device by devices key
+    removeDevice(a_device) {
+        //a_device is a key
+        if(typeof a_device === 'string') {
+            //If devices has key
+            if(this.devices.has(a_device)) {
+                //Delete
+                Debug.Log("Removing device by key", "blue");
+                return this.devices.delete(a_device);
+            }
+        }
+
+        //Otherwise loop all and check
+        this.devices.forEach(function(device, key) {
+            //a_device is uid
+            if(typeof a_device === 'number') {
+                if(device.uid === a_device) {
+                    Debug.Log("Removing device by UID", "blue");
+                    return this.devices.delete(key);  
+                }
+            } else if (typeof a_device === 'object') {
+                if(device === a_device) {
+                    Debug.Log("Removing device by reference", "blue");
+                    return this.devices.delete(key);
+                }
+            }
+        }, this);
     }
 
     // -- Emit to specific device with id

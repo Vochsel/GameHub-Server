@@ -1,8 +1,9 @@
-const EventEmitter = require('events');
+/* External Dependencies */
+const EventEmitter  = require('events');
 
-const Debug = require('./debug.js');
-
-const Message = require('./message.js');
+/* Internal Dependencies */
+const Debug         = require('./debug.js');
+const Message       = require('./message.js');
 
 class Device extends EventEmitter {
     constructor(a_socket) {
@@ -42,14 +43,14 @@ class Device extends EventEmitter {
 
     static recieveMessage(a_device, a_message) {
         var m = Message.parse(a_message);
-        Debug.SetLogPrefix("DM");
+        Debug.SetLogPrefix("Device Manager");
 
         switch(m.type) {
             case "handshake": {
                 a_device.type = m.data.type;
                 a_device.role = m.data.role;
 
-                Debug.Log("Recieved device handshake!", "blue");
+                Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
                 Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
                 Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
             }
