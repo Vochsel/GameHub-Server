@@ -5,10 +5,21 @@ var State = require('../../libs/state.js');
 class TestGM extends GameMode {
     constructor(a_name) {
         super(a_name);
+        /*this.on("deviceJoined", function(device) {
+            console.log("AHHHHH Someone new is hereeee");
+        })
+
+        this.on("deviceLeft", function(device) {
+            console.log("Phew, they gone");
+        })
+
+        this.on("start", function(l) {
+            console.log("GM START");
+        })*/
     }
 
-    reset() {
-        super.reset();
+    setup() {
+        super.setup();
         
         // -- Set TestGM Specific Properties
         this.name = "TestGM";

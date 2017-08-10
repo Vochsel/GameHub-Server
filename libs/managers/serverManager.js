@@ -7,6 +7,10 @@ var GH = require('../gamehub.js');
 
 const Debug = require('../debug.js');
 
+const Message = require('../message.js');
+
+const Device = require('../device.js');
+
 class ServerManager {
     constructor() {
         //Server Config
@@ -65,8 +69,22 @@ class GHSocketServer extends WebSocketServer {
             
             //Add device
             var newDevice = GH.deviceManager.addDevice(connIP, connIP, a_socket);
+            newDevice.emit("join");
+        
+            GH.activeGameMode.emit("deviceJoined");
 
-            a_socket.on('message', newDevice.recieveMessage);
+            a_socket.on('message', function(a_msg) {
+                Device.recieveMessage(newDevice, a_msg);
+            });
+
+            a_socket.on('close', function(a_evt) {
+                newDevice.emit("leave");
+                GH.activeGameMode.emit("deviceLeft", newDevice);
+
+                Debug.Log("Connection closed!!", "yellow");
+            })
+
+            a_socket.send(new Message("text", "HEEYYYY").stringify());
 
             //Set socket is alive
             a_socket.isAlive = true;

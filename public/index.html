@@ -1,14 +1,31 @@
-<h1>Game.Hub</h1>
+<html>
+    <head>
+        <script src="lib/message.js"></script>
+    </head>
+    <body>
+        <h1>Game.Hub</h1>
 
-<script>
-    var host = window.location.hostname;
-    var port = window.location.port;
+        <script>
+            var host = window.location.hostname;
+            var port = window.location.port;
 
-    //Initialization logic
-    ws = new WebSocket("ws://" + host + ":" + port);
-    ws.addEventListener("open", function(e) {
-        console.log("Connected to %s:%s", host, port);
-        ws.send("sdsdsd");
-    });
+            var options = {
+                type: "client",
+                role: "default"
+            }
 
-</script>
+            //Initialization logic
+            ws = new WebSocket("ws://" + host + ":" + port);
+            ws.addEventListener("open", function(e) {
+                console.log("Connected to %s:%s", host, port);
+                ws.send(new Message("handshake", options).stringify());
+            });
+            ws.addEventListener("message", function(a_message) {
+                var d = a_message.data;
+                var m = Message.parse(d);
+                console.log(m);
+            })
+
+        </script>
+    </body>
+</html>

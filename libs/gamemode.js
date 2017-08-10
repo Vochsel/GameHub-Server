@@ -1,9 +1,12 @@
 const EventEmitter = require('events');
+var GH = require('./gamehub.js');
 
 const Debug = require('./debug.js');
 
 class GameMode extends EventEmitter {
     constructor(a_name) {
+        super();
+
         /* ---------- GameMode Debug Info ---------- */
         Debug.SetLogPrefix("GM");
 
@@ -19,7 +22,10 @@ class GameMode extends EventEmitter {
         this.stages = new Array();
 
         //Current stage index
-        this.currentStageIdx = -1;        
+        this.currentStageIdx = -1;   
+        
+        //Setup GameMode
+        this.setup();
 
         /* ---------- GameMode Debug Info ---------- */
         Debug.Log("Created GameMode - " + this.name, "green");
@@ -30,6 +36,11 @@ class GameMode extends EventEmitter {
     reset() {
         //Current stage index
         this.currentStageIdx = 0;
+    }
+
+    // -- Initial setup of GameMode
+    setup() {
+
     }
 
     // -- Starts GameMode

@@ -2,6 +2,10 @@ const EventEmitter = require('events');
 
 const Debug = require('../debug.js');
 
+const Message = require('../message.js');
+
+const Device = require('../device.js');
+
 class DeviceManager {
 
     // -- Constructor
@@ -14,8 +18,9 @@ class DeviceManager {
         setInterval(function validateDevices() { 
 
             //Loop through all devices and check status
-            self.devices.forEach(function(element) {
-                element.checkStatus();
+            self.devices.forEach(function(element, key) {
+                var isAlive = element.checkStatus();
+                if(!isAlive) self.devices.delete(key);
             }, self);
 
         }, 3000);
@@ -66,37 +71,6 @@ class DeviceManager {
         }, this);
     }
 
-}
-
-class Device extends EventEmitter {
-    constructor(a_socket) {
-        super();
-
-        //Store reference to client socket
-        this.socket = a_socket;
-        
-        //Client IP address
-        this.clientIP = this.socket._socket.remoteAddress;
-
-        //Device unique ID
-        this.uid = this.clientIP;
-    }
-
-    sendMessage(a_message) {
-        this.socket.send(a_message);
-    }
-
-    recieveMessage(a_message) {
-        Debug.Log("[GH DM] " + a_message, "blue");
-    }
-
-    //Check if device is alive
-    checkStatus() {
-        if(this.socket.isAlive === false) return this.socket.terminate();
-
-        this.socket.isAlive = false;
-        this.socket.ping('', false, true);
-    }
 }
 
 module.exports = DeviceManager;

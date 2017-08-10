@@ -5,6 +5,8 @@ const Debug = require('./debug.js');
 class Stage extends EventEmitter {
 
     constructor(a_name) {
+        super();
+        
         /* ---------- Stage Debug Info ---------- */
         Debug.SetLogPrefix("Stage");
 
@@ -18,6 +20,8 @@ class Stage extends EventEmitter {
 
         //Array of states defined for this stage
         this.states = new Array();
+
+        this.currentStateIdx = 0;
 
         /* ---------- Stage Debug Info ---------- */
         Debug.Log("Created Stage - " + this.name, "cyan");

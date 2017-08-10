@@ -1,6 +1,16 @@
-class Messager {
-    constructor() {
+class Message {
+    constructor(a_type, a_data) {
+        this.type = a_type;
+        this.data = a_data;
+    }
 
+    stringify() {
+        return JSON.stringify(this);
+    }
+
+    static parse(a_message) {
+        var p = JSON.parse(a_message);
+        return new Message(p.type, p.data);
     }
 
     static emit(a_ws, a_message) {
@@ -14,3 +24,5 @@ class Messager {
         }
     }
 }
+
+module.exports = Message;
