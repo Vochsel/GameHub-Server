@@ -1,25 +1,21 @@
-var DeviceManager = require('./libs/managers/deviceManager.js');
-var ServerManager = require('./libs/managers/serverManager.js');
-var Debug = require('./libs/debug.js');
-var GameModeManager = require('./libs/gamemode.js').GameModeManager;
-
-var Utils = require('./libs/utils.js');
-
+/* Internal Dependencies */
+var Debug           = require('./libs/debug.js');
+var Utils           = require('./libs/utils.js');
 
 var GH = require('./libs/gamehub.js');
-var TestGM = require('./tests/TestGM/TestGM.js');
+var DeviceManager   = require('./libs/managers/deviceManager.js');
+var ServerManager   = require('./libs/managers/serverManager.js');
+var GameModeManager = require('./libs/gamemode.js').GameModeManager;
 
-//var GHServerManager = new ServerManager();
-
-
-//var gm = new TestGM();
-//gm.start();
+var TestGM          = require('./tests/TestGM/TestGM.js');
 
 function Setup() {
 
+    //Setup and start Managers
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
     
+    //Start GameMode
     StartGM();
 }
 
@@ -54,7 +50,6 @@ stdin.addListener("data", function(d) {
         input = lastInput;
         console.log(input);
     }
-    
 
     var o = Object.byString(GH, input);
     if(o) {

@@ -1,12 +1,14 @@
-const EventEmitter = require('events');
+/* External Dependencies */
+const EventEmitter  = require('events');
 
-const Debug = require('./debug.js');
+/* Internal Dependencies */
+const Debug			= require('./debug.js');
 
 class Stage extends EventEmitter {
 
     constructor(a_name) {
         super();
-        
+
         /* ---------- Stage Debug Info ---------- */
         Debug.SetLogPrefix("Stage");
 
