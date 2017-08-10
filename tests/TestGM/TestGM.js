@@ -3,6 +3,8 @@ var GameMode    = require('../../libs/game/gamemode.js').GameMode;
 var Stage       = require('../../libs/game/stage.js');
 var State       = require('../../libs/game/state.js');
 
+var View        = require('../../libs/mvc/view.js');
+
 class TestGM extends GameMode {
     constructor(a_name) {
         super(a_name);
@@ -27,20 +29,32 @@ class TestGM extends GameMode {
 
         var introStage = new Stage("Intro Stage");
 
-            var beginState = new State("Begin State");
+            var beginState = new State({ 
+                name: "Begin State",
+                views: [
+                    new View({
+                        type: "hub",
+                        data: "Welcome to the begin state! Please look at your devices"
+                    }),
+                    new View({
+                        type: "client",
+                        data: "Welcome to the begin state! You're a client!"
+                    })
+                ]
+            });
             introStage.states.push(beginState);
 
         this.stages.push(introStage);
 
         var gameStage = new Stage("Game Stage");
 
-            var answerState = new State("Answer State");
+            var answerState = new State({ name : "Answer State" });
             gameStage.states.push(answerState);
 
-            var selectionState = new State("Selection State");
+            var selectionState = new State({ name : "Selection State" });
             gameStage.states.push(selectionState);
 
-            var resultsState = new State("Results State");
+            var resultsState = new State({ name : "Results State" });
             gameStage.states.push(resultsState);
 
         this.stages.push(gameStage);

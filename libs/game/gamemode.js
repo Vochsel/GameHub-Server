@@ -10,6 +10,7 @@ class GameMode extends EventEmitter {
         super();
 
         /* ---------- GameMode Debug Info ---------- */
+
         Debug.SetLogPrefix("GM");
 
         /* ---------- GameMode Properties ---------- */
@@ -25,6 +26,9 @@ class GameMode extends EventEmitter {
 
         //Current stage index
         this.currentStageIdx = -1;   
+
+        //Emit Initialized
+        this.emit("initialized");
         
         //Setup GameMode
         this.setup();
@@ -74,14 +78,22 @@ class GameMode extends EventEmitter {
     }
 
     // -- Get current stage from index if available
-    getStage(stageIdx) {
+    getStage(a_idx) {
         //If stage exists, return
-        if(stageIdx >= 0 && stageIdx < this.stages.length) 
-            return this.stages[stageIdx];
+        if(a_idx >= 0 && a_idx < this.stages.length) 
+            return this.stages[a_idx];
 
         //Stage does not exist
-        Debug.Warning("Only " + this.stages.length + " stages are loaded. Stage does not exist for index: " + stageIdx + " (Off by one). Returning null!");
+        Debug.Warning("Only " + this.stages.length + " stages are loaded. Stage does not exist for index: " + a_idx + " (Off by one). Returning null!");
         return null;
+    }
+
+    setCurrentStage(a_idx) {
+        //Check if valid state
+        if(a_idx >= 0 && a_idx < this.stages.length) {
+            this.currentStageIdx = a_idx;
+            this.emit("changedState", this.currentStageIdx);
+        }
     }
 
     get currentStage() {
@@ -104,7 +116,7 @@ class GameMode extends EventEmitter {
                 this.stop();
                 return;
             }
-            this.currentStageIdx = nextStageIdx;
+            this.setCurrentStage(nextStageIdx);
             Debug.Log("Progressed to next Stage - " + nextStageIdx, "cyan");
             return;
         }

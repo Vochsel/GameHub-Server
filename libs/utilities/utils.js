@@ -17,6 +17,26 @@ function SearchForRegEx(regex, callback)
     }
 }
 
+exports.Valid = function(a_object) {
+    if(typeof a_object === "string")
+        return (a_object && a_object.length !== "");
+    else
+        return (a_object && a_object !== null && a_object !== undefined);
+}
+
+exports.MapFromObject = function(a_object) {
+    //Create empty map
+    var m = new Map();
+
+    //Iterate object keys and insert into map
+    Object.keys(a_object).forEach(key => {
+        m.set(key, a_object[key]);
+    });
+
+
+    return m;
+}
+
 //Replace injection literals with data
 exports.FormatStringWithData = function(source, data)
 {

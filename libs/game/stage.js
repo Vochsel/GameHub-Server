@@ -71,6 +71,8 @@ class Stage extends EventEmitter {
         return this.getState(this.currentStateIdx);
     }
 
+    
+
     // -- Overridable function to validate the stage
     isValidated() {
         return true;
