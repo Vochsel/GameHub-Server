@@ -46,7 +46,15 @@ class GameMode extends EventEmitter {
 
     // -- Initial setup of GameMode
     setup() {
-
+        var self = this;
+        this.on("deviceHandshake", function(device) {
+            Debug.Log("GM Device Join");
+            if(!device)
+                return;
+            self.currentStage.currentState.views.forEach(function(view) {
+                device.sendView(view);
+            }, self);
+        })
     }
 
     // -- Starts GameMode
@@ -124,6 +132,10 @@ class GameMode extends EventEmitter {
         //Next state does exist, set to that
         this.currentStage.currentStateIdx = nextStateIdx;
         Debug.Log("Progressed to next State - " + nextStateIdx, "magenta");
+    }
+
+    status() {
+        return "[Stage] : " + this.currentStage.name + ". [State] : " + this.currentStage.currentState.name + ".";
     }
 
 }

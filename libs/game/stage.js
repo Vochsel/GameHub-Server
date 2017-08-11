@@ -57,7 +57,7 @@ class Stage extends EventEmitter {
         //If state exists, return
         if(stateIdx >= 0 && stateIdx < this.states.length) {
             var state = this.states[stateIdx];
-            Debug.Log("Found state [" + state.name + "] at index: " + stateIdx, "cyan");
+            //Debug.Log("Found state [" + state.name + "] at index: " + stateIdx, "cyan");
             return state;
         }
 
@@ -71,7 +71,7 @@ class Stage extends EventEmitter {
         return this.getState(this.currentStateIdx);
     }
 
-    
+
 
     // -- Overridable function to validate the stage
     isValidated() {

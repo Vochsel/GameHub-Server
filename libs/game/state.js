@@ -2,7 +2,7 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
-const Utils         = require('../gamehub.js');
+const GH            = require('../gamehub.js');
 const Utils         = require('../utilities/utils.js');
 const Debug         = require('../utilities/debug.js');
 
@@ -29,14 +29,14 @@ class State extends EventEmitter {
             : new Array();
 
         //Debug.Log("Controllers: " + JSON.stringify(this.controllers), "magenta");
-        Debug.Log("Loaded " + this.controllers.length + " controllers!", "magenta");
+        Debug.Log(" - Loaded " + this.controllers.length + " controllers!", "magenta");
 
         //Domain specific views for state
         this.views = (a_options && Utils.Valid(a_options.views)) 
             ? Array.from(a_options.views)
             : new Array();
 
-        Debug.Log("Loaded " + this.views.length + " views!", "magenta");
+        Debug.Log(" - Loaded " + this.views.length + " views!", "magenta");
         
         /* ---------- State Debug Info ---------- */
         Debug.ResetLogPrefix();

@@ -38,7 +38,13 @@ class TestGM extends GameMode {
                     }),
                     new View({
                         type: "client",
-                        data: "Welcome to the begin state! You're a client!"
+                        role: "a",
+                        data: "Welcome to the begin state! You're a client A!"
+                    }),
+                    new View({
+                        type: "client",
+                        role: "b",
+                        data: "Welcome to the begin state! You're a client B!"
                     })
                 ]
             });

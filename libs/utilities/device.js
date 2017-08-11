@@ -4,6 +4,7 @@ const EventEmitter  = require('events');
 /* Internal Dependencies */
 const Debug         = require('./debug.js');
 const Message       = require('./message.js');
+const GH            = require('../gamehub.js');
 
 class Device extends EventEmitter {
     constructor(a_socket) {
@@ -32,11 +33,14 @@ class Device extends EventEmitter {
     sendView(a_view) {
         //TODO: Maybe move this check to state.js -> execute
         //Check if type matches
+        Debug.Log("Type = " + this.type + " : " + a_view.type, "red");
+        Debug.Log("Role = " + this.role + " : " + a_view.role, "red");
         if(this.type === a_view.type || a_view.type === "default") {
             //Check if role matches
             if(this.role === a_view.role || a_view.role === "default") {
                 //Send message
-                this.sendMessage(a_view.data);
+                this.sendMessage(new Message("view", a_view.data).stringify());
+                Debug.Log("[Device] Sent view", "blue");
             }
         }
     }
@@ -65,6 +69,7 @@ class Device extends EventEmitter {
                 Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
                 Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
                 Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
+                GH.activeGameMode.emit("deviceHandshake", a_device);
             }
             break;
         }

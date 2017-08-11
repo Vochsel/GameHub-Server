@@ -68,7 +68,7 @@ class GHSocketServer extends WebSocketServer {
             var newDevice = GH.deviceManager.addDevice(connIP, connIP, a_socket);
             newDevice.emit("join");
         
-            GH.activeGameMode.emit("deviceJoined");
+            GH.activeGameMode.emit("deviceJoined", newDevice);
 
             a_socket.on('message', function(a_msg) {
                 Device.recieveMessage(newDevice, a_msg);
@@ -82,7 +82,7 @@ class GHSocketServer extends WebSocketServer {
                 GH.deviceManager.removeDevice(newDevice);
             })
 
-            a_socket.send(new Message("text", "HEEYYYY").stringify());
+            //a_socket.send(new Message("text", "HEEYYYY").stringify());
 
             //Set socket is alive
             a_socket.isAlive = true;
