@@ -36,6 +36,11 @@ class TestGM extends GameMode {
                 },
                 views: [
                     new View({
+                        type: "default",
+                        role: "default",
+                        data: "Device has set default type and role. Error has likely occurred!"
+                    }),
+                    new View({
                         type: "hub",
                         data: "Welcome to the begin state! Please look at your devices"
                     }),

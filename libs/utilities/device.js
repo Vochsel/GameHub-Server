@@ -35,7 +35,7 @@ class Device extends EventEmitter {
         this.sendMessage(new Message("view", a_string).stringify());
         Debug.Log("[Device] Sent view", "blue");
     }
-    
+
     //Check if device is alive
     checkStatus() {
         if(this.socket.isAlive === false) {
@@ -54,8 +54,8 @@ class Device extends EventEmitter {
 
         switch(m.type) {
             case "handshake": {
-                a_device.type = m.data.type;
-                a_device.role = m.data.role;
+                if(m.data.type) a_device.type = m.data.type;
+                if(m.data.role) a_device.role = m.data.role;
 
                 Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
                 Debug.Log(" - Device Type: " + a_device.type + ".", "blue");

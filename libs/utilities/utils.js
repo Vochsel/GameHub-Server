@@ -56,7 +56,6 @@ exports.FormatStringWithData = function(source, data)
         var val = Object.byString(data, injVarPath);
         if(val)
         {
-            
             //Check if obj is array, then look for [ asdasd ]
             if(typeof val === 'object')
             {

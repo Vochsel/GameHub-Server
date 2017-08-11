@@ -47,17 +47,13 @@ class GameMode extends EventEmitter {
     // -- Initial setup of GameMode
     setup() {
         var self = this;
+
         //TODO: Should this be an event, or own func
         this.on("deviceHandshake", function(a_device) {
-            Debug.Log("GM Device Join");
             if(!a_device)
                 return;
 
             self.currentStage.currentState.execute(a_device);
-            //Get best view
-            //var view = self.currentStage.currentState.getBestViewForDevice(a_device);
-            //Send view to device
-            //a_device.sendView(view);
         })
     }
 
@@ -110,8 +106,7 @@ class GameMode extends EventEmitter {
 
     get currentStage() {
         var s = this.getStage(this.currentStageIdx);
-        if(s)
-            return s;
+        if(s) return s;
     }
 
     progressGameMode() {

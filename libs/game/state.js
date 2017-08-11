@@ -75,6 +75,9 @@ class State extends EventEmitter {
 
         //Get best view
         var view = this.getBestViewForDevice(a_device);
+
+        if(!view)
+            return Debug.Error("Could not find view for device!");
         
         var viewSrc = Utils.FormatStringWithData(view.data, this.model); //maybe move to controller?
 
@@ -97,9 +100,9 @@ class State extends EventEmitter {
             Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
 
             //Check if type matches
-            if(a_device.type === view.type || view.type === "default") {
+            if(a_device.type === view.type /*|| a_device.type === "default"*/) {
                 //Check if role matches
-                if(a_device.role === view.role || view.role === "default") {
+                if(a_device.role === view.role || a_device.role === "default") {
                     //Found best view for device
                     bestView = view;
                     return bestView;
