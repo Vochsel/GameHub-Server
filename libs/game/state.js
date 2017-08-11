@@ -23,6 +23,10 @@ class State extends EventEmitter {
         //Per state data storage
         this.collections = new Object();
 
+        this.model = (a_options && Utils.Valid(a_options.model)) 
+            ? (a_options.model)
+            : new Object();
+
         //Domain specific controller for state
         this.controllers = (a_options && Utils.Valid(a_options.controllers)) 
             ? Array.from(a_options.controllers)
@@ -64,19 +68,18 @@ class State extends EventEmitter {
         return true;
     }
 
-    execute() {
+    execute(a_device) {
         Debug.SetLogPrefix("State");
         
         Debug.Log("Executing state " + this.name, "cyan");
 
-        //Distribute views to all devices
-        var self = this;
-        GH.deviceManager.devices.forEach(function(a_device) {
-            //Get best view
-            var view = this.getBestViewForDevice(a_device);
-            //Send view to device
-            a_device.sendView(view);
-        }, this);
+        //Get best view
+        var view = this.getBestViewForDevice(a_device);
+        
+        var viewSrc = Utils.FormatStringWithData(view.data, this.model); //maybe move to controller?
+
+        //Send view to device
+        a_device.sendView(viewSrc);
 
         Debug.ResetLogPrefix();        
     }

@@ -37,7 +37,9 @@ exports.MapFromObject = function(a_object) {
     return m;
 }
 
+
 //Replace injection literals with data
+//TODO: Tidy and add debug INFO
 exports.FormatStringWithData = function(source, data)
 {
     var regexSearch = CreateRegExSearch('{', '}');
@@ -52,7 +54,6 @@ exports.FormatStringWithData = function(source, data)
 
         //Search for injection literal in supplied data object
         var val = Object.byString(data, injVarPath);
-
         if(val)
         {
             

@@ -31,6 +31,9 @@ class TestGM extends GameMode {
 
             var beginState = new State({ 
                 name: "Begin State",
+                model: {
+                    x: 10
+                },
                 views: [
                     new View({
                         type: "hub",
@@ -39,12 +42,12 @@ class TestGM extends GameMode {
                     new View({
                         type: "client",
                         role: "a",
-                        data: "Welcome to the begin state! You're a client A!"
+                        data: "Welcome to {x} the begin state! You're a client A!"
                     }),
                     new View({
                         type: "client",
                         role: "b",
-                        data: "Welcome to the begin state! You're a client B!"
+                        data: "Welcome to the begin state! You're a client B{x}!"
                     })
                 ]
             });
