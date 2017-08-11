@@ -33,7 +33,7 @@ class Device extends EventEmitter {
     sendView(a_view) {
         //TODO: Maybe move this check to state.js -> execute
         //Check if type matches
-        Debug.Log("Type = " + this.type + " : " + a_view.type, "red");
+        /*Debug.Log("Type = " + this.type + " : " + a_view.type, "red");
         Debug.Log("Role = " + this.role + " : " + a_view.role, "red");
         if(this.type === a_view.type || a_view.type === "default") {
             //Check if role matches
@@ -42,7 +42,10 @@ class Device extends EventEmitter {
                 this.sendMessage(new Message("view", a_view.data).stringify());
                 Debug.Log("[Device] Sent view", "blue");
             }
-        }
+        }*/
+
+        this.sendMessage(new Message("view", a_view.data).stringify());
+        Debug.Log("[Device] Sent view", "blue");
     }
 
     //Check if device is alive

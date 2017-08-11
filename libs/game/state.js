@@ -71,14 +71,40 @@ class State extends EventEmitter {
 
         //Distribute views to all devices
         var self = this;
-        GH.deviceManager.devices.forEach(function(device) {
-            for(var i = 0; i < self.views.length; i++) {
-                var view = self.views[i];
-                device.sendView(view);
-            }
+        GH.deviceManager.devices.forEach(function(a_device) {
+            //Get best view
+            var view = this.getBestViewForDevice(a_device);
+            //Send view to device
+            a_device.sendView(view);
         }, this);
 
         Debug.ResetLogPrefix();        
+    }
+
+    // -- Utilitiy Functions
+    getBestViewForDevice(a_device) {
+        var bestView = null;
+
+        for(var i = 0; i < this.views.length; i++) {
+            var view = this.views[i];
+
+            //Log out device type and desired view type            
+            Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
+            //Log out device role and desired view role
+            Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
+
+            //Check if type matches
+            if(a_device.type === view.type || view.type === "default") {
+                //Check if role matches
+                if(a_device.role === view.role || view.role === "default") {
+                    //Found best view for device
+                    bestView = view;
+                    return bestView;
+                }
+            }
+        }
+
+        return null;
     }
 }
 
