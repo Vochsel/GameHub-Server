@@ -28,7 +28,7 @@ class TestGM extends GameMode {
         this.name = "TestGM";
 
         var introStage = new Stage("Intro Stage");
-
+        introStage.collections.y = "Poo";
             var beginState = new State({ 
                 name: "Begin State",
                 model: {
@@ -47,12 +47,12 @@ class TestGM extends GameMode {
                     new View({
                         type: "client",
                         role: "a",
-                        data: "Welcome to {x} the begin state! You're a client A!"
+                        data: "Welcome to {state.x} the begin state! You're a client {stage.y}A!"
                     }),
                     new View({
                         type: "client",
                         role: "b",
-                        data: "Welcome to the begin state! You're a client B{x}!"
+                        data: "Welcome to the begin state! {stage.y} You're a client B{state.x}!"
                     })
                 ]
             });

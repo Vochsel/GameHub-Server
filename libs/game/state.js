@@ -29,8 +29,8 @@ class State extends EventEmitter {
 
         //Domain specific controller for state
         this.controllers = (a_options && Utils.Valid(a_options.controllers)) 
-            ? Array.from(a_options.controllers)
-            : new Array();
+            ? (a_options.controllers)
+            : new Object();
 
         //Debug.Log("Controllers: " + JSON.stringify(this.controllers), "magenta");
         Debug.Log(" - Loaded " + this.controllers.length + " controllers!", "magenta");
@@ -79,7 +79,11 @@ class State extends EventEmitter {
         if(!view)
             return Debug.Error("Could not find view for device!");
         
-        var viewSrc = Utils.FormatStringWithData(view.data, this.model); //maybe move to controller?
+        var viewSrc = Utils.FormatStringWithData(view.data, {
+            gm: GH.activeGameMode.collections, 
+            stage: GH.activeGameMode.currentStage.collections, 
+            state: this.model
+        }); //maybe move to controller?
 
         //Send view to device
         a_device.sendView(viewSrc);

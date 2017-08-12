@@ -3,10 +3,11 @@ const EventEmitter  = require('events');
 
 /* Internal Dependencies */
 const GH            = require('../gamehub.js');
+const Utils         = require('../utilities/utils.js');
 const Debug         = require('../utilities/debug.js');
 
 class GameMode extends EventEmitter {
-    constructor(a_name) {
+    constructor(a_options) {
         super();
 
         /* ---------- GameMode Debug Info ---------- */
@@ -16,7 +17,10 @@ class GameMode extends EventEmitter {
         /* ---------- GameMode Properties ---------- */
 
         //Literal name of GameMode
-        this.name = (a_name && a_name.length != 0) ? a_name : "Untitled GameMode";
+        this.name = (a_options && Utils.Valid(a_options.name.length)) ? a_options.name : "Untitled GameMode";
+
+        //Version of GameMode
+        this.version = (a_options && Utils.Valid(a_options.version.length)) ? a_options.version : "Invalid Version";
 
         //Per GameMode data storage
         this.collections = new Object();
