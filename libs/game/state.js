@@ -80,7 +80,7 @@ class State extends EventEmitter {
             return Debug.Error("Could not find view for device!");
         
         var viewSrc = Utils.FormatStringWithData(view.data, {
-            gm: GH.activeGameMode.collections, 
+            gm: GH.activeGameMode, 
             stage: GH.activeGameMode.currentStage.collections, 
             state: this.model
         }); //maybe move to controller?

@@ -26,6 +26,7 @@ class TestGM extends GameMode {
         
         // -- Set TestGM Specific Properties
         this.name = "TestGM";
+        this.version = "0.1.1";
 
         var introStage = new Stage("Intro Stage");
         introStage.collections.y = "Poo";
@@ -42,17 +43,17 @@ class TestGM extends GameMode {
                     }),
                     new View({
                         type: "hub",
-                        data: "Welcome to the begin state! Please look at your devices"
+                        data: "Welcome to {gm.name}.<br>Version: {gm.version}<br>Welcome to the begin state! Please look at your devices"
                     }),
                     new View({
                         type: "client",
                         role: "a",
-                        data: "Welcome to {state.x} the begin state! You're a client {stage.y}A!"
+                        data: "Welcome to {state.x} the begin state! You're a client {stage.y}A!<br><input type='button' value='Continue'/>"
                     }),
                     new View({
                         type: "client",
                         role: "b",
-                        data: "Welcome to the begin state! {stage.y} You're a client B{state.x}!"
+                        data: "Welcome to the begin state! {stage.y} You're a client B{state.x}!<br><input type='button' value='Continue'/>"
                     })
                 ]
             });
