@@ -8,6 +8,7 @@ const GH            = require('../gamehub.js');
 
 class Device extends EventEmitter {
     constructor(a_socket) {
+        //Call Event Emitter constructor
         super();
 
         //Store reference to client socket

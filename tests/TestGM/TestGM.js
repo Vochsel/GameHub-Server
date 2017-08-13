@@ -10,17 +10,6 @@ const GH        = require('../../libs/gamehub.js');
 class TestGM extends GameMode {
     constructor(a_name) {
         super(a_name);
-        /*this.on("deviceJoined", function(device) {
-            console.log("AHHHHH Someone new is hereeee");
-        })
-
-        this.on("deviceLeft", function(device) {
-            console.log("Phew, they gone");
-        })
-
-        this.on("start", function(l) {
-            console.log("GM START");
-        })*/
     }
 
     setup() {
