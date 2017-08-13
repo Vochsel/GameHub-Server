@@ -1,11 +1,14 @@
 /* Internal Dependencies */
-var GameMode    = require('../../libs/game/gamemode.js').GameMode;
-var Stage       = require('../../libs/game/stage.js');
-var State       = require('../../libs/game/state.js');
+const GameMode      = require('../../libs/game/gamemode.js').GameMode;
+const Stage         = require('../../libs/game/stage.js');
+const State         = require('../../libs/game/state.js');
 
-var View        = require('../../libs/mvc/view.js');
+const View          = require('../../libs/mvc/view.js');
 
-const GH        = require('../../libs/gamehub.js');
+const GH            = require('../../libs/gamehub.js');
+
+const Resource      = require('../../libs/utilities/resource.js');
+const Debug         = require('../../libs/utilities/debug.js');
 
 class TestGM extends GameMode {
     constructor(a_name) {
@@ -18,6 +21,15 @@ class TestGM extends GameMode {
         // -- Set TestGM Specific Properties
         this.name = "TestGM";
         this.version = "0.1.1";
+        this.path = __dirname;
+
+        var testData = new Resource({name: "testData", url: this.path + "/resources/testData.json"});
+
+        testData.on("load", function(data) {
+            Debug.Log("Test Data Loaded. Entries: " + Object.keys(data).length);
+        })
+
+        this.addResource(testData);
 
         var introStage = new Stage("Intro Stage");
             var beginState = new State({ 

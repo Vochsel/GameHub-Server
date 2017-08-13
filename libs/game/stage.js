@@ -38,6 +38,10 @@ class Stage extends EventEmitter {
         this.emit("reset");
     }
 
+    setup() {
+        this.emit("setup");
+    }
+
     // -- Called when stage is entered
     enter() {
         this.reset();

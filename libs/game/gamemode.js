@@ -31,6 +31,9 @@ class GameMode extends EventEmitter {
         //Current stage index
         this.currentStageIdx = -1;   
 
+        //GameMode Resources
+        this.resources = new Map();
+
         //Emit Initialized
         this.emit("initialized");
         
@@ -154,6 +157,9 @@ class GameMode extends EventEmitter {
         }
     }
 
+    addResource(a_resource) {
+        this.resources.set(a_resource.uid, a_resource);
+    }
 }
 
 class GameModeManager {

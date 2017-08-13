@@ -25,7 +25,7 @@ class Resource extends EventEmitter {
         //Contents of resource
         this.source = "";
 
-        loadResource();
+        this.loadResource();
     }
 
     loadResource() {
@@ -50,6 +50,12 @@ class Resource extends EventEmitter {
 
             //Store file contents
             self.source = a_data;
+
+            //Check if resource is JSON.
+            var sourceParsed = JSON.parse(self.source);
+            if(sourceParsed) {
+                self.source = sourceParsed;
+            }
             
             //Emit load event
             self.emit("load", self.source);
@@ -57,3 +63,5 @@ class Resource extends EventEmitter {
     }
 
 }
+
+module.exports = Resource;
