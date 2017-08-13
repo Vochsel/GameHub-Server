@@ -2,7 +2,7 @@
 function Setup(options) {
     if(!options)
         options = {};
-    
+
     var container = document.getElementById("container");
 
     var host = window.location.hostname;
@@ -35,8 +35,29 @@ function Setup(options) {
         switch(m.type) {
             case "view": {
                 container.innerHTML = m.data;
+                SetupInput();
             }
             break;
         }
     })
+
+    
+}
+
+function SetupInput() {
+    // -- Input
+    var inputs = document.getElementsByTagName("input");
+    for(var i = 0; i < inputs.length; i++) {
+        var input = inputs[i];
+        console.log(input);
+        input.addEventListener("click", function(e) {
+            var data = input.getAttribute("data-value");
+            data = data.replace('(', '');
+            data = data.replace(')', '');
+            
+            var functionName = data;
+
+            ws.send(new Message("controller", functionName).stringify());
+        });
+    }
 }

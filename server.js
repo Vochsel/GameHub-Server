@@ -9,6 +9,8 @@ var GameModeManager = require('./libs/game/gamemode.js').GameModeManager;
 
 var TestGM          = require('./tests/TestGM/TestGM.js');
 
+const chalk         = require('chalk');
+
 function Setup() {
 
     //Setup and start Managers

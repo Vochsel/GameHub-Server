@@ -96,6 +96,28 @@ class DeviceManager {
         }, this);
     }
 
+    getAllDevicesOfType(a_type) {
+        var out = new Array();
+        
+        this.devices.forEach(function(d) {
+            if(d.type === a_type)
+                out.push(d);
+        }, this);
+
+        return out;
+    }
+
+    getAllDevicesOfRole(a_role) {
+        var out = new Array();
+        
+        this.devices.forEach(function(d) {
+            if(d.role === a_role)
+                out.push(d);
+        }, this);
+
+        return out;
+    }
+
 }
 
 module.exports = DeviceManager;

@@ -24,6 +24,9 @@ class Device extends EventEmitter {
 
         //Device unique ID
         this.uid = this.clientIP;
+
+        //Should device refresh view
+        this.shouldRefreshView = false;
     }
 
     sendMessage(a_message) {
@@ -61,6 +64,32 @@ class Device extends EventEmitter {
                 Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
                 Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
                 GH.activeGameMode.emit("deviceHandshake", a_device);
+            }
+            break;
+            case "controller": {
+                //Precheck 
+                if(!m.data)
+                    return;
+
+                //Recieved function to call
+                Debug.Log("Recieved controller function: " + m.data + ". Executing!", "blue");
+                
+                //Call desired function
+                //TODO: Add some kind of check?
+                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[m.data];
+                if(funcToCall) {
+                    funcToCall(a_device);
+                } else {
+                    Debug.Error("No function found in state controller with declaration: " + m.data);
+                }
+
+                //Refresh device's view if needed
+                if(a_device.shouldRefreshView) {
+                    GH.activeGameMode.currentStage.currentState.execute(a_device);
+                    a_device.shouldRefreshView = false;
+                }
+
+                GH.activeGameMode.isValidated();
             }
             break;
         }

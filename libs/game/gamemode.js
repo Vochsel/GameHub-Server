@@ -105,6 +105,11 @@ class GameMode extends EventEmitter {
         if(a_idx >= 0 && a_idx < this.stages.length) {
             this.currentStageIdx = a_idx;
             this.emit("changedState", this.currentStageIdx);
+            //Maybe move?
+            GH.deviceManager.devices.forEach(function(device) {
+                this.currentStage.currentState.execute(device);
+            }, this);
+            //GH.deviceManager.broadcast(new Message("view", a_string).stringify())
         }
     }
 
@@ -133,12 +138,20 @@ class GameMode extends EventEmitter {
         }
 
         //Next state does exist, set to that
-        this.currentStage.currentStateIdx = nextStateIdx;
+        //this.currentStage.currentStateIdx = nextStateIdx;
+        this.setCurrentStage(nextStageIdx);
+        
         Debug.Log("Progressed to next State - " + nextStateIdx, "magenta");
     }
 
     status() {
         return "[Stage] : " + this.currentStage.name + ". [State] : " + this.currentStage.currentState.name + ".";
+    }
+
+    isValidated() {
+        if(this.currentStage.currentState.isValidated()) {
+            this.progressGameMode();
+        }
     }
 
 }

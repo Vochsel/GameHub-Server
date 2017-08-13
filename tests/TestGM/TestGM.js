@@ -5,6 +5,8 @@ var State       = require('../../libs/game/state.js');
 
 var View        = require('../../libs/mvc/view.js');
 
+const GH        = require('../../libs/gamehub.js');
+
 class TestGM extends GameMode {
     constructor(a_name) {
         super(a_name);
@@ -29,18 +31,27 @@ class TestGM extends GameMode {
         this.version = "0.1.1";
 
         var introStage = new Stage("Intro Stage");
-        introStage.collections.y = "Poo";
             var beginState = new State({ 
                 name: "Begin State",
+                isValidated: function() {
+                    var readyClients = Object.keys(this.model.clientsReady).length;
+                    var numOfClients = GH.deviceManager.getAllDevicesOfType("client").length;
+
+                    console.log(readyClients + " : " + numOfClients);
+                    
+                    return readyClients >= numOfClients;
+                },
                 model: {
-                    x: 10
+                    x: 10,
+                    clientsReady: {}
+                },
+                controller: {
+                    clientIsReady: function(a_device) {
+                        beginState.model.clientsReady[a_device.uid] = "ready";
+                        console.log(beginState.model.clientsReady);
+                    }
                 },
                 views: [
-                    new View({
-                        type: "default",
-                        role: "default",
-                        data: "Device has set default type and role. Error has likely occurred!"
-                    }),
                     new View({
                         type: "hub",
                         data: "Welcome to {gm.name}.<br>Version: {gm.version}<br>Welcome to the begin state! Please look at your devices"
@@ -48,12 +59,12 @@ class TestGM extends GameMode {
                     new View({
                         type: "client",
                         role: "a",
-                        data: "Welcome to {state.x} the begin state! You're a client {stage.y}A!<br><input type='button' value='Continue'/>"
+                        data: "Welcome to {state.x} the begin state! You're a client {stage.y}A!<br><input data-value='clientIsReady()' type='button' value='Continue'/>"
                     }),
                     new View({
                         type: "client",
                         role: "b",
-                        data: "Welcome to the begin state! {stage.y} You're a client B{state.x}!<br><input type='button' value='Continue'/>"
+                        data: "Welcome to the begin state! {stage.y} You're a client B{state.x}!<br><input data-value='clientIsReady()' type='button' value='Continue'/>"
                     })
                 ]
             });
@@ -63,7 +74,37 @@ class TestGM extends GameMode {
 
         var gameStage = new Stage("Game Stage");
 
-            var answerState = new State({ name : "Answer State" });
+            var answerState = new State({ 
+                name : "Answer State",
+                controller: {
+                    changeRoleA: function(a_device) {
+                        a_device.role = "a";
+
+                        a_device.shouldRefreshView = true; //TODO: Maybe just make these return true?
+                    },
+                    changeRoleB: function(a_device) {
+                        a_device.role = "b";
+
+                        a_device.shouldRefreshView = true;
+                    }
+                },
+                views: [
+                    new View({
+                        type: "hub",
+                        data: "<h1>Answer State!</h1>"
+                    }),
+                    new View({
+                        type: "client",
+                        role: "a",
+                        data: "Enter Answer! Role A! <input type='button' data-value='changeRoleB()' value='Change to role B'/>"
+                    }),
+                    new View({
+                        type: "client",
+                        role: "b",
+                        data: "Enter Answer! Role B! <input type='button' data-value='changeRoleA()' value='Change to role A'/>"
+                    })
+                ]
+            });
             gameStage.states.push(answerState);
 
             var selectionState = new State({ name : "Selection State" });

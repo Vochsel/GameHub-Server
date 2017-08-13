@@ -23,22 +23,28 @@ class State extends EventEmitter {
         //Per state data storage
         this.collections = new Object();
 
+        //Alternative per state data storage
         this.model = (a_options && Utils.Valid(a_options.model)) 
             ? (a_options.model)
             : new Object();
 
         //Domain specific controller for state
-        this.controllers = (a_options && Utils.Valid(a_options.controllers)) 
-            ? (a_options.controllers)
+        this.controller = (a_options && Utils.Valid(a_options.controller)) 
+            ? (a_options.controller)
             : new Object();
 
         //Debug.Log("Controllers: " + JSON.stringify(this.controllers), "magenta");
-        Debug.Log(" - Loaded " + this.controllers.length + " controllers!", "magenta");
+        Debug.Log(" - Loaded " + this.controller.length + " controllers!", "magenta");
 
         //Domain specific views for state
         this.views = (a_options && Utils.Valid(a_options.views)) 
             ? Array.from(a_options.views)
             : new Array();
+
+        // -- Function overloads
+        if(a_options.isValidated) {
+            this.isValidated = a_options.isValidated;
+        }
 
         Debug.Log(" - Loaded " + this.views.length + " views!", "magenta");
         
@@ -65,7 +71,8 @@ class State extends EventEmitter {
 
     // -- Overridable function to validate the state
     isValidated() {
-        return true;
+        //return true;
+        //return this.isValidated();
     }
 
     execute(a_device) {
@@ -106,7 +113,7 @@ class State extends EventEmitter {
             //Check if type matches
             if(a_device.type === view.type /*|| a_device.type === "default"*/) {
                 //Check if role matches
-                if(a_device.role === view.role || a_device.role === "default") {
+                if(a_device.role === view.role || view.role === "default") {    //Changed second condition from device to view
                     //Found best view for device
                     bestView = view;
                     return bestView;
