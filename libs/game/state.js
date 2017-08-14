@@ -75,6 +75,7 @@ class State extends EventEmitter {
         //return this.isValidated();
     }
 
+    //Defs should move out of state and into device, deviceManager, or server...
     execute(a_device) {
         Debug.SetLogPrefix("State");
         

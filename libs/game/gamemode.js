@@ -55,6 +55,8 @@ class GameMode extends EventEmitter {
     setup() {
         var self = this;
 
+        
+
         //TODO: Should this be an event, or own func
         this.on("deviceHandshake", function(a_device) {
             if(!a_device)
@@ -70,6 +72,11 @@ class GameMode extends EventEmitter {
         Debug.Log("Starting GameMode: " + this.name, "green");
 
         this.currentStageIdx = 0;
+
+        GH.deviceManager.devices.forEach(function(device) {
+            GH.activeGameMode.currentStage.currentState.execute(device);
+            console.log()
+        }, this);
 
         //Emit event 'on start'
         this.emit("start");

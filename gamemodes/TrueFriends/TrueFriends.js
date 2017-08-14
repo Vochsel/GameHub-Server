@@ -33,11 +33,11 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>True Friends</h1>"
+                        data: "<h1>True Friends</h1><h3>Make Memories, Lose Friends</h3>"
                     }),
                     new GH.View({
                         type: "client",
-                        data: "Welcome to True Friends. The game where you make fun of your friends!"
+                        data: "Welcome to True Friends. The game where you make fun of your friends! Wooo"
                     })
                 ]
             });
