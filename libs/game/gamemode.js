@@ -59,7 +59,6 @@ class GameMode extends EventEmitter {
         this.on("deviceHandshake", function(a_device) {
             if(!a_device)
                 return;
-
             self.currentStage.currentState.execute(a_device);
         })
     }
@@ -94,6 +93,9 @@ class GameMode extends EventEmitter {
 
     // -- Get current stage from index if available
     getStage(a_idx) {
+        if(this.stages.length <= 0)
+            return null;
+
         //If stage exists, return
         if(a_idx >= 0 && a_idx < this.stages.length) 
             return this.stages[a_idx];

@@ -5,9 +5,10 @@ var Utils           = require('./libs/utilities/utils.js');
 var GH = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
-var GameModeManager = require('./libs/game/gamemode.js').GameModeManager;
+var GMM   = require('./libs/managers/gameManager.js');
+//var GameModeManager = require('./libs/game/gamemode.js').GameModeManager;
 
-var TestGM          = require('./tests/TestGM/TestGM.js');
+var TestGM          = require('./gamemodes/TestGM/TestGM.js');
 
 const chalk         = require('chalk');
 
@@ -17,8 +18,10 @@ function Setup() {
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
     
+    GMM.loadGameMode(__dirname + "/gamemodes/TrueFriends/TrueFriends.js");
+
     //Start GameMode
-    StartGM();
+    //StartGM();
 }
 
 function StartGM() {
@@ -62,6 +65,11 @@ stdin.addListener("data", function(d) {
     var key = d.toString().trim();
     switch(key)
     {
+        case "reload" :
+            {
+                GMM.reloadActiveGameMode();
+            }
+            break;
         case 'c':
             {
                 Debug.Log(GH.deviceManager.devices.size, "red");
