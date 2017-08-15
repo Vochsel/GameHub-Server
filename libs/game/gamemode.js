@@ -138,6 +138,8 @@ class GameMode extends EventEmitter {
                 return;
             }
             this.setCurrentStage(nextStageIdx);
+            this.currentStage.setCurrentState(0);
+        
             Debug.Log("Progressed to next Stage - " + nextStageIdx, "cyan");
             return;
         }

@@ -2,12 +2,13 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
+const Utils			= require('../utilities/utils.js');
 const Debug			= require('../utilities/debug.js');
 const GH            = require('../gamehub.js');
 
 class Stage extends EventEmitter {
 
-    constructor(a_name) {
+    constructor(a_options) {
         super();
 
         /* ---------- Stage Debug Info ---------- */
@@ -16,16 +17,27 @@ class Stage extends EventEmitter {
         /* ---------- Stage Properties ---------- */
         
         //Literal name of stage
-        this.name = (a_name.length != 0) ? a_name : "Untitled Stage";
+        this.name = (a_options && Utils.Valid(a_options.name)) 
+            ? a_options.name
+            : "Untitled Stage";
 
         //Per stage data storage
-        this.collections = new Object();
-        this.model = new Object();
+        this.collections = (a_options && Utils.Valid(a_options.collections)) 
+            ? a_options.collections
+            : new Object();
 
-        this.data = new Object();
+        this.model = (a_options && Utils.Valid(a_options.model)) 
+            ? a_options.model
+            : new Object();
+
+        this.data = (a_options && Utils.Valid(a_options.data)) 
+            ? a_options.data
+            : new Object();
 
         //Array of states defined for this stage
-        this.states = new Array();
+        this.states = (a_options && Utils.Valid(a_options.states)) 
+            ? a_options.states
+            : new Array();
 
         this.currentStateIdx = 0;
 

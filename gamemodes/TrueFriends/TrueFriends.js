@@ -10,21 +10,20 @@ class TrueFriendsGM extends GH.GameMode {
         
         // -- Set TestGM Specific Properties
         this.name = "True Friends";
-        this.version = "0.0.1";
+        this.version = "0.0.2";
 
         // -- Resources
         var questionData = new GH.Resource({uid: "qdata", name: "questionData", url: this.path + "/resources/pack_01.json"});
         
         questionData.on("load", function(data) {
-            //Debug.Log("QuestionData UID: " + questionData.uid);
-            Debug.Log("Test Data Loaded. Entries: " + Object.keys(data).length);
+            Debug.Log("Question Data Loaded. Entries: " + Object.keys(data).length);
         })
 
         this.addResource(questionData);
 
         // -- Stages
         var introStage = new GH.Stage("Intro Stage");
-        var beginState = new GH.State({ 
+            var beginState = new GH.State({ 
                 name: "Begin State",
                 isValidated: function() {
                     var readyClients = Object.keys(this.model.clientsReady).length;
@@ -58,9 +57,13 @@ class TrueFriendsGM extends GH.GameMode {
 
         this.stages.push(introStage);
 
-        var gameStage = new GH.Stage("Game Stage");
-        gameStage.model.clientAnswers = {};
-        gameStage.model.clientSelections = {};
+        var gameStage = new GH.Stage({
+            name: "Game Stage",
+            model: {
+                clientAnswers: {},
+                clientSelections: {}
+            }
+        });
 
         //Stage Callbacks
         gameStage.on("enter", function() {
@@ -111,6 +114,12 @@ class TrueFriendsGM extends GH.GameMode {
                 ]
             });
             gameStage.states.push(gsAnswerInput);
+            gsAnswerInput.on("enter", function() {
+                //Reset device roles 
+                GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
+                    device.role = "default";
+                }, this);
+            })
 
             //State - Selection
             var gsAnswerSelection = new GH.State({
@@ -122,8 +131,12 @@ class TrueFriendsGM extends GH.GameMode {
                 },
                 controller: {
                     clientSubmitSelection(a_device, a_data) {
-                        gameStage.model.clientSelections[a_device.uid] = {selection: a_data.answerSelection};
-                        console.log(gameStage.model.clientSelections);
+                        //gameStage.model.clientSelections[a_device.uid] = {selection: a_data.answerSelection};
+                        var sel = gameStage.model.clientSelections[a_data.answerSelection];
+                        if(!Array.isArray(sel))
+                            sel = new Array();
+                        sel.push({selection: a_data.answerSelection});
+                        console.log(sel);
                     }
                 },
                 views: [

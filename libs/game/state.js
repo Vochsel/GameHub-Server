@@ -94,11 +94,11 @@ class State extends EventEmitter {
         }); //maybe move to controller?
 
         //TODO: Some kind of recursion needed?
-        viewSrc = Utils.FormatStringWithData(viewSrc, {
+        /*viewSrc = Utils.FormatStringWithData(viewSrc, {
             gm: GH.activeGameMode, 
             stage: GH.activeGameMode.currentStage, 
             state: this.model
-        });
+        });*/
 
         //Send view to device
         a_device.sendView(viewSrc);
@@ -107,16 +107,20 @@ class State extends EventEmitter {
     }
 
     // -- Utilitiy Functions
+
+    //Find the most appropriate view for device given (a_device)
     getBestViewForDevice(a_device) {
+        //Create ref for when second best view is found
         var defaultView = null;
 
+        //Loop through all views associated with this state
         for(var i = 0; i < this.views.length; i++) {
             var view = this.views[i];
 
             //Log out device type and desired view type            
-            //Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
+            Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
             //Log out device role and desired view role
-            //Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
+            Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
 
             //Check if type matches
             if(a_device.type === view.type /*|| a_device.type === "default"*/) {
@@ -124,7 +128,7 @@ class State extends EventEmitter {
                 if(view.role === "default")
                     defaultView = view;
                 //Check if role matches
-                if(a_device.role === view.role) {    //Changed second condition from device to view
+                if(a_device.role === view.role) {
                     //Found best view for device
                     Debug.Log("Found view for Device Type: " + a_device.type + ", Role: " + a_device.role, "red");
                     return view;
@@ -132,6 +136,7 @@ class State extends EventEmitter {
             }
         }
 
+        //If found default view, return that, otherwise null
         return (defaultView) ? defaultView : null;
     }
 }
