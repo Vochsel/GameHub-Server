@@ -3,6 +3,7 @@ const EventEmitter  = require('events');
 
 /* Internal Dependencies */
 const Debug			= require('../utilities/debug.js');
+const GH            = require('../gamehub.js');
 
 class Stage extends EventEmitter {
 
@@ -19,6 +20,9 @@ class Stage extends EventEmitter {
 
         //Per stage data storage
         this.collections = new Object();
+        this.model = new Object();
+
+        this.data = new Object();
 
         //Array of states defined for this stage
         this.states = new Array();
@@ -75,7 +79,20 @@ class Stage extends EventEmitter {
         return this.getState(this.currentStateIdx);
     }
 
-
+    setCurrentState(a_idx) {
+        //Check if valid state
+        if(a_idx >= 0 && a_idx < this.states.length) {
+            this.currentState.emit("exit");
+            this.currentStateIdx = a_idx;
+            this.currentState.emit("enter");
+            this.emit("changedState", this.currentStateIdx);
+            //Maybe move?
+            GH.deviceManager.devices.forEach(function(device) {
+                this.currentState.execute(device);
+            }, this);
+            //GH.deviceManager.broadcast(new Message("view", a_string).stringify())
+        }
+    }
 
     // -- Overridable function to validate the stage
     isValidated() {

@@ -10,10 +10,6 @@ class GameMode extends EventEmitter {
     constructor(a_options) {
         super();
 
-        /* ---------- GameMode Debug Info ---------- */
-
-        Debug.SetLogPrefix("GM");
-
         /* ---------- GameMode Properties ---------- */
 
         //Literal name of GameMode
@@ -36,13 +32,9 @@ class GameMode extends EventEmitter {
 
         //Emit Initialized
         this.emit("initialized");
-        
-        //Setup GameMode
-        this.setup();
 
         /* ---------- GameMode Debug Info ---------- */
-        Debug.Log("Created GameMode - " + this.name, "green");
-        Debug.ResetLogPrefix();
+        Debug.Log("[GM] Creating GameMode - " + this.name, "green");
     }
 
     // -- Creates and resets all properties to default values
@@ -55,8 +47,6 @@ class GameMode extends EventEmitter {
     setup() {
         var self = this;
 
-        
-
         //TODO: Should this be an event, or own func
         this.on("deviceHandshake", function(a_device) {
             if(!a_device)
@@ -67,9 +57,10 @@ class GameMode extends EventEmitter {
 
     // -- Starts GameMode
     start() {
+        this.setup();
         // -- GM Debug Information
         Debug.SetLogPrefix("GM");
-        Debug.Log("Starting GameMode: " + this.name, "green");
+        Debug.Log("Starting GameMode - " + this.name, "green");
 
         this.currentStageIdx = 0;
 
@@ -115,7 +106,9 @@ class GameMode extends EventEmitter {
     setCurrentStage(a_idx) {
         //Check if valid state
         if(a_idx >= 0 && a_idx < this.stages.length) {
+            this.currentStage.emit("exit");
             this.currentStageIdx = a_idx;
+            this.currentStage.emit("enter");
             this.emit("changedState", this.currentStageIdx);
             //Maybe move?
             GH.deviceManager.devices.forEach(function(device) {
@@ -151,7 +144,7 @@ class GameMode extends EventEmitter {
 
         //Next state does exist, set to that
         //this.currentStage.currentStateIdx = nextStateIdx;
-        this.setCurrentStage(nextStageIdx);
+        this.currentStage.setCurrentState(nextStateIdx);
         
         Debug.Log("Progressed to next State - " + nextStateIdx, "magenta");
     }

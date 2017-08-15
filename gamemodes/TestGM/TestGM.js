@@ -24,8 +24,8 @@ class TestGM extends GameMode {
         this.path = __dirname;
 
         var testData = new Resource({name: "testData", url: this.path + "/resources/testData.json"});
-
         testData.on("load", function(data) {
+            Debug.Log("TestData UID: " + testData.uid);
             Debug.Log("Test Data Loaded. Entries: " + Object.keys(data).length);
         })
 

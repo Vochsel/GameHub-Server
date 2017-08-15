@@ -60,10 +60,12 @@ class Device extends EventEmitter {
             case "handshake": {
                 if(m.data.type) a_device.type = m.data.type;
                 if(m.data.role) a_device.role = m.data.role;
+                if(m.data.name) a_device.name = m.data.name;
 
                 Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
                 Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
                 Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
+                Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
                 GH.activeGameMode.emit("deviceHandshake", a_device);
             }
             break;
@@ -72,16 +74,19 @@ class Device extends EventEmitter {
                 if(!m.data)
                     return;
 
+                var action  = m.data.action;
+                var data    = m.data.data;
+
                 //Recieved function to call
-                Debug.Log("Recieved controller function: " + m.data + ". Executing!", "blue");
+                Debug.Log("Recieved controller function: " + action + ". Executing!", "blue");
                 
                 //Call desired function
                 //TODO: Add some kind of check?
-                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[m.data];
+                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
                 if(funcToCall) {
-                    funcToCall(a_device);
+                    funcToCall(a_device, data);
                 } else {
-                    Debug.Error("No function found in state controller with declaration: " + m.data);
+                    Debug.Error("No function found in state controller with declaration: " + action);
                 }
 
                 //Refresh device's view if needed

@@ -89,9 +89,16 @@ class State extends EventEmitter {
         
         var viewSrc = Utils.FormatStringWithData(view.data, {
             gm: GH.activeGameMode, 
-            stage: GH.activeGameMode.currentStage.collections, 
+            stage: GH.activeGameMode.currentStage, 
             state: this.model
         }); //maybe move to controller?
+
+        //TODO: Some kind of recursion needed?
+        viewSrc = Utils.FormatStringWithData(viewSrc, {
+            gm: GH.activeGameMode, 
+            stage: GH.activeGameMode.currentStage, 
+            state: this.model
+        });
 
         //Send view to device
         a_device.sendView(viewSrc);
@@ -101,28 +108,31 @@ class State extends EventEmitter {
 
     // -- Utilitiy Functions
     getBestViewForDevice(a_device) {
-        var bestView = null;
+        var defaultView = null;
 
         for(var i = 0; i < this.views.length; i++) {
             var view = this.views[i];
 
             //Log out device type and desired view type            
-            Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
+            //Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
             //Log out device role and desired view role
-            Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
+            //Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
 
             //Check if type matches
             if(a_device.type === view.type /*|| a_device.type === "default"*/) {
+                //If role is default, store incase no other found...
+                if(view.role === "default")
+                    defaultView = view;
                 //Check if role matches
-                if(a_device.role === view.role || view.role === "default") {    //Changed second condition from device to view
+                if(a_device.role === view.role) {    //Changed second condition from device to view
                     //Found best view for device
-                    bestView = view;
-                    return bestView;
+                    Debug.Log("Found view for Device Type: " + a_device.type + ", Role: " + a_device.role, "red");
+                    return view;
                 }
             }
         }
 
-        return null;
+        return (defaultView) ? defaultView : null;
     }
 }
 

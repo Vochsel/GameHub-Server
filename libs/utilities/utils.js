@@ -83,7 +83,7 @@ exports.FormatStringWithData = function(source, data)
                     for(var i = 0; i < val.length; i++)
                     {
                         var v = val[i];
-                        var idata = exports.InjectData(templateSrc, v);
+                        var idata = exports.FormatStringWithData(templateSrc, v);
                         //console.log(idata);
 
                         res += idata;

@@ -18,7 +18,7 @@ function Setup() {
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
     
-    GMM.loadGameMode(__dirname + "/gamemodes/TrueFriends/TrueFriends.js");
+    GMM.loadGameMode(__dirname + "/gamemodes/TrueFriends");
 
     //Start GameMode
     //StartGM();

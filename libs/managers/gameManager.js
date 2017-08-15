@@ -21,9 +21,12 @@ class GameManager extends EventEmitter {
     }
 
     static loadGameMode(a_path) {
-        Debug.Log("[GMManager] Loading GameMode at path: " + a_path, "cyan");
+
+        var pathDir = a_path.split('/');
+        var gmName = pathDir[pathDir.length - 1];
         
-        fs.readFile(a_path, function read(a_err, a_data) {
+        fs.readFile(a_path + '/' + gmName + ".js", function read(a_err, a_data) {
+            Debug.Log("[GMManager] Loading GameMode at path: " + a_path, "cyan");
 
             //Error loading file
             if (a_err) {
@@ -38,7 +41,7 @@ class GameManager extends EventEmitter {
             //Store file contents
             var source = a_data;
 
-            var loadedGM = Eval(source, Compiler.Context);
+            var loadedGM = Eval(source, Compiler.CreateContext());
 
             Debug.Log("[GMManager] Loaded GameMode!", "cyan");
             GH.activeGameMode = new loadedGM();

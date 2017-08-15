@@ -38,7 +38,7 @@ class DeviceManager {
         //Push new device into device array
         this.devices.set(uid /*newDevice.uid*/, newDevice);
 
-        Debug.Log("Device added. UID: " + uid, "blue");
+        Debug.Log("[Device Manager] Device added. UID: " + uid, "blue");
 
         //Return new device for external reference
         return newDevice;
