@@ -1,16 +1,24 @@
 <html>
     <head>
-        <script src="lib/message.js"></script>
+        <link href="css/debug.css" rel="stylesheet"/>
     </head>
     <body>
         <h1>Game.Hub</h1>
-
-        <h1>Hub</h1>
-        <iframe src="device.html?type=hub" width="50%"></iframe>
+        <iframe src="device.html?type=hub" width="60%" height="50%"></iframe>
         <br>
-        <h3>Client: A</h3>
-        <iframe src="device.html?type=client&role=a"></iframe>
-        <h3>Client: B</h3>
-        <iframe src="device.html?type=client&role=b"></iframe>
+        <!--<h3>Client: A</h3>-->
+        <div class='clientViewer'>
+            <iframe src="device.html?type=client&name=Luke" width="80%" height="30%"></iframe>
+        </div>
+        <!--<h3>Client: B</h3>-->
+        <div class='clientViewer'>
+            <iframe src="device.html?type=client&name=Aaron" width="80%" height="30%"></iframe>
+        </div>
+        <div class='clientViewer'>
+            <iframe src="device.html?type=client&name=Josh" width="80%" height="30%"></iframe>
+        </div>
+        <div class='clientViewer'>
+            <iframe src="device.html?type=client&name=Oli" width="80%" height="30%"></iframe>
+        </div>
     </body>
 </html>

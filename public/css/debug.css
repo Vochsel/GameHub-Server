@@ -1,0 +1,20 @@
+body {
+    text-align: center;
+}
+
+.clientViewer {
+    float: left;
+    width: 20%;
+    margin: 2.5%;
+}
+
+.hub {
+    margin: 0 auto;
+    width: 80%;
+    
+}
+
+.viewer {
+    height: 40%;
+    width: 100%;
+}
