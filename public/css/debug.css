@@ -3,9 +3,14 @@ body {
 }
 
 .clientViewer {
-    float: left;
     width: 20%;
     margin: 2.5%;
+    display: inline-block;
+}
+
+.clientContainer {
+    text-align: center;
+    overflow: auto;
 }
 
 .hub {
