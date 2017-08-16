@@ -16,8 +16,12 @@ class Debug {
         if(!chalk[colourLiteral])
             colourLiteral = "white"
 
+        var message = a_msg;
+        if(typeof a_msg === "object" || Object.is(a_msg))
+            message = JSON.stringify(a_msg);
+
         //Console log with specified colour
-        console.log(chalk[colourLiteral](((Debug.LogPrefix != "") ? "[" + Debug.LogPrefix + "] " : "") + a_msg));
+        console.log(chalk[colourLiteral](((Debug.LogPrefix != "") ? "[" + Debug.LogPrefix + "] " : "") + message));
     }
 
     // -- Warning log function    
