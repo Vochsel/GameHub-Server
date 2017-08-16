@@ -1,5 +1,11 @@
 <html>
     <head>
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="viewport" content="minimal-ui, width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+        <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+        
+
         <!-- Internal Scripts -->
         <script src="js/lib/message.js"></script>
         <script src="js/src/main.js"></script>
@@ -11,9 +17,11 @@
         <link href="css/common.css" rel="stylesheet"/>
         <link href="css/gradients.css" rel="stylesheet"/>
 
+        <title>Game.Hub Client</title>
+
     </head>
-    <body onload="Setup()" class="gradient green" >
-        <div id="container" ></div>
+    <body onload="Setup();" class="gradient sky" >
+        <div id="container" class='offblack'></div>
 
     </body>
 </html>

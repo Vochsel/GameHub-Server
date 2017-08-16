@@ -41,19 +41,34 @@ class TrueFriendsGM extends GH.GameMode {
                 controller: {
                     clientIsReady: function(a_device) {
                         beginState.model.clientsReady[a_device.uid] = "ready";
-                        console.log(beginState.model.clientsReady);
+
+                        a_device.role = "ready";
+                        a_device.shouldRefreshView = true;
+                    },
+                    clientIsNotReady: function(a_device) {
+                        delete beginState.model.clientsReady[a_device.uid];
+
+                        a_device.role = "default";
+                        a_device.shouldRefreshView = true;
                     }
                 },
                 views: [
                     new GH.View({
                         type: "hub",
                         //src: "views/beginState/hub.html"
-                        data: "<h1>True Friends</h1><h3>Make Memories, Lose Friends</h3>"
+                        data: "<h1 class='bold'>True Friends</h1><h3>Make Memories, Lose Friends</h3>"
                     }),
                     new GH.View({
                         type: "client",
-                        data: "Welcome to True Friends. The game where you make fun of your friends! Wooo<br><br><input data-action='clientIsReady()' data-value='ready' type='button' value='Ready To Play'/>"
+                        role: "default",
+                        data: "Welcome to True Friends. The game where you make fun of your friends!<br><br><div class='button' data-action='clientIsReady()' data-value='ready'>Ready To Play!</div>"
+                    }),
+                    new GH.View({
+                        type: "client",
+                        role: "ready",
+                        data: "Welcome to True Friends. The game where you make fun of your friends!<br><br><div class='button' data-action='clientIsNotReady()' data-value='ready'>Unready!</div>"
                     })
+                    
                 ]
             });
             introStage.states.push(beginState);
@@ -76,7 +91,18 @@ class TrueFriendsGM extends GH.GameMode {
             var questions = self.resources.get('qdata').source;
             var question = questions[Math.floor(Math.random() * questions.length)].question;
             gameStage.model.question = question;
+
+            //Reset device roles 
+            GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
+                device.role = "default";
+            }, this);
         });
+        /*gsAnswerInput.on("enter", function() {
+            //Reset device roles 
+            GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
+                device.role = "default";
+            }, this);
+        })*/
             
             //State - Input
             var gsAnswerInput = new GH.State({
@@ -99,12 +125,12 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>{stage.model.question}</h1><br><h3>Enter your answers on your devices</h3>"
+                        data: "<h1>{stage.model.question}</h1><h3>Enter your answers on your devices</h3>"
                     }),
                     new GH.View({
                         type: "client",
                         role: "default",
-                        data: "<input data-id='clientAnswer' type='text'/> <br> <input type='button' data-action='clientSubmitAnswer()' value='Submit!'/>"
+                        data: "<input data-id='clientAnswer' type='text'/> <br> <div class='button' data-action='clientSubmitAnswer()' data-value='ready'>Submit</div>"
                     }),
                     new GH.View({
                         type: "client",
@@ -114,12 +140,7 @@ class TrueFriendsGM extends GH.GameMode {
                 ]
             });
             gameStage.states.push(gsAnswerInput);
-            gsAnswerInput.on("enter", function() {
-                //Reset device roles 
-                GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
-                    device.role = "default";
-                }, this);
-            })
+            
 
             //State - Selection
             var gsAnswerSelection = new GH.State({

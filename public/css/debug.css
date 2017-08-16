@@ -23,3 +23,9 @@ body {
     height: 40%;
     width: 100%;
 }
+
+iframe {
+    /*border: dashed thin black;*/
+    border: none;
+    box-shadow: 0 0 20px 0 #ddd;
+}

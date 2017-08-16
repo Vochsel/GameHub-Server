@@ -11,20 +11,52 @@ body {
     height: 100%;
 }
 
-h1 { font-size: 6vw; }
-h2 { font-size: 5.5vw; }
-h3 { font-size: 5vw; }
-h4 { font-size: 4vw; }
-h5 { font-size: 4.5vw; }
+h1 { font-weight: normal; font-size: 6vw; }
+h2 { font-weight: normal; font-size: 5.5vw; }
+h3 { font-weight: normal; font-size: 5vw; }
+h4 { font-weight: normal; font-size: 4vw; }
+h5 { font-weight: normal; font-size: 4.5vw; }
+
+.bold { font-weight: bold; }
+
+.black { color: black; }
+.white { color: white; }
+.offblack { color: #333; }
+.offwhite { color: #ddd; }
 
 li { list-style: none; }
 
 p { font-size: 3vw; }
 
-input, button {
-    border-radius: 10vw;
+input {
+    /*border-radius: 10vw;*/
     padding: 5vw;
     font-size: 5vw;
+}
+
+.button {
+    padding: 5vw;
+    font-size: 10vw;
+    text-transform: uppercase;
+    background-color: #333;
+    color: #ddd;
+    display: inline-block;
+    cursor: pointer;
+    margin: 5vw;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently*/
+}
+
+.button:active {
+    background-color: #aaa;    
+}
+
+.button:hover {
+    background-color: #aaa;    
 }
 
 #container {

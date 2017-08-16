@@ -1,5 +1,14 @@
+function hideAddressBar(){
+    if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
+      document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
+    setTimeout(window.scrollTo(1,1),1);
+    console.log("HIDDEN");
+  }
+  //window.addEventListener("load",function(){hideAddressBar();});
+  window.addEventListener("orientationchange",function(){hideAddressBar();});
 
 function Setup(options) {
+    //hideAddressBar();
     if(!options)
         options = {};
 
@@ -50,41 +59,55 @@ function Setup(options) {
     
 }
 
+function GetInputs() {
+    var i = document.getElementsByTagName("input");
+    //console.log(i);
+    var j = document.getElementsByClassName('button');
+    //console.log(j);
+    var cat = Array.from(i).concat(Array.from(j));
+    console.log(cat);
+    return cat;
+}
+
 function SetupInput() {
     // -- Input
     var inputs = document.getElementsByTagName("input");
+    
+    inputs = GetInputs();
+
     for(var i = 0; i < inputs.length; i++) {
         var input = inputs[i];
         console.log(input);
+        
         input.addEventListener("click", inputHandle);
     }
 }
 
 function inputHandle(e) {
-    console.log(e.target);
-    if(e.target.type !== "button")
-        return;
-    var inputValues = {};
-    var allInputs = document.getElementsByTagName("input");
-    for(var i = 0; i < allInputs.length; i++) {
-        var input = allInputs[i];
-        var inputID = input.getAttribute('data-id');
-        if(inputID) {
-            if(input.type === "text") {
-                inputValues[inputID] = input.value;
-            } else {
-                if(input.getAttribute('data-value')) {
-                    inputValues[inputID] = input.getAttribute('data-value');
+    if(e.target.type === "button" || e.target.className === "button") {
+        var inputValues = {};
+        var allInputs = document.getElementsByTagName("input");
+        allInputs = GetInputs();
+        for(var i = 0; i < allInputs.length; i++) {
+            var input = allInputs[i];
+            var inputID = input.getAttribute('data-id');
+            if(inputID) {
+                if(input.type === "text") {
+                    inputValues[inputID] = input.value;
+                } else {
+                    if(input.getAttribute('data-value')) {
+                        inputValues[inputID] = input.getAttribute('data-value');
+                    }
                 }
             }
         }
+
+        var action = input.getAttribute("data-action");
+        action = action.replace('(', '');
+        action = action.replace(')', '');
+        
+        var functionName = action;
+        console.log(inputValues);
+        ws.send(new Message("controller", {action: functionName, data: inputValues}).stringify());
     }
-
-    var action = input.getAttribute("data-action");
-    action = action.replace('(', '');
-    action = action.replace(')', '');
-    
-    var functionName = action;
-
-    ws.send(new Message("controller", {action: functionName, data: inputValues}).stringify());
 }
