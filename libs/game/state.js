@@ -104,9 +104,9 @@ class State extends EventEmitter {
             var view = this.views[i];
 
             //Log out device type and desired view type            
-            Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
+            //Debug.Log("Type = " + a_device.type + " : " + view.type, "red");
             //Log out device role and desired view role
-            Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
+            //Debug.Log("Role = " + a_device.role + " : " + view.role, "red");
 
             //Check if type matches
             if(a_device.type === view.type /*|| a_device.type === "default"*/) {

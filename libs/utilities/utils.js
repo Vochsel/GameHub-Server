@@ -1,4 +1,5 @@
 const Debug = require('./debug.js');
+const fs = require('fs');
 
 // -- Private Utility Functions
 
@@ -141,4 +142,29 @@ exports.FormatStringWithData = function(source, a_data)
 
     //Return formatted source
     return source;
+}
+
+exports.LoadFile = function(a_path) {
+    //Store ref to this for callback
+    var self = this;
+
+    //Read file asynchronously
+    fs.readFileSync(this.url, function read(a_err, a_data) {
+
+        //Error loading file
+        if (a_err) {
+            //Log out error message
+            Debug.Error("[Resource] Error reading file!");
+            Debug.Error("[Resource] " + a_err);
+
+            //Emit error event
+            self.emit("error", a_err);
+
+            //Throw Error?
+            throw a_err;
+        }
+
+        //Store file contents
+        return a_data;
+    });
 }
