@@ -19,7 +19,7 @@ class GameMode extends EventEmitter {
         this.version = (a_options && Utils.Valid(a_options.version.length)) ? a_options.version : "Invalid Version";
 
         //Per GameMode data storage
-        this.collections = new Object();
+        this.model = new Object();
 
         //Array of all stages for this GameMode
         this.stages = new Array();
@@ -34,7 +34,7 @@ class GameMode extends EventEmitter {
         this.emit("initialized");
 
         /* ---------- GameMode Debug Info ---------- */
-        Debug.Log("[GM] Creating GameMode - " + this.name, "green");
+        Debug.Log("[GM] Creating GameMode - " + this.name + " - Version: " + this.version, "green");
     }
 
     // -- Creates and resets all properties to default values

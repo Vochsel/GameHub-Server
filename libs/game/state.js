@@ -18,37 +18,30 @@ class State extends EventEmitter {
         //Literal name of the state
         this.name = (a_options && Utils.Valid(a_options.name)) ? a_options.name : "Untitled State";
         
-        Debug.Log("Created State - " + this.name, "magenta");        
+        Debug.Log("Creating State - " + this.name, "magenta");        
 
         //Per state data storage
-        this.collections = new Object();
-
-        //Alternative per state data storage
         this.model = (a_options && Utils.Valid(a_options.model)) 
-            ? (a_options.model)
+            ? ((a_options.model) & Debug.Log(" - Loaded model!", "magenta"))
             : new Object();
 
         //Domain specific controller for state
         this.controller = (a_options && Utils.Valid(a_options.controller)) 
-            ? (a_options.controller)
+            ? ((a_options.controller) & Debug.Log(" - Loaded controller!", "magenta"))
             : new Object();
-
-        //Debug.Log("Controllers: " + JSON.stringify(this.controllers), "magenta");
-        Debug.Log(" - Loaded " + this.controller.length + " controllers!", "magenta");
 
         //Domain specific views for state
         this.views = (a_options && Utils.Valid(a_options.views)) 
-            ? Array.from(a_options.views)
+            ? (Array.from(a_options.views) & Debug.Log(" - Loaded " + Utils.Length(a_options.views) + " views!", "magenta"))
             : new Array();
 
         // -- Function overloads
         if(a_options.isValidated) {
             this.isValidated = a_options.isValidated;
         }
-
-        Debug.Log(" - Loaded " + this.views.length + " views!", "magenta");
         
         /* ---------- State Debug Info ---------- */
+        Debug.Log("Created State Successfully", "magenta");                
         Debug.ResetLogPrefix();
     }
 
@@ -92,13 +85,6 @@ class State extends EventEmitter {
             stage: GH.activeGameMode.currentStage, 
             state: this.model
         }); //maybe move to controller?
-
-        //TODO: Some kind of recursion needed?
-        /*viewSrc = Utils.FormatStringWithData(viewSrc, {
-            gm: GH.activeGameMode, 
-            stage: GH.activeGameMode.currentStage, 
-            state: this.model
-        });*/
 
         //Send view to device
         a_device.sendView(viewSrc);

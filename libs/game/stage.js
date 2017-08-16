@@ -13,36 +13,30 @@ class Stage extends EventEmitter {
 
         /* ---------- Stage Debug Info ---------- */
         Debug.SetLogPrefix("Stage");
-
+        
         /* ---------- Stage Properties ---------- */
         
         //Literal name of stage
         this.name = (a_options && Utils.Valid(a_options.name)) 
             ? a_options.name
             : "Untitled Stage";
+        
+        Debug.Log("Creating Stage - " + this.name, "cyan");
 
         //Per stage data storage
-        this.collections = (a_options && Utils.Valid(a_options.collections)) 
-            ? a_options.collections
-            : new Object();
-
         this.model = (a_options && Utils.Valid(a_options.model)) 
-            ? a_options.model
-            : new Object();
-
-        this.data = (a_options && Utils.Valid(a_options.data)) 
-            ? a_options.data
+            ? (a_options.model & Debug.Log(" - Loaded model!", "cyan"))
             : new Object();
 
         //Array of states defined for this stage
         this.states = (a_options && Utils.Valid(a_options.states)) 
-            ? a_options.states
+            ? (a_options.states & Debug.Log("Loaded " + Utils.Length(a_options.states) + " states!", "cyan"))
             : new Array();
 
         this.currentStateIdx = 0;
 
         /* ---------- Stage Debug Info ---------- */
-        Debug.Log("Created Stage - " + this.name, "cyan");
+        Debug.Log("Created Stage Successfully", "cyan");        
         Debug.ResetLogPrefix();
     }
 

@@ -30,6 +30,18 @@ exports.Valid = function(a_object) {
         return (a_object && a_object !== null && a_object !== undefined);
 }
 
+//Context aware function to return length of object
+exports.Length = function(a_object) {
+    if(a_object) {
+        if(Object.is(a_object))
+            return Object.values(a_object).length;
+        else if(Array.isArray(a_object))
+            return a_object.length;
+    }
+    else 
+        return null;
+}
+
 //Converts object to a map
 exports.MapFromObject = function(a_object) {
     //Create empty map
