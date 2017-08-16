@@ -90,6 +90,8 @@ function inputHandle(e) {
         allInputs = GetInputs();
         for(var i = 0; i < allInputs.length; i++) {
             var input = allInputs[i];
+            if(input.type === "button" || input.className === "button")
+                continue;
             var inputID = input.getAttribute('data-id');
             if(inputID) {
                 if(input.type === "text") {
@@ -98,6 +100,16 @@ function inputHandle(e) {
                     if(input.getAttribute('data-value')) {
                         inputValues[inputID] = input.getAttribute('data-value');
                     }
+                }
+            }
+        }
+        var inputID = e.target.getAttribute('data-id');
+        if(inputID) {
+            if(e.target.type === "text") {
+                inputValues[inputID] = e.target.value;
+            } else {
+                if(e.target.getAttribute('data-value')) {
+                    inputValues[inputID] = e.target.getAttribute('data-value');
                 }
             }
         }

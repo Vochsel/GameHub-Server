@@ -164,11 +164,11 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>{stage.model.question}</h1><br><h3>Select the best answer!</h3>"
+                        data: "<h1>{stage.model.question}</h1><h3>Select the best answer!</h3>"
                     }),
                     new GH.View({
                         type: "client",
-                        data: "{stage.model.clientAnswers}[<input type='button' data-action='clientSubmitSelection()' data-id='answerSelection' data-value='{answer}' value='{answer}'/>]"
+                        data: "{stage.model.clientAnswers}[<div class='button' data-action='clientSubmitSelection()' data-id='answerSelection' data-value='{answer}'>{answer}</div>]"
                     })
                 ]
             });
