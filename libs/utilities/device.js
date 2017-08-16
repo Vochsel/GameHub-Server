@@ -59,7 +59,7 @@ class Device extends EventEmitter {
         switch(m.type) {
             case "handshake": {
                 if(m.data.type) a_device.type = m.data.type;
-                if(m.data.role) a_device.role = m.data.role;
+                if(m.data.role) a_device.initialRole = a_device.role = m.data.role;
                 if(m.data.name) a_device.name = m.data.name;
 
                 Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");

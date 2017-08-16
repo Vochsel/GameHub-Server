@@ -43,6 +43,10 @@ class GameManager extends EventEmitter {
 
             var loadedGM = Eval(source, Compiler.CreateContext());
 
+            GH.deviceManager.devices.forEach(function(device) {
+                device.role = device.initialRole;
+            }, this);
+
             Debug.Log("[GMManager] Loaded GameMode!", "cyan");
             GH.activeGameMode = new loadedGM();
             GH.activeGameMode.path = a_path;
