@@ -25,12 +25,12 @@ class Stage extends EventEmitter {
 
         //Per stage data storage
         this.model = (a_options && Utils.Valid(a_options.model)) 
-            ? (a_options.model & Debug.Log(" - Loaded model!", "cyan"))
+            ? (Debug.Log(" - Loaded model!", "cyan"), a_options.model)
             : new Object();
 
         //Array of states defined for this stage
         this.states = (a_options && Utils.Valid(a_options.states)) 
-            ? (a_options.states & Debug.Log("Loaded " + Utils.Length(a_options.states) + " states!", "cyan"))
+            ? (Debug.Log("Loaded " + Utils.Length(a_options.states) + " states!", "cyan"), a_options.states)
             : new Array();
 
         this.currentStateIdx = 0;

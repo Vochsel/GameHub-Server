@@ -12,7 +12,6 @@ class TrueFriendsGM extends GH.GameMode {
 
         var self = this;
         
-
         // -- Resources
         var questionData = new GH.Resource({uid: "qdata", name: "questionData", url: this.path + "/resources/pack_01.json"});
         
@@ -71,11 +70,11 @@ class TrueFriendsGM extends GH.GameMode {
         //Stage Callbacks
         gameStage.on("enter", function() {
             var clients = GH.System.deviceManager.getAllDevicesOfType('client');
-            gameStage.data.chosenName = clients[Math.floor(Math.random() * clients.length)].name;
+            gameStage.model.chosenName = clients[Math.floor(Math.random() * clients.length)].name;
 
             var questions = self.resources.get('qdata').source;
             var question = questions[Math.floor(Math.random() * questions.length)].question;
-            gameStage.data.question = question;
+            gameStage.model.question = question;
         });
             
             //State - Input
@@ -99,7 +98,7 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>{stage.data.question}</h1><br><h3>Enter your answers on your devices</h3>"
+                        data: "<h1>{stage.model.question}</h1><br><h3>Enter your answers on your devices</h3>"
                     }),
                     new GH.View({
                         type: "client",
@@ -143,7 +142,7 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>{stage.data.question}</h1><br><h3>Select the best answer!</h3>"
+                        data: "<h1>{stage.model.question}</h1><br><h3>Select the best answer!</h3>"
                     }),
                     new GH.View({
                         type: "client",

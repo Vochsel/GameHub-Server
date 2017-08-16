@@ -22,17 +22,17 @@ class State extends EventEmitter {
 
         //Per state data storage
         this.model = (a_options && Utils.Valid(a_options.model)) 
-            ? ((a_options.model) & Debug.Log(" - Loaded model!", "magenta"))
+            ? (Debug.Log(" - Loaded model!", "magenta"), (a_options.model))
             : new Object();
 
         //Domain specific controller for state
         this.controller = (a_options && Utils.Valid(a_options.controller)) 
-            ? ((a_options.controller) & Debug.Log(" - Loaded controller!", "magenta"))
+            ? (Debug.Log(" - Loaded controller!", "magenta"), (a_options.controller))
             : new Object();
 
         //Domain specific views for state
         this.views = (a_options && Utils.Valid(a_options.views)) 
-            ? (Array.from(a_options.views) & Debug.Log(" - Loaded " + Utils.Length(a_options.views) + " views!", "magenta"))
+            ? (Debug.Log(" - Loaded " + Utils.Length(a_options.views) + " views!", "magenta"), Array.from(a_options.views))
             : new Array();
 
         // -- Function overloads

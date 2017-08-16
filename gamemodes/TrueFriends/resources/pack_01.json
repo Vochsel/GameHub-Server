@@ -1,14 +1,14 @@
 [
     {
-        "question"  : "{stage.data.chosenName} once got arrested for what?"
+        "question"  : "{stage.model.chosenName} once got arrested for what?"
     },
     {
-        "question"  : "If {stage.data.chosenName} was to max out their credit card, what would it be on?"
+        "question"  : "If {stage.model.chosenName} was to max out their credit card, what would it be on?"
     },
     {
-        "question"  : "What is {stage.data.chosenName}'s favourite passtime?"
+        "question"  : "What is {stage.model.chosenName}'s favourite passtime?"
     },
     {
-        "question"  : "What is {stage.data.chosenName}'s secret obsession?"
+        "question"  : "What is {stage.model.chosenName}'s secret obsession?"
     }
 ]

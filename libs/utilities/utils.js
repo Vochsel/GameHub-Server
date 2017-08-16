@@ -119,17 +119,22 @@ exports.FormatStringWithData = function(source, a_data)
                 }
                 //Array replacement
                 source = source.substring(0, match.index) + res + source.substring(match.index + match[0].length + templateLength);
+                //Check source one more time... Could be better with recursion...
+                source = exports.FormatStringWithData(source, a_data);
             } else {
                 //Otherwise use direct replacement
                 source = source.substring(0, match.index) + val + source.substring(match.index + match[0].length);
+                //Check source one more time... Could be better with recursion...
+                source = exports.FormatStringWithData(source, a_data);
             }
 
         } else {
+
             Debug.Error("[Formatter] Could not find any variable called " + injVarPath + " in data supplied!");
         }
         //Solves recursion problem, likely will introduce other problems...
-        source = exports.FormatStringWithData(source, a_data);
-
+        //source = exports.FormatStringWithData(source, a_data);
+        
         //Look for next match
         match = regexSearch.exec(source);
     }
