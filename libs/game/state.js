@@ -68,30 +68,6 @@ class State extends EventEmitter {
         //return this.isValidated();
     }
 
-    //Defs should move out of state and into device, deviceManager, or server...
-    execute(a_device) {
-        Debug.SetLogPrefix("State");
-        
-        Debug.Log("Executing state " + this.name, "cyan");
-
-        //Get best view
-        var view = this.getBestViewForDevice(a_device);
-
-        if(!view)
-            return Debug.Error("Could not find view for device!");
-        
-        var viewSrc = Utils.FormatStringWithData(view.data, {
-            gm: GH.activeGameMode, 
-            stage: GH.activeGameMode.currentStage, 
-            state: this.model
-        }); //maybe move to controller?
-
-        //Send view to device
-        a_device.sendView(viewSrc);
-
-        Debug.ResetLogPrefix();        
-    }
-
     // -- Utilitiy Functions
 
     //Find the most appropriate view for device given (a_device)

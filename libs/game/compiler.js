@@ -9,6 +9,7 @@ const Resource  = require('../utilities/resource.js');
 const GHub      = require('../gamehub.js');
 
 const Debug      = require('../utilities/debug.js');
+const Utils      = require('../utilities/utils.js');
 
 module.exports.CreateContext = function() {
     return {
@@ -27,6 +28,7 @@ module.exports.CreateContext = function() {
             }
         },
         console: console,
-        Debug: Debug
+        Debug: Debug,
+        Utils: Utils
     }
 }

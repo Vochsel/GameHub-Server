@@ -34,10 +34,13 @@ exports.Valid = function(a_object) {
 //Context aware function to return length of object
 exports.Length = function(a_object) {
     if(a_object) {
+<<<<<<< HEAD
         /*if(Object.is(a_object)) {
             console.log(Object.values(a_object));
             return Object.values(a_object).length;
         }*/
+=======
+>>>>>>> 43438fe7579b3f4a20323e82060aa1d5d9bc0e51
         if(Array.isArray(a_object))
             return a_object.length;
         else 
@@ -81,10 +84,12 @@ exports.FormatStringWithData = function(source, a_data)
         if(val)
         {
             //If val is an object, convert to array of values
-            if(typeof val === 'object')
+            if(typeof val === 'object' || Object.is(val))
             {
                 val = Object.values(val);
             }
+
+            
             
             if(Array.isArray(val))
             {
@@ -106,11 +111,12 @@ exports.FormatStringWithData = function(source, a_data)
 
                     //Store length of template string
                     templateLength += templateMatch[0].length;
-
                     //Insert formatted template for each value in array
-                    for(var i = 0; i < val.length; i++)
+                    for(var i = 0; i < exports.Length(val); i++)
                     {
                         var v = val[i];
+                            
+                        console.log("FFFF:" + JSON.stringify(v));
                         //Format template src with array iteration {}
                         var idata = exports.FormatStringWithData(templateSrc, v);
 

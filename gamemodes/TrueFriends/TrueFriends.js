@@ -108,9 +108,9 @@ class TrueFriendsGM extends GH.GameMode {
             var gsAnswerInput = new GH.State({
                 name: "Answer State",
                 isValidated: function() {
-                    var readyClients = Object.keys(gameStage.model.clientAnswers).length;
+                    var readyClients = Utils.Length(gameStage.model.clientAnswers);
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
-                    
+                    Debug.Log(readyClients);
                     return readyClients >= numOfClients;
                 },
                 controller: {
@@ -146,19 +146,29 @@ class TrueFriendsGM extends GH.GameMode {
             var gsAnswerSelection = new GH.State({
                 name: "Answer Selection State",
                 isValidated: function() {
-                    var selections = Object.keys(gameStage.model.clientSelections).length;
+                    var selections = Utils.Length(gsAnswerSelection.model.selections);
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
-                    
+                    Debug.Log(selections);
                     return selections >= numOfClients;
+                },
+                model: {
+                    selections: {}
                 },
                 controller: {
                     clientSubmitSelection(a_device, a_data) {
                         //gameStage.model.clientSelections[a_device.uid] = {selection: a_data.answerSelection};
                         var sel = gameStage.model.clientSelections[a_data.answerSelection];
-                        if(!Array.isArray(sel))
-                            sel = new Array();
-                        sel.push({selection: a_data.answerSelection});
-                        console.log(sel);
+                        //if(!Array.isArray(sel))
+                        //    sel = new Array();
+                        if(!(gameStage.model.clientSelections[a_data.answerSelection]))
+                            gameStage.model.clientSelections[a_data.answerSelection] = {answer: "", selections:0};
+
+                        gsAnswerSelection.model.selections[a_device.name] = "ready";                        
+                        gameStage.model.clientSelections[a_data.answerSelection].answer = a_data.answerSelection;
+                        gameStage.model.clientSelections[a_data.answerSelection].selections += 1;
+                        console.log(gameStage.model.clientSelections);
+                        a_device.role = "ready";
+                        a_device.shouldRefreshView = true;
                     }
                 },
                 views: [
@@ -168,10 +178,26 @@ class TrueFriendsGM extends GH.GameMode {
                     }),
                     new GH.View({
                         type: "client",
+                        role: "default",
                         data: "{stage.model.clientAnswers}[<div class='button' data-action='clientSubmitSelection()' data-id='answerSelection' data-value='{answer}'>{answer}</div>]"
+                    }),
+                    new GH.View({
+                        type: "client",
+                        role: "ready",
+                        data: "<h3>Please wait for others to finish!</h3>"
                     })
                 ]
             });
+            gsAnswerSelection.on("exit", function() {
+                GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
+                    device.role = "default";
+                }, this);
+            })
+            gsAnswerSelection.on("enter", function() {
+                GH.System.deviceManager.getAllDevicesOfType("client").forEach(function(device) {
+                    device.role = "default";
+                }, this);
+            })
             gameStage.states.push(gsAnswerSelection);
 
             //State - Results
@@ -184,7 +210,7 @@ class TrueFriendsGM extends GH.GameMode {
                     }),
                     new GH.View({
                         type: "client",
-                        data: "RESULTS"
+                        data: "{stage.model.clientSelections}[<h2>{answer} : {selections}</h4>]"
                     })
                 ]
             });

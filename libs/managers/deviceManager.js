@@ -96,6 +96,13 @@ class DeviceManager {
         }, this);
     }
 
+    broadcastState(a_state) {
+        this.devices.forEach(function(device) {
+            //Send state to device
+            device.sendState(a_state);
+        }, this);
+    }
+
     getAllDevicesOfType(a_type) {
         var out = new Array();
         
