@@ -210,7 +210,7 @@ class TrueFriendsGM extends GH.GameMode {
                     }),
                     new GH.View({
                         type: "client",
-                        data: "{stage.model.clientSelections}[<h4>{answer} : {selections}</h4>]"
+                        data: "{stage.model.clientSelections}[<h2>{answer} : {selections}</h4>]"
                     })
                 ]
             });
