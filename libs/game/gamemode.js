@@ -51,7 +51,8 @@ class GameMode extends EventEmitter {
         this.on("deviceHandshake", function(a_device) {
             if(!a_device)
                 return;
-            self.currentStage.currentState.execute(a_device);
+            a_device.sendState(self.currentStage.currentState);
+
         })
     }
 
@@ -64,10 +65,7 @@ class GameMode extends EventEmitter {
 
         this.currentStageIdx = 0;
 
-        GH.deviceManager.devices.forEach(function(device) {
-            GH.activeGameMode.currentStage.currentState.execute(device);
-            console.log()
-        }, this);
+        GH.deviceManager.broadcastState(this.currentStage.currentState);
 
         //Emit event 'on start'
         this.emit("start");
@@ -110,11 +108,8 @@ class GameMode extends EventEmitter {
             this.currentStageIdx = a_idx;
             this.currentStage.emit("enter");
             this.emit("changedState", this.currentStageIdx);
-            //Maybe move?
-            GH.deviceManager.devices.forEach(function(device) {
-                this.currentStage.currentState.execute(device);
-            }, this);
-            //GH.deviceManager.broadcast(new Message("view", a_string).stringify())
+
+            GH.deviceManager.broadcastState(GH.activeGameMode.currentStage.currentState);
         }
     }
 

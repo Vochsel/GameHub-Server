@@ -79,7 +79,6 @@ stdin.addListener("data", function(d) {
         case 'd':
             {
                 Debug.Log(GH.activeGameMode.status());
-                //gm.currentStage.execute();
             }
             break;
         case 'f':

@@ -5,6 +5,7 @@ const EventEmitter  = require('events');
 const Debug         = require('./debug.js');
 const Message       = require('./message.js');
 const GH            = require('../gamehub.js');
+const Utils         = require('../utilities/utils.js');
 
 class Device extends EventEmitter {
     constructor(a_socket) {
@@ -30,14 +31,31 @@ class Device extends EventEmitter {
         this.shouldRefreshView = false;
     }
 
-    sendMessage(a_message) {
-        this.socket.send(a_message);
+
+    sendMessage(a_type, a_data) {
+        this.socket.send(new Message(a_type, a_data).stringify());
     }
 
-    //TODO: Doesnt make sense to call function this and take a string
-    sendView(a_string) {
-        this.sendMessage(new Message("view", a_string).stringify());
-        Debug.Log("[Device] Sent view", "blue");
+    sendState(a_state) {
+        //Get best view
+        var view = a_state.getBestViewForDevice(this);
+        
+        //Check if found view
+        if(!view)
+            return Debug.Error("Could not find view for device [" + this.uid + "] in " + a_state.name + "!");
+        
+        //Format view with provided object
+        var viewSrc = Utils.FormatStringWithData(view.data, {
+            gm: GH.activeGameMode, 
+            stage: GH.activeGameMode.currentStage, 
+            state: GH.activeGameMode.currentStage.currentState.model
+        }); //maybe move to controller?
+
+        //Send view
+        this.sendMessage("view", viewSrc);
+
+        //Send out success log message
+        Debug.Log("[Device] Sent view to device", "blue");
     }
 
     //Check if device is alive
@@ -54,7 +72,6 @@ class Device extends EventEmitter {
 
     static recieveMessage(a_device, a_message) {
         var m = Message.parse(a_message);
-        Debug.SetLogPrefix("Device Manager");
 
         switch(m.type) {
             case "handshake": {
@@ -62,10 +79,12 @@ class Device extends EventEmitter {
                 if(m.data.role) a_device.initialRole = a_device.role = m.data.role;
                 if(m.data.name) a_device.name = m.data.name;
 
-                Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
-                Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
-                Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
-                Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
+                Debug.SetLogPrefix("Device Manager");
+                    Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
+                    Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
+                    Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
+                    Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
+                Debug.ResetLogPrefix();
                 GH.activeGameMode.emit("deviceHandshake", a_device);
             }
             break;
@@ -78,7 +97,7 @@ class Device extends EventEmitter {
                 var data    = m.data.data;
 
                 //Recieved function to call
-                Debug.Log("Recieved controller function: " + action + ". Executing!", "blue");
+                Debug.Log("[Device Manager] Recieved controller function: " + action + ". Executing!", "blue");
                 
                 //Call desired function
                 //TODO: Add some kind of check?
@@ -86,12 +105,12 @@ class Device extends EventEmitter {
                 if(funcToCall) {
                     funcToCall(a_device, data);
                 } else {
-                    Debug.Error("No function found in state controller with declaration: " + action);
+                    Debug.Error("[Device Manager] No function found in state controller with declaration: " + action);
                 }
 
                 //Refresh device's view if needed
                 if(a_device.shouldRefreshView) {
-                    GH.activeGameMode.currentStage.currentState.execute(a_device);
+                    a_device.sendState(GH.activeGameMode.currentStage.currentState);
                     a_device.shouldRefreshView = false;
                 }
 

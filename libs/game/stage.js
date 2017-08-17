@@ -92,11 +92,8 @@ class Stage extends EventEmitter {
             this.currentStateIdx = a_idx;
             this.currentState.emit("enter");
             this.emit("changedState", this.currentStateIdx);
-            //Maybe move?
-            GH.deviceManager.devices.forEach(function(device) {
-                this.currentState.execute(device);
-            }, this);
-            //GH.deviceManager.broadcast(new Message("view", a_string).stringify())
+
+            GH.deviceManager.broadcastState(GH.activeGameMode.currentStage.currentState);
         }
     }
 
