@@ -19,10 +19,10 @@ class Device extends EventEmitter {
         this.clientIP = this.socket._socket.remoteAddress;
 
         //Type of device, this determines which view it will recieve
-        this.type = "default";
+        this.initialType = this.type = "default";
 
         //Role of device, determines which sub view device will get
-        this.role = "default";
+        this.initialRole = this.role = "default";
 
         //Device unique ID
         this.uid = this.clientIP;
@@ -70,12 +70,17 @@ class Device extends EventEmitter {
         return true;
     }
 
+    reset() {
+        this.role = this.initialRole;
+        this.type = this.initialType;
+    }
+
     static recieveMessage(a_device, a_message) {
         var m = Message.parse(a_message);
 
         switch(m.type) {
             case "handshake": {
-                if(m.data.type) a_device.type = m.data.type;
+                if(m.data.type) a_device.initialType = a_device.type = m.data.type;
                 if(m.data.role) a_device.initialRole = a_device.role = m.data.role;
                 if(m.data.name) a_device.name = m.data.name;
 
