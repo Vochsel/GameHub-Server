@@ -54,9 +54,14 @@ class Resource extends EventEmitter {
             //Check if resource is JSON.
             var sourceParsed = JSON.parse(self.source);
             if(sourceParsed) {
+                //Store parsed version instead of raw source
                 self.source = sourceParsed;
+                
+                //Log out success 
+                Debug.Log("[Resource] Loaded resource with " + Utils.Length(self.source) + " entries!", "yellow");
             }
             
+
             //Emit load event
             self.emit("load", self.source);
         });

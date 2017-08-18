@@ -13,12 +13,15 @@ class TrueFriendsGM extends GH.GameMode {
         var self = this;
         
         // -- Resources
-        var questionData = new GH.Resource({uid: "qdata", name: "questionData", url: this.path + "/resources/pack_01.json"});
-        
-        questionData.on("load", function(data) {
-            Debug.Log("Question Data Loaded. Entries: " + Object.keys(data).length);
-        })
 
+        //Load question data
+        var questionData = new GH.Resource({
+            uid: "qdata", 
+            name: "questionData", 
+            url: this.path + "/resources/pack_01.json"
+        });
+
+        //Add resource to GameMode
         this.addResource(questionData);
 
         // -- Stages
@@ -56,7 +59,7 @@ class TrueFriendsGM extends GH.GameMode {
                     new GH.View({
                         type: "hub",
                         //src: "views/beginState/hub.html"
-                        data: "<h1 class='bold'>True Friends</h1><h3>Make Memories, Lose Friends</h3>"
+                        data: "<h1 class='bold'>True Friends. Ben is the best!</h1><h3>Make Memories, Lose Friends</h3>"
                     }),
                     new GH.View({
                         type: "client",
@@ -134,7 +137,6 @@ class TrueFriendsGM extends GH.GameMode {
             });
             gameStage.states.push(gsAnswerInput);
             
-
             //State - Selection
             var gsAnswerSelection = new GH.State({
                 name: "Answer Selection State",
@@ -166,12 +168,12 @@ class TrueFriendsGM extends GH.GameMode {
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>{stage.model.question}</h1><h3>Select the best answer!</h3><br>{stage.model.clientAnswers}[<div class='button' data-action='clientSubmitSelection()' data-id='answerSelection' data-value='{user}'>{answer}</div>]"
+                        data: "<h1>{stage.model.question}</h1><h3>Select the best answer!</h3><br>"
                     }),
                     new GH.View({
                         type: "client",
                         role: "default",
-                        data: ""
+                        data: "{stage.model.clientAnswers}[<div class='button' data-action='clientSubmitSelection()' data-id='answerSelection' data-value='{user}'>{answer}</div>]"
                     }),
                     new GH.View({
                         type: "client",

@@ -7,6 +7,7 @@ const Utils         = require('../utilities/utils.js');
 const Debug         = require('../utilities/debug.js');
 
 class GameMode extends EventEmitter {
+    // -- GameMode Constructor
     constructor(a_options) {
         super();
 
@@ -146,7 +147,7 @@ class GameMode extends EventEmitter {
         Debug.Log("Progressed to next State - " + nextStateIdx, "magenta");
     }
 
-    status() {
+    logStatus() {
         return "[Stage] : " + this.currentStage.name + ". [State] : " + this.currentStage.currentState.name + ".";
     }
 
@@ -156,6 +157,7 @@ class GameMode extends EventEmitter {
         }
     }
 
+    // -- Store resource in map with uid as key
     addResource(a_resource) {
         this.resources.set(a_resource.uid, a_resource);
     }
