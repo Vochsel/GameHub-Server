@@ -34,6 +34,13 @@ exports.Valid = function(a_object) {
 //Context aware function to return length of object
 exports.Length = function(a_object) {
     if(a_object) {
+<<<<<<< HEAD
+        /*if(Object.is(a_object)) {
+            console.log(Object.values(a_object));
+            return Object.values(a_object).length;
+        }*/
+=======
+>>>>>>> 43438fe7579b3f4a20323e82060aa1d5d9bc0e51
         if(Array.isArray(a_object))
             return a_object.length;
         else 
