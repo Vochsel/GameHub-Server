@@ -333,7 +333,7 @@ class WitsEndGM extends GH.GameMode {
                     new GH.View({
                         type: "hub",
                         //src: "views/endState/hub.html"
-                        data: "<h2>Thanks for playing Wits End!</h2><h3>If you've got any feedback let Ben know!</h3>{gm.model.clientScore}[<h4>{name} - {totalVotes}</h4>]"
+                        data: "<h2>Thanks for playing Wits End!</h2>{gm.model.clientScore}[<h4>{name} - {totalVotes}</h4>]"
                     }),
                     new GH.View({
                         type: "client",
