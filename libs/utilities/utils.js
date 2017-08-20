@@ -109,7 +109,7 @@ exports.FormatStringWithData = function(source, a_data)
                     {
                         var v = val[i];
                             
-                        console.log("FFFF:" + JSON.stringify(v));
+                        //console.log("FFFF:" + JSON.stringify(v));
                         //Format template src with array iteration {}
                         var idata = exports.FormatStringWithData(templateSrc, v);
 
@@ -170,4 +170,26 @@ exports.LoadFile = function(a_path) {
         //Store file contents
         return a_data;
     });
+}
+
+exports.Random = function(a_min, a_max) {
+    return Math.Random() * (a_max - a_min) + a_min;
+}
+
+exports.RandomInt = function(a_min, a_max) {
+    return Math.floor(Math.random() * (a_max - a_min) + a_min);
+}
+
+exports.Shuffle = function(a_array) {
+    for (var i = a_array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = a_array[i];
+        a_array[i] = a_array[j];
+        a_array[j] = temp;
+    }
+    return a_array;
+}
+
+exports.Clone = function(a_object) {
+    return JSON.parse(JSON.stringify(a_object));
 }

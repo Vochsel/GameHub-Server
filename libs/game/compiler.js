@@ -14,7 +14,7 @@ const Utils      = require('../utilities/utils.js');
 module.exports.CreateContext = function() {
     return {
         GH: {
-            GameMode: GameMode.GameMode,
+            GameMode: GameMode,
             Stage: Stage,
             State: State,
             

@@ -18,7 +18,8 @@ function Setup() {
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
     
-    GMM.loadGameMode(__dirname + "/gamemodes/TrueFriends");
+//    GMM.loadGameMode(__dirname + "/gamemodes/TrueFriends");
+    GMM.loadGameMode(__dirname + "/gamemodes/WitsEnd");
 
     //Start GameMode
     //StartGM();

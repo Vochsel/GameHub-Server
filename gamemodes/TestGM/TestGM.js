@@ -1,5 +1,5 @@
 /* Internal Dependencies */
-const GameMode      = require('../../libs/game/gamemode.js').GameMode;
+const GameMode      = require('../../libs/game/gamemode.js');
 const Stage         = require('../../libs/game/stage.js');
 const State         = require('../../libs/game/state.js');
 

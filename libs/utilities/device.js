@@ -29,6 +29,8 @@ class Device extends EventEmitter {
 
         //Should device refresh view
         this.shouldRefreshView = false;
+
+        this.shouldResetRole = false;
     }
 
 

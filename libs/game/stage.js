@@ -13,6 +13,18 @@ class Stage extends EventEmitter {
 
         /* ---------- Stage Debug Info ---------- */
         Debug.SetLogPrefix("Stage");
+
+        /* ---------- Stage Callbacks ---------- */
+
+        //Stage enter callback
+        if(a_options.enter) {
+            this.on("enter", a_options.enter);
+        }
+
+        //Stage exit callback
+        if(a_options.exit) {
+            this.on("exit", a_options.exit);
+        }
         
         /* ---------- Stage Properties ---------- */
         
@@ -24,9 +36,11 @@ class Stage extends EventEmitter {
         Debug.Log("Creating Stage - " + this.name, "cyan");
 
         //Per stage data storage
-        this.model = (a_options && Utils.Valid(a_options.model)) 
+        this.initialModel = (a_options && Utils.Valid(a_options.model)) 
             ? (Debug.Log(" - Loaded model!", "cyan"), a_options.model)
             : new Object();
+
+        this.model = Utils.Clone(this.initialModel);
 
         //Array of states defined for this stage
         this.states = (a_options && Utils.Valid(a_options.states)) 
@@ -41,8 +55,20 @@ class Stage extends EventEmitter {
     }
 
     reset() {        
+        Debug.Log("Reset Stage - " + this.name, "cyan");
+        //TODO: Fix more permanently!
+        this.model = Utils.Clone(this.initialModel);
+
+        for(var i = 0; i < this.states.length; i++) {
+            this.states[i].reset();
+        }
+
+        //this.states.forEach(function(a_state) {
+        //    a_state.reset();
+        //}, this);
+
         //Reset current state to 0
-        this.currentStateIdx = 0;
+        this.setCurrentState(0);
 
         //Emit event 'on reset'
         this.emit("reset");
@@ -56,12 +82,16 @@ class Stage extends EventEmitter {
     enter() {
         this.reset();
 
+        Debug.Log("Enter Stage - " + this.name, 'cyan');
+
         //Emit event 'on enter'
         this.emit("enter");
     }
 
     // -- Called when stage is exited
     exit() {
+        Debug.Log("Exit Stage - " + this.name, 'cyan');
+        
         //Emit event 'on exit'
         this.emit("exit");
     }
@@ -88,9 +118,14 @@ class Stage extends EventEmitter {
     setCurrentState(a_idx) {
         //Check if valid state
         if(a_idx >= 0 && a_idx < this.states.length) {
-            this.currentState.emit("exit");
+            this.currentState.exit();
+            /*GH.deviceManager.devices.forEach(function(a_device) {
+                //Should a_device reset role...
+                if(a_device.shouldResetRole)
+                    a_device.reset();
+            }, this);*/
             this.currentStateIdx = a_idx;
-            this.currentState.emit("enter");
+            this.currentState.enter();
             this.emit("changedState", this.currentStateIdx);
 
             GH.deviceManager.broadcastState(GH.activeGameMode.currentStage.currentState);

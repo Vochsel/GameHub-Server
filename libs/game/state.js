@@ -13,6 +13,18 @@ class State extends EventEmitter {
         /* ---------- State Debug Info ---------- */
         Debug.SetLogPrefix("State");
         
+        /* ---------- Stage Callbacks ---------- */
+
+        //State enter callback
+        if(a_options.enter) {
+            this.on("enter", a_options.enter);
+        }
+
+        //State exit callback
+        if(a_options.exit) {
+            this.on("exit", a_options.exit);
+        }
+
         /* ---------- State Properties ---------- */
 
         //Literal name of the state
@@ -21,9 +33,11 @@ class State extends EventEmitter {
         Debug.Log("Creating State - " + this.name, "magenta");        
 
         //Per state data storage
-        this.model = (a_options && Utils.Valid(a_options.model)) 
+        this.initialModel = (a_options && Utils.Valid(a_options.model)) 
             ? (Debug.Log(" - Loaded model!", "magenta"), (a_options.model))
             : new Object();
+        
+        this.model = Utils.Clone(this.initialModel);
 
         //Domain specific controller for state
         this.controller = (a_options && Utils.Valid(a_options.controller)) 
@@ -46,18 +60,28 @@ class State extends EventEmitter {
     }
 
     reset() {
+        Debug.Log("Reset State - " + this.name, "magenta");
+        //TODO: Fix more permanently!
+        this.model = Utils.Clone(this.initialModel);
         //Emit event 'on reset'
         this.emit("reset");
     }
 
     // -- Called when state is entered
     enter() {
+        this.reset();
+        
+        Debug.Log("Enter State - " + this.name, 'magenta');
+
         //Emit event 'on enter'
         this.emit("enter");
     }
 
     // -- Called when state is exited
     exit() {
+
+        Debug.Log("Exit State - " + this.name, 'magenta');
+
         //Emit event 'on exit'
         this.emit("exit");
     }

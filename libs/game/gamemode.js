@@ -14,22 +14,50 @@ class GameMode extends EventEmitter {
         /* ---------- GameMode Properties ---------- */
 
         //Literal name of GameMode
-        this.name = (a_options && Utils.Valid(a_options.name.length)) ? a_options.name : "Untitled GameMode";
+        this.name = (a_options && Utils.Valid(a_options.name)) ? a_options.name : "Untitled GameMode";
 
         //Version of GameMode
-        this.version = (a_options && Utils.Valid(a_options.version.length)) ? a_options.version : "Invalid Version";
+        this.version = (a_options && Utils.Valid(a_options.version)) ? a_options.version : "Invalid Version";
 
         //Per GameMode data storage
-        this.model = new Object();
+        this.initialModel = (a_options && Utils.Valid(a_options.model)) 
+            ? (Debug.Log(" - Loaded model!", "green"), a_options.model)
+            : new Object();
+
+        this.model = Utils.Clone(this.initialModel);
 
         //Array of all stages for this GameMode
-        this.stages = new Array();
-
-        //Current stage index
-        this.currentStageIdx = -1;   
+        this.stages = new Array(); 
 
         //GameMode Resources
         this.resources = new Map();
+
+        //GameMode Flow
+        this.flow = (a_options && Utils.Valid(a_options.flow)) 
+            ? a_options.flow 
+            : [
+                { 
+                    stage: "introStage",
+                    repeats: 1
+                },
+                { 
+                    stage: "gameStage",
+                    repeats: 1
+                },
+                { 
+                    stage: "outroStage",
+                    repeats: 1
+                },
+            ];
+
+        // -- Internal Data
+
+        //Current stage index
+        this.currentStageIdx = -1;
+
+        this.currentFlowIdx = -1;
+
+        this.currentFlowRepeat = 0;
 
         //Emit Initialized
         this.emit("initialized");
@@ -42,6 +70,8 @@ class GameMode extends EventEmitter {
     reset() {
         //Current stage index
         this.currentStageIdx = 0;
+        this.currentFlowIdx = 0;
+        this.currentFlowRepeat = 0;
     }
 
     // -- Initial setup of GameMode
@@ -65,6 +95,8 @@ class GameMode extends EventEmitter {
         Debug.Log("Starting GameMode - " + this.name, "green");
 
         this.currentStageIdx = 0;
+        this.currentFlowIdx = 0;
+        this.currentFlowRepeat = 0;
 
         GH.deviceManager.broadcastState(this.currentStage.currentState);
 
@@ -88,7 +120,7 @@ class GameMode extends EventEmitter {
         Debug.ResetLogPrefix();
     }
 
-    // -- Get current stage from index if available
+    // -- Get stage from index if available
     getStage(a_idx) {
         if(this.stages.length <= 0)
             return null;
@@ -102,37 +134,89 @@ class GameMode extends EventEmitter {
         return null;
     }
 
+    // -- Get stage by name if available
+    getStageIdxByName(a_name) {
+        //Loop through all stages
+        for(var i = 0; i < this.stages.length; i++) {
+
+            //Store ref to current iteration
+            var stage = this.stages[i];
+
+            //If stage name is the same as a_name, return
+            if(stage.name === a_name)
+                return i;
+        }
+
+        //No stage with name supplied has been found
+        Debug.Warning("No stage was found with name: " + a_name + "! Returning null!");
+
+        //Return null
+        return null;
+    }
+
     setCurrentStage(a_idx) {
         //Check if valid state
         if(a_idx >= 0 && a_idx < this.stages.length) {
-            this.currentStage.emit("exit");
+            this.currentStage.exit();
+
+            /*GH.deviceManager.devices.forEach(function(a_device) {
+                //Should a_device reset role...
+                if(a_device.shouldResetRole)
+                    a_device.reset();
+            }, this);*/
+
             this.currentStageIdx = a_idx;
-            this.currentStage.emit("enter");
+            this.currentStage.enter();
             this.emit("changedState", this.currentStageIdx);
 
             GH.deviceManager.broadcastState(GH.activeGameMode.currentStage.currentState);
+            Debug.Log("Set GM current stage");
+            return;
         }
+        Debug.Error("Could not Set GM current stage - " + a_idx);
     }
 
     get currentStage() {
-        var s = this.getStage(this.currentStageIdx);
+        //var s = this.getStage(this.currentStageIdx);
+        var s = this.getStage(this.getStageIdxByName(this.flow[this.currentFlowIdx].stage));
         if(s) return s;
     }
 
     progressGameMode() {
+        
         var nextStateIdx = this.currentStage.currentStateIdx + 1;
         
         //If next state doesnt exist, go to next stage
         if(nextStateIdx >= this.currentStage.states.length)
         {
+            //Increment how many times this flow stage has repeated...
+            this.currentFlowRepeat += 1;
+
             //Finished stage, go to next stage
             var nextStageIdx = this.currentStageIdx + 1;
+            
 
+            if(this.currentFlowRepeat < this.flow[this.currentFlowIdx].repeats) {
+                Debug.Log("---------- Repeating", "yellow");
+                //this.setCurrentStage(this.getStageIdxByName(this.flow[this.currentFlowIdx].stage));
+                this.setCurrentStage(this.currentStageIdx);
+                //this.currentStage.reset();
+                //this.currentStage.setCurrentState(0);
+                
+                return;
+                //this.currentStage.reset();
+            }
+
+            
             if(nextStageIdx >= this.stages.length) {
                 //Reached last stage, ending GameMode
                 this.stop();
                 return;
             }
+
+            this.currentFlowRepeat = 0;
+            this.currentFlowIdx += 1;
+
             this.setCurrentStage(nextStageIdx);
             this.currentStage.setCurrentState(0);
         
@@ -153,6 +237,7 @@ class GameMode extends EventEmitter {
 
     isValidated() {
         if(this.currentStage.currentState.isValidated()) {
+            console.log("Progressing");
             this.progressGameMode();
         }
     }
@@ -163,21 +248,6 @@ class GameMode extends EventEmitter {
     }
 }
 
-class GameModeManager {
-    constructor() {
-        // -- GameMode Manager Properties
-        this.gamemode = null;
-
-        // -- GameMode Manager Functions
-        this.SetGameMode(a_gamemode)
-        {
-            this.gamemode = a_gamemode;
-        }
-    }
-}
-
-
 // -- Exports State Class
 
-module.exports.GameMode = GameMode;
-module.exports.GameModeManager = GameModeManager;
+module.exports = GameMode;
