@@ -11,7 +11,7 @@ class WitsEndGM extends GH.GameMode {
                 },
                 {
                     stage : "GameStage",
-                    repeats: 2
+                    repeats: 5
                 },
                 {
                     stage : "OutroStage",
