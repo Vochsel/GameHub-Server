@@ -1,11 +1,25 @@
 function hideAddressBar(){
     if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
-      document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
+        document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
     setTimeout(window.scrollTo(1,1),1);
     console.log("HIDDEN");
-  }
-  //window.addEventListener("load",function(){hideAddressBar();});
-  window.addEventListener("orientationchange",function(){hideAddressBar();});
+}
+//window.addEventListener("load",function(){hideAddressBar();});
+window.addEventListener("orientationchange",function(){hideAddressBar();});
+
+function getQueryParams(qs) {
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
+}
 
 function Setup(options) {
     //hideAddressBar();
@@ -17,10 +31,14 @@ function Setup(options) {
     var host = window.location.hostname;
     var port = window.location.port;
 
-    var windowURL = new URL(window.location.href);
-    var role = windowURL.searchParams.get('role');
-    var type = windowURL.searchParams.get('type');
-    var name = windowURL.searchParams.get('name');
+    //var windowURL = new URL(window.location.href);
+    //var role = windowURL.searchParams.get('role');
+    //var type = windowURL.searchParams.get('type');
+    //var name = windowURL.searchParams.get('name');
+    var windowURL = getQueryParams(window.location.search);
+    var role = windowURL.role;
+    var type = windowURL.type;
+    var name = windowURL.name;
 
     if(role) {
         console.log("Found role in URL. Role: %s.", role);
