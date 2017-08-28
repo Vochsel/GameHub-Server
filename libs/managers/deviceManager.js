@@ -11,6 +11,7 @@ class DeviceManager {
     // -- Constructor
     constructor() {
         //Create device map
+        //TODO: Does this really need to be a map?
         this.devices = new Map();
 
         //Start device status checker
@@ -20,25 +21,43 @@ class DeviceManager {
             //Loop through all devices and check status
             self.devices.forEach(function(device, key) {
                 var isAlive = device.checkStatus();
-                if(!isAlive) self.removeDevice(key);
+                if(!isAlive) {
+                    Debug.Log("Connection timed out, removing device", "yellow");
+                    self.removeDevice(key);
+                }
             }, self);
 
         }, 3000);
     }
 
     // -- Add device
-    addDevice(a_uid, a_remoteAddress, a_socket) {
+    addDevice(a_socket) {
+
+        //Check for existing user
+        //TODO: Maybe should have a different function and call that from serverManager.js?
+        var dip = a_socket._socket.remoteAddress;
+        if(this.devices.has(dip)) {
+            var loadedDevice = this.devices.get(dip);
+            loadedDevice.socket = a_socket;
+            
+            Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + dip, "blue");
+            
+            return loadedDevice;
+        }
+
         //Create new device
-        //var newDevice = new Device(a_uid, a_remoteAddress, a_socket);
         var newDevice = new Device(a_socket);
 
-        var uid = this.devices.size;
-        newDevice.uid = uid;
+        //Check for local connections
+        if(newDevice.clientIP == "::1") {
+            //Client is local, create fake uid
+            newDevice.uid = "local:" + this.devices.size;
+        }
 
         //Push new device into device array
-        this.devices.set(uid /*newDevice.uid*/, newDevice);
+        this.devices.set(newDevice.uid, newDevice);
 
-        Debug.Log("[Device Manager] Device added. UID: " + uid, "blue");
+        Debug.Log("[Device Manager] Device added. UID: " + newDevice.uid, "blue");
 
         //Return new device for external reference
         return newDevice;
@@ -51,7 +70,7 @@ class DeviceManager {
             //If devices has key
             if(this.devices.has(a_device)) {
                 //Delete
-                Debug.Log("Removing device by key", "blue");
+                Debug.Log("Removing device by key. UID: " + a_device, "blue");
                 return this.devices.delete(a_device);
             }
         }
@@ -61,12 +80,12 @@ class DeviceManager {
             //a_device is uid
             if(typeof a_device === 'number') {
                 if(device.uid === a_device) {
-                    Debug.Log("Removing device by UID", "blue");
+                    Debug.Log("Removing device by UID. UID: " + device.uid, "blue");
                     return this.devices.delete(key);  
                 }
             } else if (typeof a_device === 'object') {
                 if(device === a_device) {
-                    Debug.Log("Removing device by reference", "blue");
+                    Debug.Log("Removing device by reference. UID: " + device.uid, "blue");
                     return this.devices.delete(key);
                 }
             }

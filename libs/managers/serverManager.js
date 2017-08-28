@@ -60,12 +60,9 @@ class GHSocketServer extends WebSocketServer {
         //Client has connected
         this.on('connection', function(a_socket) {
             Debug.Log("[GH Socket Server] New connection", "yellow");
-
-            //Connection IP - Remote Address
-            const connIP = a_socket._socket.remoteAddress;
             
             //Add device
-            var newDevice = GH.deviceManager.addDevice(connIP, connIP, a_socket);
+            var newDevice = GH.deviceManager.addDevice(a_socket);
             newDevice.emit("join");
         
             GH.activeGameMode.emit("deviceJoined", newDevice);
@@ -74,13 +71,13 @@ class GHSocketServer extends WebSocketServer {
                 Device.recieveMessage(newDevice, a_msg);
             });
 
-            a_socket.on('close', function(a_evt) {
+            /*a_socket.on('close', function(a_evt) {
                 newDevice.emit("leave");
                 GH.activeGameMode.emit("deviceLeft", newDevice);
 
                 Debug.Log("Connection closed, removing device", "yellow");
                 GH.deviceManager.removeDevice(newDevice);
-            })
+            })*/
 
             //a_socket.send(new Message("text", "HEEYYYY").stringify());
 
