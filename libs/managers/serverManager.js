@@ -107,10 +107,10 @@ class GHSocketServer extends WebSocketServer {
                 GH.activeGameMode.emit("deviceHandshake", newDevice);
 
                 Debug.SetLogPrefix("Device Manager");
-                    Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
-                    Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
-                    Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
-                    Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
+                    Debug.Log("Recieved device (UID: " + newDevice.uid + ") handshake!", "blue");
+                    Debug.Log(" - Device Type: " + newDevice.type + ".", "blue");
+                    Debug.Log(" - Device Role: " + newDevice.role + ".", "blue");
+                    Debug.Log(" - Device Name: " + newDevice.name + ".", "blue");
                 Debug.ResetLogPrefix();
                 break;
             }
