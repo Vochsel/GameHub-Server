@@ -81,3 +81,35 @@ input {
     height: 100%;
     margin: 0;
 }
+
+.billboard {
+    float: left;
+    background-color: #7FA3D7;
+    /*border: thick dotted;*/
+/*    box-shadow: 0 0 5px 0 #000;*/
+    margin: 2vw;
+    position: relative;
+    padding: 2vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+    color: white;
+    border-bottom-left-radius: 15px;
+    
+}
+
+ .badge {
+    position: absolute;
+    top: -3.5vw;
+    right: -3.5vw;
+    background-color: #E35B5B;
+    border-top-left-radius: 50%;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    width: 6vw;
+    height: 6vw;
+    text-align: center;
+    line-height: 5.75vw;
+    font-size: 4vw;
+    color: white;
+
+}

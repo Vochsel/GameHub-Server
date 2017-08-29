@@ -54,6 +54,11 @@ class WitsEndGM extends GH.GameMode {
                     var readyClients = Utils.Length(this.model.clientsReady);
                     //Get number of total clients
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
+
+                    //Check for min num of clients... TODO: Fix this
+                    if(numOfClients < 2)
+                        return false;
+
                     console.log(this.model);
                     console.log(readyClients >= numOfClients);
                     //Return true if all players are ready
@@ -279,7 +284,7 @@ class WitsEndGM extends GH.GameMode {
                     new GH.View({
                         type: "hub",
                         //src: "views/resultsState/hub.html"
-                        data: "<h3>{stage.model.question}</h3> <h4>{stage.model.challenger1} VS. {stage.model.challenger2}</h4>{stage.model.clientSelections}[<h2 class='bold'>{name} : {answer} - {votes}  </h2>]"
+                        data: "<h3>{stage.model.question}</h3> {stage.model.clientSelections}[<div class='billboard'>{name} : {answer}<div class='badge'>{votes}</div>  </div>]"
                     }),
                     new GH.View({
                         type: "client",
