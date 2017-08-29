@@ -1,0 +1,46 @@
+body {
+    text-align: center;
+    /*font-family: 'Encode Sans', sans-serif;*/
+    font-family: 'Open Sans', sans-serif;
+}
+
+.clientViewer {
+    width: 20%;
+    margin: 2.5%;
+    display: inline-block;
+}
+
+.clientContainer {
+    text-align: center;
+    overflow: auto;
+    
+    float: right;
+    margin-right: 5vw;
+    width: 30vw;
+}
+
+.hubContainer {
+
+    float: left;
+    margin-left: 5vw;
+    
+    width: 50vw;
+}
+
+.hub {
+    margin: 0 auto;
+    width: 80%;
+    
+}
+
+.viewer {
+    height: 40%;
+    width: 100%;
+}
+
+iframe {
+    /*border: dashed thin black;*/
+    border: none;
+    box-shadow: 0 0 20px 0 #ddd;
+    margin-top:1vw;
+}
