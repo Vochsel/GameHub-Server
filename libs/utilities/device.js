@@ -8,31 +8,37 @@ const GH            = require('../gamehub.js');
 const Utils         = require('../utilities/utils.js');
 
 class Device extends EventEmitter {
-    constructor(a_socket) {
+    constructor(a_socket, a_options) {
         //Call Event Emitter constructor
         super();
 
         //Store reference to client socket
         this.socket = a_socket;
         
-        //Client IP address
-        this.clientIP = this.socket._socket.remoteAddress;
+            //Client IP address
+            this.clientIP = this.socket._socket.remoteAddress;
 
         //Type of device, this determines which view it will recieve
-        this.initialType = this.type = "default";
+        this.initialType = this.type = (a_options && Utils.Valid(a_options.type)) ? a_options.type : "default";
 
         //Role of device, determines which sub view device will get
-        this.initialRole = this.role = "default";
+        this.initialRole = this.role = (a_options && Utils.Valid(a_options.role)) ? a_options.role : "default";
+
+        this.name = (a_options && Utils.Valid(a_options.name)) ? a_options.name : "Mr No Name";
 
         //Device unique ID
-        this.uid = this.clientIP;
+        this.uid = this.generateUID();
 
         //Should device refresh view
         this.shouldRefreshView = false;
 
+        //Should device reset role on state change
         this.shouldResetRole = false;
     }
 
+    generateUID() {
+        return this.clientIP + "-" + this.initialType + "-" + this.initialRole;
+    }
 
     sendMessage(a_type, a_data) {
         this.socket.send(new Message(a_type, a_data).stringify());
@@ -77,57 +83,7 @@ class Device extends EventEmitter {
         this.type = this.initialType;
     }
 
-    static recieveMessage(a_device, a_message) {
-        var m = Message.parse(a_message);
-
-        switch(m.type) {
-            case "handshake": {
-                if(m.data.type) a_device.initialType = a_device.type = m.data.type;
-                if(m.data.role) a_device.initialRole = a_device.role = m.data.role;
-                if(m.data.name) a_device.name = m.data.name;
-
-                Debug.SetLogPrefix("Device Manager");
-                    Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
-                    Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
-                    Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
-                    Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
-                Debug.ResetLogPrefix();
-                GH.activeGameMode.emit("deviceHandshake", a_device);
-            }
-            break;
-            case "controller": {
-                //Precheck 
-                if(!m.data)
-                    return;
-
-                var action  = m.data.action;
-                var data    = m.data.data;
-
-                //Recieved function to call
-                Debug.Log("[Device Manager] Recieved controller function: " + action + ". Executing!", "blue");
-                
-                //Call desired function
-                //TODO: Add some kind of check?
-                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
-                if(funcToCall) {
-                    funcToCall(a_device, data);
-                } else {
-                    Debug.Error("[Device Manager] No function found in state controller with declaration: " + action);
-                }
-
-                //Refresh device's view if needed
-                if(a_device.shouldRefreshView) {
-                    a_device.sendState(GH.activeGameMode.currentStage.currentState);
-                    a_device.shouldRefreshView = false;
-                }
-
-                GH.activeGameMode.isValidated();
-            }
-            break;
-        }
-
-        Debug.ResetLogPrefix();
-    }
+    
 }
 
 module.exports = Device;

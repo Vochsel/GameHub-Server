@@ -7,6 +7,7 @@ const GH                = require('../gamehub.js');
 const Debug             = require('../utilities/debug.js');
 const Message           = require('../utilities/message.js');
 const Device            = require('../utilities/device.js');
+const DeviceManager     = require('./deviceManager.js');
 
 class ServerManager {
     constructor() {
@@ -61,14 +62,8 @@ class GHSocketServer extends WebSocketServer {
         this.on('connection', function(a_socket) {
             Debug.Log("[GH Socket Server] New connection", "yellow");
             
-            //Add device
-            var newDevice = GH.deviceManager.addDevice(a_socket);
-            newDevice.emit("join");
-        
-            GH.activeGameMode.emit("deviceJoined", newDevice);
-
             a_socket.on('message', function(a_msg) {
-                Device.recieveMessage(newDevice, a_msg);
+                GHSocketServer.RecieveMessage(a_socket, a_msg);
             });
 
             /*a_socket.on('close', function(a_evt) {
@@ -79,8 +74,6 @@ class GHSocketServer extends WebSocketServer {
                 GH.deviceManager.removeDevice(newDevice);
             })*/
 
-            //a_socket.send(new Message("text", "HEEYYYY").stringify());
-
             //Set socket is alive
             a_socket.isAlive = true;
 
@@ -89,6 +82,70 @@ class GHSocketServer extends WebSocketServer {
                 a_socket.isAlive = true;
             });
         });
+    }
+
+    //Handler when socket server recieves message
+    static RecieveMessage(a_socket, a_message) {
+        var m = Message.parse(a_message);
+
+        var device = a_socket.attachedDevice;
+
+        switch(m.type) {
+            case "handshake": {
+                var opts = {};
+                
+                if(m.data.type) opts.type = m.data.type;
+                if(m.data.role) opts.role = m.data.role;
+                if(m.data.name) opts.name = m.data.name;
+
+                var newDevice = GH.deviceManager.addDevice(a_socket, opts);
+                newDevice.emit("join");
+
+                a_socket.attachedDevice = newDevice;
+            
+                GH.activeGameMode.emit("deviceJoined", newDevice);
+                GH.activeGameMode.emit("deviceHandshake", newDevice);
+
+                Debug.SetLogPrefix("Device Manager");
+                    Debug.Log("Recieved device (UID: " + a_device.uid + ") handshake!", "blue");
+                    Debug.Log(" - Device Type: " + a_device.type + ".", "blue");
+                    Debug.Log(" - Device Role: " + a_device.role + ".", "blue");
+                    Debug.Log(" - Device Name: " + a_device.name + ".", "blue");
+                Debug.ResetLogPrefix();
+                break;
+            }
+            case "controller": {
+                //Precheck 
+                if(!m.data)
+                    return;
+
+                var action  = m.data.action;
+                var data    = m.data.data;
+
+                //Recieved function to call
+                Debug.Log("[Device Manager] Recieved controller function: " + action + ". Executing!", "blue");
+                
+                //Call desired function
+                //TODO: Add some kind of check?
+                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
+                if(funcToCall) {
+                    funcToCall(device, data);
+                } else {
+                    Debug.Error("[Device Manager] No function found in state controller with declaration: " + action);
+                }
+
+                //Refresh device's view if needed
+                if(device.shouldRefreshView) {
+                    device.sendState(GH.activeGameMode.currentStage.currentState);
+                    device.shouldRefreshView = false;
+                }
+
+                GH.activeGameMode.isValidated();
+            }
+            break;
+        }
+
+        Debug.ResetLogPrefix();
     }
 }
 

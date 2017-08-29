@@ -2,6 +2,7 @@
 const EventEmitter  = require('events');
 
 /* Internal Dependencies */
+const GH                = require('../gamehub.js');
 const Debug         = require('../utilities/debug.js');
 const Message       = require('../utilities/message.js');
 const Device        = require('../utilities/device.js');
@@ -31,22 +32,20 @@ class DeviceManager {
     }
 
     // -- Add device
-    addDevice(a_socket) {
+    addDevice(a_socket, a_options) {
 
+        //Create new device
+        var newDevice = new Device(a_socket, a_options);
+        
         //Check for existing user
-        //TODO: Maybe should have a different function and call that from serverManager.js?
-        var dip = a_socket._socket.remoteAddress;
-        if(this.devices.has(dip)) {
-            var loadedDevice = this.devices.get(dip);
+        if(this.devices.has(newDevice.uid)) {
+            var loadedDevice = this.devices.get(newDevice.uid);
             loadedDevice.socket = a_socket;
             
-            Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + dip, "blue");
+            Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + newDevice.uid, "blue");
             
             return loadedDevice;
         }
-
-        //Create new device
-        var newDevice = new Device(a_socket);
 
         //Check for local connections
         if(newDevice.clientIP == "::1") {
@@ -150,6 +149,7 @@ class DeviceManager {
         return out;
     }
 
+    
 }
 
 module.exports = DeviceManager;
