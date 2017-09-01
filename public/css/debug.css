@@ -29,3 +29,15 @@ iframe {
     border: none;
     box-shadow: 0 0 20px 0 #ddd;
 }
+
+.debug_log {
+    text-align: left;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    height: 20vh;
+    background-color: #eee;
+    padding: 2.5vw;
+    overflow: auto;
+}

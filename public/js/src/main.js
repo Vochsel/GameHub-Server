@@ -2,7 +2,7 @@ function hideAddressBar(){
     if(document.documentElement.scrollHeight<window.outerHeight/window.devicePixelRatio)
         document.documentElement.style.height=(window.outerHeight/window.devicePixelRatio)+'px';
     setTimeout(window.scrollTo(1,1),1);
-    console.log("HIDDEN");
+    DebugLog("HIDDEN");
 }
 //window.addEventListener("load",function(){hideAddressBar();});
 window.addEventListener("orientationchange",function(){hideAddressBar();});
@@ -39,32 +39,44 @@ function Setup(options) {
     var role = windowURL.role;
     var type = windowURL.type;
     var name = windowURL.name;
+    var debug = windowURL.debug;
+
+    
+    if(debug) {
+        AddDebugLog();
+        DebugLog("Debug connected!");
+    }
 
     if(role) {
-        console.log("Found role in URL. Role: %s.", role);
+        DebugLog("Found role in URL. Role: " + role);
         options.role = role;
     }
 
     if(type) {
-        console.log("Found type in URL. Type: %s.", type);
+        DebugLog("Found type in URL. Type: " + type);
         options.type = type;
     }
 
     if(name) {
-        console.log("Found type in URL. Name: %s.", name);
+        DebugLog("Found type in URL. Name: " + name);
         options.name = name;
     }
+
 
     //Initialization logic
     ws = new WebSocket("ws://" + host + ":" + port);
     ws.addEventListener("open", function(e) {
-        console.log("Connected to %s:%s", host, port);
-        ws.send(new Message("handshake", options).stringify());
+        DebugLog("Connected to " + host + " : " + port);
+        SendWS(ws, new Message("handshake", options));
+        setInterval(function() {
+            SendWS(ws, new Message("ping", "Stayin' alive"));
+        }, 30000);
+        //ws.send(new Message("handshake", options).stringify());
     });
     ws.addEventListener("message", function(a_message) {
         var d = a_message.data;
         var m = Message.parse(d);
-        console.log(m);
+        DebugLog("RECIEVED MESSAGE: " + d, "red");
         switch(m.type) {
             case "view": {
                 container.innerHTML = m.data;
@@ -79,11 +91,11 @@ function Setup(options) {
 
 function GetInputs() {
     var i = document.getElementsByTagName("input");
-    //console.log(i);
+    //DebugLog(i);
     var j = document.getElementsByClassName('button');
-    //console.log(j);
+    //DebugLog(j);
     var cat = Array.from(i).concat(Array.from(j));
-    console.log(cat);
+   // DebugLog(cat);
     return cat;
 }
 
@@ -95,7 +107,7 @@ function SetupInput() {
 
     for(var i = 0; i < inputs.length; i++) {
         var input = inputs[i];
-        console.log(input);
+        //DebugLog(input);
         
         input.addEventListener("click", inputHandle);
     }
@@ -137,7 +149,15 @@ function inputHandle(e) {
         action = action.replace(')', '');
         
         var functionName = action;
-        console.log(inputValues);
-        ws.send(new Message("controller", {action: functionName, data: inputValues}).stringify());
+        //DebugLog(inputValues);
+        var msg = new Message("controller", {action: functionName, data: inputValues});
+        
+        //ws.send(msg.stringify());
+        SendWS(ws, msg);
     }
+}
+
+function SendWS(a_ws, a_msg) {
+    DebugLog("SENT MESSAGE: " + a_msg.stringify(), "blue");
+    a_ws.send(a_msg.stringify());
 }
