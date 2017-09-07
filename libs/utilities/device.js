@@ -83,6 +83,10 @@ class Device extends EventEmitter {
         this.type = this.initialType;
     }
 
+    refreshView() {
+        this.sendState(GH.activeGameMode.currentStage.currentState);
+    }
+
     
 }
 

@@ -136,7 +136,7 @@ class GHSocketServer extends WebSocketServer {
 
                 //Refresh device's view if needed
                 if(device.shouldRefreshView) {
-                    device.sendState(GH.activeGameMode.currentStage.currentState);
+                    device.refreshView();
                     device.shouldRefreshView = false;
                 }
 
