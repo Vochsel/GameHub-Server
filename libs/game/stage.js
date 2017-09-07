@@ -154,6 +154,18 @@ class Stage extends EventEmitter {
         Debug.Log("Executing stage " + this.name, "cyan");
         Debug.ResetLogPrefix();
     }
+
+    log() {
+        Debug.Log("[Stage] Name - " + this.name, "cyan");
+        Debug.Log("[Stage] Model Variables - " + Utils.Length(this.model), "cyan");
+        Debug.Log("[Stage] Number of States - " + Utils.Length(this.states), "cyan");
+
+        for(var i = 0; i < Utils.Length(this.states); i++) {
+            Debug.Log("[Stage] State [" + i + "]", "cyan");
+            Debug.Log("[Stage] - State: " + this.states[i].name, "cyan");    
+            //this.states[i].log();
+        }
+    }
 }
 
 // -- Exports Stage Class

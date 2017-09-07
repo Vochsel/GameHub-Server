@@ -1,0 +1,23 @@
+{
+    "name": "Test Game Mode",
+    "version": "0.2.0",
+    "model": {
+        "test": "10"
+    },
+    "stages": [
+        {
+            "name": "Test Inline Stage",
+            "states": [
+                {
+                    "name": "Test State?"
+                },
+                {
+                    "src": "states/test/externalState.json"
+                }
+            ]
+        },
+        {
+            "src": "stages/test/externalStage.json"
+        }
+    ]
+}

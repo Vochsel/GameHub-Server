@@ -3,7 +3,17 @@ class TrueFriendsGM extends GH.GameMode {
         // -- Set TestGM Specific Properties
         super({
             name: "True Friends",
-            version: "0.0.3"
+            version: "0.0.3",
+            flow: [
+                {
+                    stage : "IntroStage",
+                    repeats: 1
+                },
+                {
+                    stage : "GameStage",
+                    repeats: 5
+                }
+            ],
         });
     }
 
@@ -26,10 +36,10 @@ class TrueFriendsGM extends GH.GameMode {
 
         // -- Stages
         var introStage = new GH.Stage({
-            name: "Intro Stage"
+            name: "IntroStage"
         });
             var beginState = new GH.State({ 
-                name: "Begin State",
+                name: "BeginState",
                 isValidated: function() {
                     var readyClients = Object.keys(this.model.clientsReady).length;
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
@@ -79,7 +89,7 @@ class TrueFriendsGM extends GH.GameMode {
         this.stages.push(introStage);
 
         var gameStage = new GH.Stage({
-            name: "Game Stage",
+            name: "GameStage",
             model: {
                 clientAnswers: {},
                 clientSelections: {}
@@ -102,7 +112,7 @@ class TrueFriendsGM extends GH.GameMode {
         });
             //State - Input
             var gsAnswerInput = new GH.State({
-                name: "Answer State",
+                name: "AnswerState",
                 isValidated: function() {
                     var readyClients = Utils.Length(gameStage.model.clientAnswers);
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
@@ -139,7 +149,7 @@ class TrueFriendsGM extends GH.GameMode {
             
             //State - Selection
             var gsAnswerSelection = new GH.State({
-                name: "Answer Selection State",
+                name: "AnswerSelectionState",
                 isValidated: function() {
                     var selections = Utils.Length(gsAnswerSelection.model.selections);
                     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
@@ -196,15 +206,15 @@ class TrueFriendsGM extends GH.GameMode {
 
             //State - Results
             var gsResults = new GH.State({
-                name: "Results State",
+                name: "ResultsState",
                 views: [
                     new GH.View({
                         type: "hub",
-                        data: "<h1>Results</h1>"
+                        data: "<h1>Results</h1><div class='billboard_container'>{stage.model.clientSelections}[<div class='billboard'>{answer}<div class='badge'>{selections}</div>  </div>]</div>"
                     }),
                     new GH.View({
                         type: "client",
-                        data: "{stage.model.clientSelections}[<h2>{answer} : {selections}</h4>]"
+                        data: "{stage.model.clientSelections}[<div class='button'>{answer}<div class='badge'>{selections}</div>  </div>]"
                     })
                 ]
             });

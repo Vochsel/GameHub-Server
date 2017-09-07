@@ -125,6 +125,13 @@ class State extends EventEmitter {
         //If found default view, return that, otherwise null
         return (defaultView) ? defaultView : null;
     }
+
+    log() {
+        Debug.Log("[State] Name - " + this.name, "magenta");  
+        Debug.Log("[State] Model Variables - "      + Utils.Length(this.model), "magenta");  
+        Debug.Log("[State] Controller Functions - " + Utils.Length(this.controller), "magenta");  
+        Debug.Log("[State] Views - "                + Utils.Length(this.views), "magenta");  
+    }
 }
 
 

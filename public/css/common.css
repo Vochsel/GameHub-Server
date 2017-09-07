@@ -45,6 +45,7 @@ input {
     box-sizing: border-box;
     color: #ddd;
     display: inline-block;
+    position: relative;
     cursor: pointer;
     margin: 5vw;
     width: 70%;

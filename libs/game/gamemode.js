@@ -246,6 +246,16 @@ class GameMode extends EventEmitter {
     addResource(a_resource) {
         this.resources.set(a_resource.uid, a_resource);
     }
+
+    log() {
+        Debug.Log("[GM] GameMode - " + this.name + " | Version: " + this.version, "green");
+        Debug.Log("[GM] Number of Stages - " + this.stages.length, "green")
+        
+        for(var i = 0; i < this.stages.length; i++) {
+            Debug.Log("[GM] Stage [" + i + "]", "green");
+            this.stages[i].log();
+        }
+    }
 }
 
 // -- Exports State Class
