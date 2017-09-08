@@ -12,6 +12,7 @@ class Stage extends EventEmitter {
         super();
 
         /* ---------- Stage Debug Info ---------- */
+        
         Debug.SetLogPrefix("Stage");
 
         /* ---------- Stage Callbacks ---------- */
