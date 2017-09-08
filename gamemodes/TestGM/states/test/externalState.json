@@ -1,3 +1,16 @@
 {
-    "name": "External State Hey?"
+    "name": "External State Hey?",
+    "controller": {
+        "src": "states/test/controllers/main.js"
+    },
+    "views": [
+        {
+            "type": "hub",
+            "data": "<h1 class='bold'>Wits End!</h1><h3>Go head to head to win the laughs of your friends!</h3>"
+        },
+        {
+            "type": "client",
+            "src": "states/test/views/client.html"
+        }
+    ]
 }

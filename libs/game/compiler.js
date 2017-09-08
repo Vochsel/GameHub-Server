@@ -6,6 +6,7 @@ const View      = require('../mvc/view.js');
 
 const Resource  = require('../utilities/resource.js');
 const fs            = require('fs');
+const Eval          = require('safe-eval');
 
 const GHub      = require('../gamehub.js');
 
@@ -49,6 +50,8 @@ class Compiler {
 
             var gmLoadPromises = new Array();
             var gmStatePromises = new Array();
+            var gmControllerPromises = new Array();
+            var gmViewPromises = new Array();
 
             //Load meta
 
@@ -64,6 +67,25 @@ class Compiler {
                     // -- Load States
                     for(var j = 0; j < loaded.stage.states.length; j++) {
                         gmStatePromises.push(Compiler.LoadState(path, loaded.stage.states[j], j).then((loadedState) =>  {
+
+                            // -- Load Controllers
+                            if(Utils.Valid(loadedState.state.controller.src)) {
+                                gmControllerPromises.push(Compiler.LoadController(path, loadedState.state.controller.src, 0).then((loadedController) =>  {
+                                    loadedState.state.controller = loadedController.controller;
+                                }).catch((a_reason) => {
+                                    Debug.Error(a_reason);
+                                }));
+                            }
+
+                            // -- Load Views
+                            for(var l = 0; l < loadedState.state.views.length; l++) {
+                                gmViewPromises.push(Compiler.LoadView(path, loadedState.state.views[l], l).then((loadedView) =>  {
+                                    console.log(loadedView.view);
+                                    loadedState.state.views[loadedView.idx] = loadedView.view;
+                                }));
+                            }
+
+
                             loaded.stage.states[loadedState.idx] = loadedState.state;
                         }));
                     }
@@ -78,7 +100,11 @@ class Compiler {
             // -- Call final callback
             Promise.all(gmLoadPromises).then(values => {
                 Promise.all(gmStatePromises).then(values => {
-                    a_callback(gmExport);
+                    Promise.all(gmViewPromises).then(values => {
+                        Promise.all(gmControllerPromises).then(values => {
+                            a_callback(gmExport);
+                        })
+                    })
                 });
             });
 
@@ -130,12 +156,47 @@ class Compiler {
         return statePromise;
     }
 
-    static LoadController(a_controllerSrc) {
-        
+    static LoadController(a_path, a_controllerSrc, a_idx) {
+        var controllerFunctions = null;
+        var controllerPromise = new Promise((resolve, reject) => {
+            if(Utils.Valid(a_controllerSrc)) {
+                //Load from src
+                fs.readFile(a_path + "/" + a_controllerSrc, "utf8", function(a_err, a_data) {
+                    //console.log(a_err);
+                    controllerFunctions = Eval(a_data, module.exports.CreateContext());
+                    //console.log(controllerFunctions);
+                    //controllerFunctions.test();
+                    //controllerOpts.data = a_data;//JSON.parse(a_data);
+    
+                    //Call callback on load
+                    resolve({controller: controllerFunctions, idx: a_idx});
+                });
+            } else {
+                reject("Invalid controller source: " + a_controllerSrc);
+            }
+        });
+
+        return controllerPromise;
     }
 
-    static LoadView(a_viewSrc) {
-        
+    static LoadView(a_path, a_viewSrc, a_idx) {
+        var viewOpts = a_viewSrc;
+        var viewPromise = new Promise((resolve, reject) => {
+            if(Utils.Valid(viewOpts.src)) {
+                //Load from src
+                fs.readFile(a_path + "/" + viewOpts.src, "utf8", function(a_err, a_data) {
+                    viewOpts.data = a_data;//JSON.parse(a_data);
+                    //console.log(viewOpts);
+                    //Call callback on load
+                    resolve({view: new View(viewOpts), idx: a_idx});
+                });
+            } else {
+                //No async was needed, call callback anyway
+                resolve({view: new View(viewOpts), idx: a_idx});
+            }
+        });
+
+        return viewPromise;
     }
 }
 

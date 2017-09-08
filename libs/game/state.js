@@ -129,8 +129,11 @@ class State extends EventEmitter {
     log() {
         Debug.Log("[State] Name - " + this.name, "magenta");  
         Debug.Log("[State] Model Variables - "      + Utils.Length(this.model), "magenta");  
-        Debug.Log("[State] Controller Functions - " + Utils.Length(this.controller), "magenta");  
+        Debug.Log("[State] Controller Functions - " + Utils.Length(this.controller), "magenta");
         Debug.Log("[State] Views - "                + Utils.Length(this.views), "magenta");  
+        for(var i = 0; i < Utils.Length(this.views); i++) {
+            Debug.Log(this.views[i], "magenta");
+        }
     }
 }
 

@@ -7,9 +7,7 @@ var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
 var GMM             = require('./libs/managers/gameManager.js');
 var GMCompiler      = require('./libs/game/compiler.js').GMCompiler;
-//var GameModeManager = require('./libs/game/gamemode.js').GameModeManager;
 
-var TestGM          = require('./gamemodes/TestGM/TestGM.js');
 
 const chalk         = require('chalk');
 
@@ -29,14 +27,12 @@ function Setup() {
         gmToLoad = process.argv[2];
     
     //console.log(GMCompiler);
-    /*var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
-        //console.log(gmExport);
-        //console.log("DONE");
+    var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
         gmExport.log();
-    });*/
+    });
 
 
-    GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
+    //GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
 
     //Start GameMode
     //StartGM();

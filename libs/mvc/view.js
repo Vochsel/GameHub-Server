@@ -14,9 +14,9 @@ class View {
         this.data   = (a_options && Utils.Valid(a_options.data)) ? a_options.data : "";
 
         //TODO: Loading of external source
-        if(a_options && Utils.Valid(a_options.src)) {
+        /*if(a_options && Utils.Valid(a_options.src)) {
             this.data = this.loadSrc(a_options.src);
-        } 
+        }*/
     }
 
     loadSrc(a_path) {

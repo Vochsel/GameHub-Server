@@ -10,9 +10,6 @@
             "states": [
                 {
                     "name": "Test State?"
-                },
-                {
-                    "src": "states/test/externalState.json"
                 }
             ]
         },

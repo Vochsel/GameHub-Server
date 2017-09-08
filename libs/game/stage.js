@@ -163,7 +163,7 @@ class Stage extends EventEmitter {
         for(var i = 0; i < Utils.Length(this.states); i++) {
             Debug.Log("[Stage] State [" + i + "]", "cyan");
             Debug.Log("[Stage] - State: " + this.states[i].name, "cyan");    
-            //this.states[i].log();
+            this.states[i].log();
         }
     }
 }
