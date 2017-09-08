@@ -1,0 +1,25 @@
+{
+    "name": "Results State",
+    "model": {
+        "clientsReady": {}
+    },
+    "controller": {
+        "src": "states/results/controllers/main.js"
+    },
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/results/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/results/views/client_default.html" 
+        },
+        {
+            "type": "client",
+            "role": "ready", 
+            "src": "states/results/views/client_ready.html" 
+        }
+    ]
+}

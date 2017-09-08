@@ -1,0 +1,25 @@
+{
+    "name": "Answer State",
+    "model": {
+        "clientsReady": {}
+    },
+    "controller": {
+        "src": "states/answer/controllers/main.js"
+    },
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/answer/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/answer/views/client_default.html" 
+        },
+        {
+            "type": "client",
+            "role": "challenger", 
+            "src": "states/answer/views/client_challenger.html" 
+        }
+    ]
+}

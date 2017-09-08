@@ -1,0 +1,25 @@
+{
+    "name": "End State",
+    "model": {
+        "clientsFinished": {}
+    },
+    "controller": {
+        "src": "states/end/controllers/main.js"
+    },
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/end/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/end/views/client_default.html" 
+        },
+        {
+            "type": "client",
+            "role": "finished", 
+            "src": "states/end/views/client_finished.html" 
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+{
+    "name": "Intro Stage",
+    "states": [
+        { "src": "states/outro/meta.json" }
+    ]
+}

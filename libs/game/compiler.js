@@ -47,6 +47,7 @@ class Compiler {
             var gmSource = JSON.parse(a_data);
 
             var gmExport = new GameMode(gmSource);
+            gmExport.path = a_source;
 
             var gmLoadPromises = new Array();
             var gmStatePromises = new Array();
@@ -87,6 +88,8 @@ class Compiler {
 
 
                             loaded.stage.states[loadedState.idx] = loadedState.state;
+                        }).catch((a_reason) => {
+                            Debug.Error(a_reason);
                         }));
                     }
 
@@ -122,6 +125,11 @@ class Compiler {
             if(Utils.Valid(stageOpts.src)) {
                 //Load from src
                 fs.readFile(a_path + "/" + stageOpts.src, "utf8", function(a_err, a_data) {
+                    if(!Utils.Valid(a_data)) {
+                        reject("Could not parse data. Error: " + a_err + ". Data: " + a_data);
+                        return;
+                    }
+
                     stageOpts = JSON.parse(a_data);
 
                     //Call callback on load
@@ -142,6 +150,11 @@ class Compiler {
             if(Utils.Valid(stateOpts.src)) {
                 //Load from src
                 fs.readFile(a_path + "/" + stateOpts.src, "utf8", function(a_err, a_data) {
+                    if(!Utils.Valid(a_data)) {
+                        reject("Could not parse data. Error: " + a_err + ". Data: " + a_data);
+                        return;
+                    }
+
                     stateOpts = JSON.parse(a_data);
     
                     //Call callback on load
@@ -173,6 +186,7 @@ class Compiler {
                 });
             } else {
                 reject("Invalid controller source: " + a_controllerSrc);
+                return;
             }
         });
 

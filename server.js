@@ -29,6 +29,10 @@ function Setup() {
     //console.log(GMCompiler);
     var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
         gmExport.log();
+
+        GH.activeGameMode = gmExport;
+        //GH.activeGameMode.path = a_path;
+        GH.activeGameMode.start();
     });
 
 
@@ -87,7 +91,13 @@ stdin.addListener("data", function(d) {
             break;
         case "reload" :
             {
-                GMM.reloadActiveGameMode();
+                var gm = GMCompiler.Compile(GH.activeGameMode.path, function(gmExport) {
+                    gmExport.log();
+            
+                    GH.activeGameMode = gmExport;
+                    //GH.activeGameMode.path = a_path;
+                    GH.activeGameMode.start();
+                });
             }
             break;
         case 'c':

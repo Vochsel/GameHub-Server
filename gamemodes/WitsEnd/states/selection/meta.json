@@ -1,0 +1,25 @@
+{
+    "name": "Selection State",
+    "model": {
+        "clientsReady": {}
+    },
+    "controller": {
+        "src": "states/selection/controllers/main.js"
+    },
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/selection/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/selection/views/client_default.html" 
+        },
+        {
+            "type": "client",
+            "role": "ready", 
+            "src": "states/selection/views/client_ready.html" 
+        }
+    ]
+}

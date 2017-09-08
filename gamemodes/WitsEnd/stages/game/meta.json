@@ -1,0 +1,11 @@
+{
+    "name": "Game Stage",
+    "model": {
+        "question": "",
+        "clientSubmissions": {},
+        "clientSelections": {}
+    },
+    "states": [
+        { "src": "states/answer/meta.json" }
+    ]
+}
