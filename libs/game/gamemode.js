@@ -103,6 +103,9 @@ class GameMode extends EventEmitter {
         //Emit event 'on start'
         this.emit("start");
 
+        this.currentStage.enter();
+        //this.currentStage.currentState.enter();
+
         // -- Closing GM Debug Information
         Debug.ResetLogPrefix();
     }
@@ -218,7 +221,6 @@ class GameMode extends EventEmitter {
             this.currentFlowIdx += 1;
 
             this.setCurrentStage(nextStageIdx);
-            this.currentStage.setCurrentState(0);
         
             Debug.Log("Progressed to next Stage - " + nextStageIdx, "cyan");
             return;
@@ -249,10 +251,11 @@ class GameMode extends EventEmitter {
 
     log() {
         Debug.Log("[GM] GameMode - " + this.name + " | Version: " + this.version, "green");
+        Debug.Log("[GM] Number of Resources - " + this.resources.size, "green")
         Debug.Log("[GM] Number of Stages - " + this.stages.length, "green")
         
         for(var i = 0; i < this.stages.length; i++) {
-            Debug.Log("[GM] Stage [" + i + "]", "green");
+            Debug.Log("[GM] Stage (" + i + ") - " +  this.stages[i].name, "green");
             this.stages[i].log();
         }
     }

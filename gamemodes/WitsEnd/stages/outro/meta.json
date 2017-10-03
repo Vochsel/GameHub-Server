@@ -1,6 +1,6 @@
 {
-    "name": "Intro Stage",
+    "name": "OutroStage",
     "states": [
-        { "src": "states/outro/meta.json" }
+        { "src": "states/end/meta.json" }
     ]
 }

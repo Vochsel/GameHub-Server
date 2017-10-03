@@ -81,9 +81,14 @@ class Stage extends EventEmitter {
 
     // -- Called when stage is entered
     enter() {
-        this.reset();
-
         Debug.Log("Enter Stage - " + this.name, 'cyan');
+
+        //TODO: Fix this
+        if(this.currentStateIdx > 0)
+            this.reset();
+        else 
+            this.setCurrentState(0);
+            //this.currentState.enter();
 
         //Emit event 'on enter'
         this.emit("enter");
@@ -92,7 +97,7 @@ class Stage extends EventEmitter {
     // -- Called when stage is exited
     exit() {
         Debug.Log("Exit Stage - " + this.name, 'cyan');
-        
+        //console.trace("Exiting");
         //Emit event 'on exit'
         this.emit("exit");
     }
@@ -120,11 +125,14 @@ class Stage extends EventEmitter {
         //Check if valid state
         if(a_idx >= 0 && a_idx < this.states.length) {
             this.currentState.exit();
-            /*GH.deviceManager.devices.forEach(function(a_device) {
+
+            Debug.Log("Resetting Roles If Needed");
+            GH.deviceManager.devices.forEach(function(a_device) {
                 //Should a_device reset role...
                 if(a_device.shouldResetRole)
                     a_device.reset();
-            }, this);*/
+            }, this);
+
             this.currentStateIdx = a_idx;
             this.currentState.enter();
             this.emit("changedState", this.currentStateIdx);
@@ -162,8 +170,8 @@ class Stage extends EventEmitter {
         Debug.Log("[Stage] Number of States - " + Utils.Length(this.states), "cyan");
 
         for(var i = 0; i < Utils.Length(this.states); i++) {
-            Debug.Log("[Stage] State [" + i + "]", "cyan");
-            Debug.Log("[Stage] - State: " + this.states[i].name, "cyan");    
+            Debug.Log("[Stage] State (" + i + ") - " + this.states[i].name, "cyan");
+            //Debug.Log("[Stage] - State: " + this.states[i].name, "cyan");    
             this.states[i].log();
         }
     }

@@ -1,5 +1,5 @@
 {
-    "name": "Intro Stage",
+    "name": "IntroStage",
     "states": [
         { "src": "states/begin/meta.json" }
     ]

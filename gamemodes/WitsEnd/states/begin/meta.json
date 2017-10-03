@@ -1,5 +1,6 @@
 {
     "name": "Begin State",
+    "src": "states/begin/src/events.js",
     "model": {
         "clientsReady": {}
     },

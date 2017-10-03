@@ -2,9 +2,9 @@
     "name": "Wits End",
     "version": "0.0.2",
     "flow": [
-        { "stage" : "Intro Stage", "repeats" : 1 },
-        { "stage" : "Game Stage", "repeats" : 5 },
-        { "stage" : "Outro Stage", "repeats" : 1 }
+        { "stage" : "IntroStage", "repeats" : 1 },
+        { "stage" : "GameStage", "repeats" : 5 },
+        { "stage" : "OutroStage", "repeats" : 1 }
     ],
     "model": {
         "clientScore": {}
@@ -13,5 +13,12 @@
         { "src": "stages/intro/meta.json" },
         { "src": "stages/game/meta.json" },
         { "src": "stages/outro/meta.json" }
+    ],
+    "resources": [
+        {
+            "uid": "qdata", 
+            "name": "questionData", 
+            "url": "resources/pack_01.json"
+        }
     ]
 }

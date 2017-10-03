@@ -25,6 +25,7 @@ module.exports.CreateContext = function() {
             Resource: Resource,
 
             System: {
+                gm: GHub.activeGameMode,
                 deviceManager: GHub.deviceManager,
                 serverManager: GHub.serverManager,
             }
@@ -48,6 +49,7 @@ class Compiler {
 
             var gmExport = new GameMode(gmSource);
             gmExport.path = a_source;
+            GHub.activeGameMode = gmExport;
 
             var gmLoadPromises = new Array();
             var gmStatePromises = new Array();
@@ -58,6 +60,16 @@ class Compiler {
 
             //Load model
 
+            // -- Load Resources
+            if(gmSource.resources) {
+                for(var i = 0; i < gmSource.resources.length; i++) {
+                    var r = gmSource.resources[i];
+                    r.url = a_source + "/" + r.url;
+                    var res = new Resource(r);
+                    gmExport.addResource(res);
+                }
+            }
+
             // -- Load stages
             var stages = gmSource.stages;
 
@@ -65,13 +77,24 @@ class Compiler {
             for(var i = 0; i < stages.length; i++) {
                 //Load stage and push promise into gmLoadPromises
                 gmLoadPromises.push(Compiler.LoadStage(path, stages[i], i).then((loaded) =>  {
+
+                    // -- Load Src
+
+                    /*if(Utils.Valid(loaded.stage.src)) {
+                        gmControllerPromises.push(Compiler.LoadSrc(path, loaded.stage.src, 0).then((loadedSrc) =>  {
+                            Object.assign(loaded.stage, loadedSrc.src);
+                        }).catch((a_reason) => {
+                            Debug.Error(a_reason);
+                        }));
+                    }*/
+
                     // -- Load States
                     for(var j = 0; j < loaded.stage.states.length; j++) {
-                        gmStatePromises.push(Compiler.LoadState(path, loaded.stage.states[j], j).then((loadedState) =>  {
+                        gmStatePromises.push(Compiler.LoadState(path, loaded.stage.states[j], j, loaded.stage).then((loadedState) =>  {
 
                             // -- Load Controllers
                             if(Utils.Valid(loadedState.state.controller.src)) {
-                                gmControllerPromises.push(Compiler.LoadController(path, loadedState.state.controller.src, 0).then((loadedController) =>  {
+                                gmControllerPromises.push(Compiler.LoadController(path, loadedState.state.controller.src, 0, {thisState: loadedState.state, thisStage: loaded.stage}).then((loadedController) =>  {
                                     loadedState.state.controller = loadedController.controller;
                                 }).catch((a_reason) => {
                                     Debug.Error(a_reason);
@@ -81,7 +104,7 @@ class Compiler {
                             // -- Load Views
                             for(var l = 0; l < loadedState.state.views.length; l++) {
                                 gmViewPromises.push(Compiler.LoadView(path, loadedState.state.views[l], l).then((loadedView) =>  {
-                                    console.log(loadedView.view);
+                                    //console.log(loadedView.view);
                                     loadedState.state.views[loadedView.idx] = loadedView.view;
                                 }));
                             }
@@ -121,6 +144,7 @@ class Compiler {
 
     static LoadStage(a_path, a_stageSrc, a_idx) {
         var stageOpts = a_stageSrc;
+        var stageOut = null;
         var stagePromise = new Promise((resolve, reject) => {
             if(Utils.Valid(stageOpts.src)) {
                 //Load from src
@@ -132,8 +156,28 @@ class Compiler {
 
                     stageOpts = JSON.parse(a_data);
 
+                    // -- Load Src
+                    if(Utils.Valid(stageOpts.src)) {
+                        console.log(stageOpts.src);
+                        Compiler.LoadSrc(a_path, stageOpts.src, 0, {this: stageOut}).then((loadedSrc) =>  {
+                            stageOpts = Object.assign(stageOpts, loadedSrc.src);
+
+                            stageOut = new Stage(stageOpts);
+                            resolve({stage: stageOut, idx: a_idx});
+                         }).catch((a_reason) => {
+                             Debug.Error(a_reason);
+
+                             stageOut = new Stage(stageOpts);
+                             resolve({stage: stageOut, idx: a_idx});
+                         });
+                     } else {
+                        stageOut = new Stage(stageOpts);
+                        resolve({stage: stageOut, idx: a_idx});
+                        
+                     }
+
                     //Call callback on load
-                    resolve({stage: new Stage(stageOpts), idx: a_idx});
+                    //resolve({stage: new Stage(stageOpts), idx: a_idx});
                 });
             } else {
                 //No async was needed, call callback anyway
@@ -144,7 +188,7 @@ class Compiler {
         return stagePromise;
     }
 
-    static LoadState(a_path, a_stateSrc, a_idx) {
+    static LoadState(a_path, a_stateSrc, a_idx, a_stage) {
         var stateOpts = a_stateSrc;
         var statePromise = new Promise((resolve, reject) => {
             if(Utils.Valid(stateOpts.src)) {
@@ -156,9 +200,26 @@ class Compiler {
                     }
 
                     stateOpts = JSON.parse(a_data);
+
+                     // -- Load Src
+                     if(Utils.Valid(stateOpts.src)) {
+                        console.log(stateOpts.src);
+                        Compiler.LoadSrc(a_path, stateOpts.src, 0, {thisStage: a_stage}).then((loadedSrc) =>  {
+                            stateOpts = Object.assign(stateOpts, loadedSrc.src);
+
+                             resolve({state: new State(stateOpts), idx: a_idx});
+                         }).catch((a_reason) => {
+                             Debug.Error(a_reason);
+
+                             resolve({state: new State(stateOpts), idx: a_idx});                             
+                         });
+                     } else {
+                        resolve({state: new State(stateOpts), idx: a_idx});                             
+                        
+                     }
     
                     //Call callback on load
-                    resolve({state: new State(stateOpts), idx: a_idx});
+                    //resolve({state: new State(stateOpts), idx: a_idx});
                 });
             } else {
                 //No async was needed, call callback anyway
@@ -169,14 +230,21 @@ class Compiler {
         return statePromise;
     }
 
-    static LoadController(a_path, a_controllerSrc, a_idx) {
+    static LoadResource(a_path, a_stateSrc, a_idx) {
+
+
+    }
+
+    static LoadController(a_path, a_controllerSrc, a_idx, a_opts) {
         var controllerFunctions = null;
         var controllerPromise = new Promise((resolve, reject) => {
             if(Utils.Valid(a_controllerSrc)) {
                 //Load from src
                 fs.readFile(a_path + "/" + a_controllerSrc, "utf8", function(a_err, a_data) {
+                    if(a_err)
+                        Debug.Error("Load Error: " + a_err);
                     //console.log(a_err);
-                    controllerFunctions = Eval(a_data, module.exports.CreateContext());
+                    controllerFunctions = Eval(a_data, Object.assign(module.exports.CreateContext(), a_opts));
                     //console.log(controllerFunctions);
                     //controllerFunctions.test();
                     //controllerOpts.data = a_data;//JSON.parse(a_data);
@@ -192,6 +260,31 @@ class Compiler {
 
         return controllerPromise;
     }
+
+    static LoadSrc(a_path, a_src, a_idx, a_opts) {
+        var srcFunctions = null;
+        var srcPromise = new Promise((resolve, reject) => {
+            if(Utils.Valid(a_src)) {
+                //Load from src
+                fs.readFile(a_path + "/" + a_src, "utf8", function(a_err, a_data) {
+                    //console.log(a_err);
+                    srcFunctions = Eval(a_data, Object.assign(module.exports.CreateContext(), a_opts));
+                    //console.log(srcFunctions);
+                    //srcFunctions.test();
+                    //controllerOpts.data = a_data;//JSON.parse(a_data);
+    
+                    //Call callback on load
+                    resolve({src: srcFunctions, idx: a_idx});
+                });
+            } else {
+                reject("Invalid controller source: " + a_src);
+                return;
+            }
+        });
+
+        return srcPromise;
+    }
+
 
     static LoadView(a_path, a_viewSrc, a_idx) {
         var viewOpts = a_viewSrc;

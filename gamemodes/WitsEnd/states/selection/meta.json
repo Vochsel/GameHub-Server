@@ -1,5 +1,6 @@
 {
     "name": "Selection State",
+    "src": "states/selection/src/main.js",
     "model": {
         "clientsReady": {}
     },

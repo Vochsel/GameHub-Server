@@ -79,6 +79,7 @@ class Device extends EventEmitter {
     }
 
     reset() {
+        //console.trace("RESET DEVICE");
         this.role = this.initialRole;
         this.type = this.initialType;
     }

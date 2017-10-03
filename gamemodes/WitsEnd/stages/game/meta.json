@@ -1,11 +1,14 @@
 {
-    "name": "Game Stage",
+    "name": "GameStage",
     "model": {
         "question": "",
         "clientSubmissions": {},
         "clientSelections": {}
     },
     "states": [
-        { "src": "states/answer/meta.json" }
-    ]
+        { "src": "states/answer/meta.json" },
+        { "src": "states/selection/meta.json" },
+        { "src": "states/results/meta.json" }
+    ],
+    "src": "stages/game/src/events.js"
 }

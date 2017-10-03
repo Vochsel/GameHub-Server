@@ -1,5 +1,6 @@
 {
     "name": "End State",
+    "src": "states/end/src/main.js",
     "model": {
         "clientsFinished": {}
     },

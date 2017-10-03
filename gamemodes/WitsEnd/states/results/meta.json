@@ -6,6 +6,7 @@
     "controller": {
         "src": "states/results/controllers/main.js"
     },
+    "src": "states/results/src/events.js",
     "views": [
         { 
             "type": "hub",

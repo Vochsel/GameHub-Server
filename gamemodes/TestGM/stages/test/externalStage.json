@@ -4,5 +4,6 @@
         {
             "src": "states/test/externalState.json"
         }
-    ]
+    ],
+    "src": "src.js"
 }

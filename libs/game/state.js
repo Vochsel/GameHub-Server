@@ -69,8 +69,6 @@ class State extends EventEmitter {
 
     // -- Called when state is entered
     enter() {
-        this.reset();
-        
         Debug.Log("Enter State - " + this.name, 'magenta');
 
         //Emit event 'on enter'
@@ -132,7 +130,7 @@ class State extends EventEmitter {
         Debug.Log("[State] Controller Functions - " + Utils.Length(this.controller), "magenta");
         Debug.Log("[State] Views - "                + Utils.Length(this.views), "magenta");  
         for(var i = 0; i < Utils.Length(this.views); i++) {
-            Debug.Log(this.views[i], "magenta");
+            Debug.Log("[State]   - Type: " + this.views[i].type + ". Role: " + this.views[i].role, "magenta");
         }
     }
 }

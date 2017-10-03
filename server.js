@@ -30,7 +30,7 @@ function Setup() {
     var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
         gmExport.log();
 
-        GH.activeGameMode = gmExport;
+        
         //GH.activeGameMode.path = a_path;
         GH.activeGameMode.start();
     });

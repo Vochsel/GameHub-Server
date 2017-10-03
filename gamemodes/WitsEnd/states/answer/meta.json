@@ -6,6 +6,7 @@
     "controller": {
         "src": "states/answer/controllers/main.js"
     },
+    "src": "states/answer/src/main.js",
     "views": [
         { 
             "type": "hub",

@@ -116,12 +116,6 @@ class DeviceManager {
 
     broadcastState(a_state) {
         this.devices.forEach(function(device) {
-            //Should device reset role...
-            if(device.shouldResetRole) {
-                device.reset();
-                device.shouldResetRole = false;
-            }
-
             //Send state to device
             device.sendState(a_state);
         }, this);

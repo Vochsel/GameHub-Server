@@ -1,17 +1,18 @@
 {
-    isValidated: function() {
-        //Get number of ready clients
-        var readyClients = Utils.Length(this.model.clientsReady);
-        //Get number of total clients
-        var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
+    clientIsReady: function(a_device, a_data) {
+        //console.log(state);
+        if(Utils.Valid(a_data.clientName)) {
+            thisState.model.clientsReady[a_device.uid] = "ready";
+            a_device.name = a_data.clientName;
+            a_device.role = "ready";
+            a_device.shouldRefreshView = true;
+            a_device.shouldResetRole = true;
+        }                        
+    },
+    clientIsNotReady: function(a_device) {
+        delete thisState.model.clientsReady[a_device.uid];
 
-        //Check for min num of clients... TODO: Fix this
-        if(numOfClients < 2)
-            return false;
-
-        console.log(this.model);
-        console.log(readyClients >= numOfClients);
-        //Return true if all players are ready
-        return readyClients >= numOfClients;
+        a_device.role = "default";
+        a_device.shouldRefreshView = true;
     }
 }
