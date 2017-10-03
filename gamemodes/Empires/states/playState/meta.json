@@ -1,0 +1,14 @@
+{
+    "name": "PlayState",
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/playState/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/playState/views/client.html"
+        }
+    ]
+}

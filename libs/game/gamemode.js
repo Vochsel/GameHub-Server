@@ -98,14 +98,16 @@ class GameMode extends EventEmitter {
         this.currentFlowIdx = 0;
         this.currentFlowRepeat = 0;
 
-        
         //Emit event 'on start'
         this.emit("start");
         
+        //Enter stage
         this.currentStage.enter();
-        //this.currentStage.currentState.enter();
         
+        //Broadcast state
+        //TODO: Move this to state class?
         GH.deviceManager.broadcastState(this.currentStage.currentState);
+        
         // -- Closing GM Debug Information
         Debug.ResetLogPrefix();
     }

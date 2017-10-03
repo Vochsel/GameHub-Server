@@ -1,0 +1,7 @@
+{
+    "name": "ReviewStage",
+    "states": [
+        { "src": "states/reviewState/meta.json" },
+        { "src": "states/playState/meta.json" }
+    ]
+}

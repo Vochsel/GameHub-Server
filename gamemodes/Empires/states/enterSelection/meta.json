@@ -1,0 +1,23 @@
+{
+    "name": "EnterSelectionState",
+    "controller": {
+        "src": "states/enterSelection/controllers/main.js"
+    },
+    "src": "states/enterSelection/src/main.js",
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/enterSelection/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/enterSelection/views/client_enter.html" 
+        },
+        {
+            "type": "client",
+            "role": "ready", 
+            "src": "states/enterSelection/views/client_ready.html" 
+        }
+    ]
+}

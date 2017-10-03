@@ -1,0 +1,7 @@
+{
+    "name": "SelectStage",
+    "states": [
+        { "src": "states/enterSelection/meta.json" }
+    ],
+    "src": "stages/select/src/events.js"
+}

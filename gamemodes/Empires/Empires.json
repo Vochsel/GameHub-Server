@@ -1,0 +1,23 @@
+{
+    "name": "Empires",
+    "version": "0.0.1",
+    "flow": [
+        { "stage" : "SelectStage", "repeats" : 1 },
+        { "stage" : "ReviewStage", "repeats" : 2 }
+    ],
+    "model": {
+        "themeChoice": "",
+        "themeSelections": {}
+    },
+    "stages": [
+        { "src": "stages/select/meta.json" },
+        { "src": "stages/review/meta.json" }
+    ],
+    "resources": [
+        {
+            "uid": "tdata", 
+            "name": "themeData", 
+            "url": "resources/theme_kids.json"
+        }
+    ]
+}

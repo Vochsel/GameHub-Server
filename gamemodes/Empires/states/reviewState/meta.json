@@ -1,0 +1,15 @@
+{
+    "name": "ReviewState",
+    "views": [
+        { 
+            "type": "hub",
+            "src": "states/reviewState/views/hub.html" 
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "src": "states/reviewState/views/client.html"
+        }
+    ],
+    "src": "states/reviewState/src/main.js"
+}

@@ -193,3 +193,7 @@ exports.Shuffle = function(a_array) {
 exports.Clone = function(a_object) {
     return JSON.parse(JSON.stringify(a_object));
 }
+
+exports.StartTimer = function(a_callback, a_delayInSeconds) {
+    return setTimeout(a_callback, a_delayInSeconds * 1000);
+}
