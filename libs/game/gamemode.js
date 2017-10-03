@@ -72,6 +72,8 @@ class GameMode extends EventEmitter {
         this.currentStageIdx = 0;
         this.currentFlowIdx = 0;
         this.currentFlowRepeat = 0;
+
+        this.model = Utils.Clone(this.initialModel);
     }
 
     // -- Initial setup of GameMode

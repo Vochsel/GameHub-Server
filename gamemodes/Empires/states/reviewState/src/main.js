@@ -2,6 +2,6 @@
     enter: function() {
         Utils.StartTimer(function() {
             GH.System.gm.progressGameMode();
-        }, 20);
+        }, 2 * Utils.Length(GH.System.gm.model.themeSelections));
     }
 }

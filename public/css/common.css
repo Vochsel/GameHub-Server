@@ -80,9 +80,15 @@ input {
 .bg {
     width: 100%;
     height: 100%;
+    padding: 3vw;
+    box-sizing: border-box;
     margin: 0;
-}
+    
+    padding-top:10vw;
+    
+    text-align: center;
 
+}
 .billboard {
     float: left;
     background-color: #7FA3D7;
