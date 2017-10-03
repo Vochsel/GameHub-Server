@@ -98,6 +98,11 @@ class GameMode extends EventEmitter {
         this.currentFlowIdx = 0;
         this.currentFlowRepeat = 0;
 
+        //Reset devices? Wrong place
+        GH.deviceManager.devices.forEach(function(a_device) {
+            a_device.reset();
+        }, this);
+
         //Emit event 'on start'
         this.emit("start");
         
