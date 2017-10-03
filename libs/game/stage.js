@@ -48,7 +48,7 @@ class Stage extends EventEmitter {
             ? (Debug.Log("Loaded " + Utils.Length(a_options.states) + " states!", "cyan"), a_options.states)
             : new Array();
 
-        this.currentStateIdx = 0;
+        this.currentStateIdx = -1;
 
         /* ---------- Stage Debug Info ---------- */
         Debug.Log("Created Stage Successfully", "cyan");        
@@ -83,6 +83,9 @@ class Stage extends EventEmitter {
     enter() {
         Debug.Log("Enter Stage - " + this.name, 'cyan');
 
+        //Emit event 'on enter'
+        this.emit("enter"); //Moved so callbacks are fired before views sent
+
         //TODO: Fix this
         if(this.currentStateIdx > 0)
             this.reset();
@@ -90,8 +93,6 @@ class Stage extends EventEmitter {
             this.setCurrentState(0);
             //this.currentState.enter();
 
-        //Emit event 'on enter'
-        this.emit("enter");
     }
 
     // -- Called when stage is exited
@@ -124,9 +125,10 @@ class Stage extends EventEmitter {
     setCurrentState(a_idx) {
         //Check if valid state
         if(a_idx >= 0 && a_idx < this.states.length) {
-            this.currentState.exit();
+            if(this.currentStateIdx >= 0)
+                this.currentState.exit();
 
-            Debug.Log("Resetting Roles If Needed");
+            Debug.Log("Resetting Roles If Needed", "green");
             GH.deviceManager.devices.forEach(function(a_device) {
                 //Should a_device reset role...
                 if(a_device.shouldResetRole)

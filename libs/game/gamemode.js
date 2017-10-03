@@ -111,7 +111,7 @@ class GameMode extends EventEmitter {
         
         //Broadcast state
         //TODO: Move this to state class?
-        GH.deviceManager.broadcastState(this.currentStage.currentState);
+        //GH.deviceManager.broadcastState(this.currentStage.currentState);
         
         // -- Closing GM Debug Information
         Debug.ResetLogPrefix();
