@@ -17,7 +17,7 @@
         {
             "uid": "tdata", 
             "name": "themeData", 
-            "url": "resources/theme_kids.json"
+            "url": "resources/themes_general.json"
         }
     ]
 }
