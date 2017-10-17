@@ -1,9 +1,9 @@
-{
-    enter: function() {
-        //Pick random theme for stage
-        var themes = GH.System.gm.resources.get('tdata').source;
-        var theme = themes[Utils.RandomInt(0, themes.length)].theme;
+exports.onEnter = function () {
+    console.log("Entered Stage Select");
+    //Pick random theme for stage
 
-        GH.System.gm.model.themeChoice = theme;
-    }
+    var themes = this.parentGM.resources.get('themeData').data;
+    var theme = themes[Utils.RandomInt(0, themes.length)].theme;
+
+    this.parentGM.model.themeChoice = theme;
 }

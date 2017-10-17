@@ -15,9 +15,8 @@
     ],
     "resources": [
         {
-            "uid": "tdata", 
             "name": "themeData", 
-            "url": "resources/themes_general.json"
+            "src": "resources/themes_general.json"
         }
     ]
 }
