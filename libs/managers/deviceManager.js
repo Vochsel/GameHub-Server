@@ -5,7 +5,9 @@ const EventEmitter  = require('events');
 const GH                = require('../gamehub.js');
 const Debug         = require('../utilities/debug.js');
 const Message       = require('../utilities/message.js');
-const Device        = require('../utilities/device.js');
+//const Device        = require('../utilities/device.js');
+const Device = require('gh-api').Device;
+
 
 class DeviceManager {
 
@@ -32,15 +34,15 @@ class DeviceManager {
     }
 
     // -- Add device
-    addDevice(a_socket, a_options) {
+    addDevice(a_options) {
 
         //Create new device
-        var newDevice = new Device(a_socket, a_options);
+        var newDevice = new Device(a_options);
         
         //Check for existing user
         if(this.devices.has(newDevice.uid)) {
             var loadedDevice = this.devices.get(newDevice.uid);
-            loadedDevice.socket = a_socket;
+            loadedDevice.socket = a_options.socket;
             
             Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + newDevice.uid, "blue");
             

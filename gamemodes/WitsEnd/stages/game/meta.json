@@ -10,5 +10,5 @@
         { "src": "states/selection/meta.json" },
         { "src": "states/results/meta.json" }
     ],
-    "src": "stages/game/src/events.js"
+    "src": "src/events.js"
 }

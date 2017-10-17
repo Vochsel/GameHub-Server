@@ -2,12 +2,14 @@
 const EventEmitter  = require('events');
 const fs            = require('fs');
 const Eval          = require('safe-eval');
+const GHAPI = require('gh-api');
 
 // -- Internal Dependencies
 const Utils         = require('../utilities/utils.js');
 const Debug         = require('../utilities/debug.js');
 const Compiler      = require('../game/compiler.js');
 const GH            = require('../gamehub.js');
+
 
 class GameManager extends EventEmitter {
     constructor() {
@@ -24,8 +26,36 @@ class GameManager extends EventEmitter {
 
         var pathDir = a_path.split('/');
         var gmName = pathDir[pathDir.length - 1];
+
+        var gm = new GHAPI.GameMode({
+            src: a_path,
+            onSetup: () => {
+                gm.on("deviceHandshake", (a_device) => {
+                    if (!a_device)
+                        return;
+                    a_device.sendState(gm.currentStage.currentState, gm);
+                });
+            },
+            onLoad: () => {
+                GH.activeGameMode = gm;
+
+                for(var i = 0; i < gm.stages.length; i++) {
+                    gm.stages[i].on("changedState", function(e) {
+                        console.log("CHANGED !");
+                        GH.deviceManager.devices.forEach(function (a_device) {
+                        	if (a_device.shouldResetRole)
+                        		a_device.reset();
+                        }, this);
+                    });
+                }
+
+                GH.activeGameMode.start();
+            }
+        });
         
-        fs.readFile(a_path + '/' + gmName + ".js", function read(a_err, a_data) {
+        return gm;
+
+        /*fs.readFile(a_path + '/' + gmName + ".js", function read(a_err, a_data) {
             Debug.Log("[GMManager] Loading GameMode at path: " + a_path, "cyan");
 
             //Error loading file
@@ -53,7 +83,7 @@ class GameManager extends EventEmitter {
             GH.activeGameMode.start();
             Debug.Log("[GMManager] Created and started GameMode - " + GH.activeGameMode.name, "cyan");
             
-        });
+        });*/
     }
 }
 

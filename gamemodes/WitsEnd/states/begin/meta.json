@@ -1,26 +1,26 @@
 {
     "name": "Begin State",
-    "src": "states/begin/src/events.js",
+    "src": "src/events.js",
     "model": {
         "clientsReady": {}
     },
     "controller": {
-        "src": "states/begin/controllers/main.js"
+        "src": "controllers/main.js"
     },
     "views": [
         { 
             "type": "hub",
-            "src": "states/begin/views/hub.html" 
+            "src": "views/hub.html" 
         },
         { 
             "type": "client",
             "role": "default",
-            "src": "states/begin/views/client_default.html" 
+            "src": "views/client_default.html" 
         },
         {
             "type": "client",
             "role": "ready", 
-            "src": "states/begin/views/client_ready.html" 
+            "src": "views/client_ready.html" 
         }
     ]
 }

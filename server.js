@@ -8,7 +8,6 @@ var ServerManager   = require('./libs/managers/serverManager.js');
 var GMM             = require('./libs/managers/gameManager.js');
 var GMCompiler      = require('./libs/game/compiler.js').GMCompiler;
 
-
 const chalk         = require('chalk');
 
 function Setup() {
@@ -25,18 +24,20 @@ function Setup() {
 
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];
+
+    GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
     
     //console.log(GMCompiler);
-    var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
+    /*var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
         gmExport.log();
 
         
         //GH.activeGameMode.path = a_path;
         GH.activeGameMode.start();
-    });
+    });*/
 
 
-    //GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
+    
 
     //Start GameMode
     //StartGM();

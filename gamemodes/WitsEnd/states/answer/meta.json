@@ -4,23 +4,23 @@
         "clientsReady": {}
     },
     "controller": {
-        "src": "states/answer/controllers/main.js"
+        "src": "controllers/main.js"
     },
-    "src": "states/answer/src/main.js",
+    "src": "src/main.js",
     "views": [
         { 
             "type": "hub",
-            "src": "states/answer/views/hub.html" 
+            "src": "views/hub.html" 
         },
         { 
             "type": "client",
             "role": "default",
-            "src": "states/answer/views/client_default.html" 
+            "src": "views/client_default.html" 
         },
         {
             "type": "client",
             "role": "challenger", 
-            "src": "states/answer/views/client_challenger.html" 
+            "src": "views/client_challenger.html" 
         }
     ]
 }

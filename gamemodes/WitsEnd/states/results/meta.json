@@ -4,23 +4,23 @@
         "clientsReady": {}
     },
     "controller": {
-        "src": "states/results/controllers/main.js"
+        "src": "controllers/main.js"
     },
-    "src": "states/results/src/events.js",
+    "src": "src/events.js",
     "views": [
         { 
             "type": "hub",
-            "src": "states/results/views/hub.html" 
+            "src": "views/hub.html" 
         },
         { 
             "type": "client",
             "role": "default",
-            "src": "states/results/views/client_default.html" 
+            "src": "views/client_default.html" 
         },
         {
             "type": "client",
             "role": "ready", 
-            "src": "states/results/views/client_ready.html" 
+            "src": "views/client_ready.html" 
         }
     ]
 }

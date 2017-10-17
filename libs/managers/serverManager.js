@@ -6,7 +6,8 @@ const WebSocketServer   = require('ws').Server;
 const GH                = require('../gamehub.js');
 const Debug             = require('../utilities/debug.js');
 const Message           = require('../utilities/message.js');
-const Device            = require('../utilities/device.js');
+//const Device            = require('../utilities/device.js');
+const Device = require('../gamehub.js').Device;
 const DeviceManager     = require('./deviceManager.js');
 
 class ServerManager {
@@ -97,8 +98,9 @@ class GHSocketServer extends WebSocketServer {
                 if(m.data.type) opts.type = m.data.type;
                 if(m.data.role) opts.role = m.data.role;
                 if(m.data.name) opts.name = m.data.name;
+                if(a_socket) opts.socket = a_socket;
 
-                var newDevice = GH.deviceManager.addDevice(a_socket, opts);
+                var newDevice = GH.deviceManager.addDevice(opts);
                 newDevice.emit("join");
 
                 a_socket.attachedDevice = newDevice;
@@ -127,7 +129,8 @@ class GHSocketServer extends WebSocketServer {
                 
                 //Call desired function
                 //TODO: Add some kind of check?
-                var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
+                //var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
+                var funcToCall = GH.activeGameMode.currentStage.currentState.getControllerFunction(action);
                 if(funcToCall) {
                     funcToCall(device, data);
                 } else {
