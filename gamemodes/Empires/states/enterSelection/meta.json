@@ -1,8 +1,10 @@
 {
     "name": "EnterSelectionState",
-    "controller": {
-        "src": "states/enterSelection/controllers/main.js"
-    },
+    "controllers": [
+        {
+            "src": "states/enterSelection/controllers/main.js"
+        }
+    ],
     "src": "states/enterSelection/src/main.js",
     "views": [
         { 

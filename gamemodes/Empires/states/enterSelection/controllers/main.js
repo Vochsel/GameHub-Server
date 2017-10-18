@@ -6,11 +6,9 @@ exports.clientSubmit = function (a_device, a_data) {
     //Check if already selected
     var alreadySelected = false;
 
-    console.log(this.parentState.parentStage.parentGM);
-
-    for (var key in GH.System.gm.model.themeSelections) {
-        if (GH.System.gm.model.themeSelections.hasOwnProperty(key)) {
-            if (GH.System.gm.model.themeSelections[key].selection === clientSelection)
+    for (var key in this.parentStage.parentGM.model.themeSelections) {
+        if (this.parentStage.parentGM.model.themeSelections.hasOwnProperty(key)) {
+            if (this.parentStage.parentGM.model.themeSelections[key].selection === clientSelection)
                 alreadySelected = true;
         }
     }
@@ -18,7 +16,7 @@ exports.clientSubmit = function (a_device, a_data) {
     //If valid, enter and continue
     if (Utils.Valid(clientName) && Utils.Valid(clientSelection) && !alreadySelected) {
         a_device.name = a_data.clientName;
-        GH.System.gm.model.themeSelections[a_device.uid] = { uid: a_device.uid, name: a_device.name, selection: a_data.clientSelection };
+        this.parentStage.parentGM.model.themeSelections[a_device.uid] = { uid: a_device.uid, name: a_device.name, selection: a_data.clientSelection };
 
         a_device.role = "ready";
     }

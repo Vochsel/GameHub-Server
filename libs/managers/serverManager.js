@@ -132,7 +132,8 @@ class GHSocketServer extends WebSocketServer {
                 //var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
                 var funcToCall = GH.activeGameMode.currentStage.currentState.getControllerFunction(action);
                 if(funcToCall) {
-                    funcToCall(device, data);
+                    //TODO: maybe move this??
+                    funcToCall.call(GH.activeGameMode.currentStage.currentState, device, data);
                 } else {
                     Debug.Error("[Device Manager] No function found in state controller with declaration: " + action);
                 }

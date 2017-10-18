@@ -38,6 +38,10 @@ class DeviceManager {
 
         //Create new device
         var newDevice = new Device(a_options);
+        newDevice.on("refresh", () => {
+            console.log("Refreshing");
+            newDevice.sendState(GH.activeGameMode.currentStage.currentState, GH.activeGameMode);
+        })
         
         //Check for existing user
         if(this.devices.has(newDevice.uid)) {

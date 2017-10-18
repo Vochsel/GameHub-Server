@@ -30,6 +30,7 @@ class GameManager extends EventEmitter {
         var gm = new GHAPI.GameMode({
             src: a_path,
             onSetup: () => {
+                //gm.debug();
                 gm.on("deviceHandshake", (a_device) => {
                     if (!a_device)
                         return;

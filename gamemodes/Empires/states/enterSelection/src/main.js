@@ -1,6 +1,5 @@
 exports.isValidated = function () {
-
-    console.log(this.parentStage.parentGM);
+    
     //Get number of ready clients
     var readyClients = Utils.Length(this.parentStage.parentGM.model.themeSelections);
     //Get number of total clients
