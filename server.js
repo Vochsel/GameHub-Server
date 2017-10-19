@@ -1,6 +1,6 @@
 /* Internal Dependencies */
 var Debug           = require('./libs/utilities/debug.js');
-var Utils           = require('./libs/utilities/utils.js');
+var Utils           = require('gh-api').Utils;
 
 var GH              = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
@@ -15,6 +15,10 @@ function Setup() {
     //Setup and start Managers
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
+
+    //TODO: Easy fix...
+    Utils.GH_API.GH.System = new Object();
+    Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
     /*process.argv.forEach(function (val, index, array) {
         console.log(index + ': ' + val);

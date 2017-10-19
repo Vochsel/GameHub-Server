@@ -39,6 +39,11 @@ class GameManager extends EventEmitter {
             },
             onLoad: () => {
                 GH.activeGameMode = gm;
+
+                GH.deviceManager.devices.forEach(function (a_device) {
+                    a_device.reset();
+                }, this);
+
                 gm.on("stageChange", function(v) {
                     console.log("CHANGED STAGE!");
 
