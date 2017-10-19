@@ -24,8 +24,8 @@ function Setup() {
         console.log(index + ': ' + val);
     });*/
 
-    //var gmToLoad = "WitsEnd";
-    var gmToLoad = "Empires";
+    var gmToLoad = "WitsEnd";
+    //var gmToLoad = "Empires";
 
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];

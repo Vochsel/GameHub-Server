@@ -1,4 +1,4 @@
-exports.enter = function () {
+exports.onEnter = function () {
     // Shuffle clients and pick two challengers
     var clients = GH.System.deviceManager.getAllDevicesOfType("client");
     var shuffledClients = Utils.Shuffle(clients);
@@ -12,7 +12,8 @@ exports.enter = function () {
     console.log(this.model);
 
     //Pick random question for stage
-    var questions = GH.System.gm.resources.get('qdata').source;
+
+    var questions = this.parentGM.resources.get('qData').data;
     var question = questions[Utils.RandomInt(0, questions.length)].question;
 
     this.model.question = question;

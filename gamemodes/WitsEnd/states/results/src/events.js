@@ -1,20 +1,20 @@
-exports.enter = function () {
+exports.onEnter = function () {
     Debug.Log("Results ENTERED");
 
     //console.log(thisStage.model.clientSelections);
-    for (var idx in thisStage.model.clientSelections) {
-        var val = thisStage.model.clientSelections[idx];
+    for (var idx in this.parentStage.model.clientSelections) {
+        var val = this.parentStage.model.clientSelections[idx];
         //console.log(val);
 
-        if (!Utils.Valid(GH.System.gm.model.clientScore[val.uid]))
-            GH.System.gm.model.clientScore[val.uid] = new Object();
+        if (!Utils.Valid(this.parentStage.parentGM.model.clientScore[val.uid]))
+            this.parentStage.parentGM.model.clientScore[val.uid] = new Object();
 
-        GH.System.gm.model.clientScore[val.uid].name = val.name;
+        this.parentStage.parentGM.model.clientScore[val.uid].name = val.name;
 
-        if (!Utils.Valid(GH.System.gm.model.clientScore[val.uid].totalVotes))
-            GH.System.gm.model.clientScore[val.uid].totalVotes = 0;
+        if (!Utils.Valid(this.parentStage.parentGM.model.clientScore[val.uid].totalVotes))
+            this.parentStage.parentGM.model.clientScore[val.uid].totalVotes = 0;
 
-        GH.System.gm.model.clientScore[val.uid].totalVotes += val.votes;
+        this.parentStage.parentGM.model.clientScore[val.uid].totalVotes += val.votes;
     }
 
 }

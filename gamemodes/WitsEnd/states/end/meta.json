@@ -4,9 +4,9 @@
     "model": {
         "clientsFinished": {}
     },
-    "controller": {
-        "src": "controllers/main.js"
-    },
+    "controllers": [
+        { "src": "controllers/main.js" }
+    ],
     "views": [
         { 
             "type": "hub",

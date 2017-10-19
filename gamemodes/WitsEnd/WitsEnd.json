@@ -16,9 +16,8 @@
     ],
     "resources": [
         {
-            "uid": "qdata", 
-            "name": "questionData", 
-            "url": "resources/pack_01.json"
+            "name": "qData", 
+            "src": "resources/pack_01.json"
         }
     ]
 }

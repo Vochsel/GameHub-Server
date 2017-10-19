@@ -1,5 +1,5 @@
-exports.enter = function () {
-    console.log(GH.System.gm.model.clientScore);
+exports.onEnter = function () {
+    console.log(this.parentStage.parentGM.model.clientScore);
 }
 exports.isValidated = function () {
     //Get number of ready clients

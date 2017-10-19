@@ -3,9 +3,9 @@
     "model": {
         "clientsReady": {}
     },
-    "controller": {
-        "src": "controllers/main.js"
-    },
+    "controllers": [
+        { "src": "controllers/main.js" }
+    ],
     "src": "src/main.js",
     "views": [
         { 
