@@ -1,0 +1,13 @@
+/* slabo-27px-regular - latin */
+@font-face {
+    font-family: 'Slabo 27px';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./slabo/slabo-27px-v4-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Slabo 27px'), local('Slabo27px-Regular'),
+         url('./slabo/slabo-27px-v4-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('./slabo/slabo-27px-v4-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('./slabo/slabo-27px-v4-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('./slabo/slabo-27px-v4-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('./slabo/slabo-27px-v4-latin-regular.svg#Slabo27px') format('svg'); /* Legacy iOS */
+}

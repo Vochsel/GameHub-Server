@@ -1,5 +1,11 @@
 body {
-    font-family: 'Open Sans', sans-serif;
+    /*font-family: 'Open Sans', sans-serif;*/
+    font-family: 'Montserrat', sans-serif;
+    /*
+    font-family: 'Slabo 27px', serif;
+    font-family: 'Montserrat', sans-serif;
+
+    */
     text-align: center;
     /*padding: 1.5vw;*/
     display: table; 
@@ -68,23 +74,23 @@ input {
 }
 
 #container {
-    /*border: solid thin black;*/
-    padding: 5vw;
-    /*display: table-cell;*/
-    display: table-cell; 
+    display: table; 
+    
     vertical-align: middle;
     box-sizing: border-box;
     font-size: 5vw;
 }
 
 .bg {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    display: table-cell;
+    height: 100vh;
     padding: 3vw;
+    vertical-align: middle;
     box-sizing: border-box;
     margin: 0;
-    
-    padding-top:10vw;
+    padding: 5vw;
+    /*padding-top:10vw;*/
     
     text-align: center;
 
