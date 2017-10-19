@@ -93,13 +93,14 @@ stdin.addListener("data", function(d) {
             break;
         case "reload" :
             {
-                var gm = GMCompiler.Compile(GH.activeGameMode.path, function(gmExport) {
+                var gm = GMM.loadGameMode(GH.activeGameMode.src);
+                /*var gm = GMCompiler.Compile(GH.activeGameMode.path, function(gmExport) {
                     gmExport.log();
             
                     GH.activeGameMode = gmExport;
                     //GH.activeGameMode.path = a_path;
                     GH.activeGameMode.start();
-                });
+                });*/
             }
             break;
         case 'c':

@@ -39,11 +39,23 @@ class GameManager extends EventEmitter {
             },
             onLoad: () => {
                 GH.activeGameMode = gm;
+                gm.on("stageChange", function(v) {
+                    console.log("CHANGED STAGE!");
+
+                    GH.deviceManager.devices.forEach(function (a_device) {
+                        if (a_device.shouldResetRole)
+                            a_device.reset();
+                    }, this);
+                });
 
                 for(var i = 0; i < gm.stages.length; i++) {
-                    gm.stages[i].on("changedState", function(e) {
-                        console.log("CHANGED !");
+                    gm.stages[i].on("stateChange", function(state) {
+                        console.log("CHANGED STATE!");
+
+                        GH.deviceManager.broadcastState(state, gm);
+
                         GH.deviceManager.devices.forEach(function (a_device) {
+                            console.log(a_device.name + " : " + a_device.shouldResetRole);
                         	if (a_device.shouldResetRole)
                         		a_device.reset();
                         }, this);

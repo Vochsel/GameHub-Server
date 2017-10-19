@@ -120,10 +120,10 @@ class DeviceManager {
         }, this);
     }
 
-    broadcastState(a_state) {
+    broadcastState(a_state, a_gm) {
         this.devices.forEach(function(device) {
             //Send state to device
-            device.sendState(a_state);
+            device.sendState(a_state, a_gm);
         }, this);
     }
 
