@@ -6,7 +6,6 @@ var GH              = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
 var GMM             = require('./libs/managers/gameManager.js');
-var GMCompiler      = require('./libs/game/compiler.js').GMCompiler;
 
 const chalk         = require('chalk');
 
@@ -20,37 +19,13 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    /*process.argv.forEach(function (val, index, array) {
-        console.log(index + ': ' + val);
-    });*/
-
     var gmToLoad = "WitsEnd";
-    //var gmToLoad = "Empires";
 
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];
 
     GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
     
-    //console.log(GMCompiler);
-    /*var gm = GMCompiler.Compile(__dirname + "/gamemodes/" + gmToLoad, function(gmExport) {
-        gmExport.log();
-
-        
-        //GH.activeGameMode.path = a_path;
-        GH.activeGameMode.start();
-    });*/
-
-
-    
-
-    //Start GameMode
-    //StartGM();
-}
-
-function StartGM() {
-    GH.activeGameMode = new TestGM();
-    GH.activeGameMode.start();
 }
 
 //Helper function to access sub objects by string

@@ -1,13 +1,10 @@
 // -- External Dependencies
 const EventEmitter = require('events');
 const fs = require('fs');
-const Eval = require('safe-eval');
 const GHAPI = require('gh-api');
 
 // -- Internal Dependencies
-const Utils = require('../utilities/utils.js');
 const Debug = require('../utilities/debug.js');
-const Compiler = require('../game/compiler.js');
 const GH = require('../gamehub.js');
 
 
