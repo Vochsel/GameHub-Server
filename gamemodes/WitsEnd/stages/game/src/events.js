@@ -9,7 +9,7 @@ exports.onEnter = function () {
     this.model.challenger1 = shuffledClients[0].name;
     this.model.challenger2 = shuffledClients[1].name;
 
-    console.log(this.model);
+    //console.log(this.model);
 
     //Pick random question for stage
 

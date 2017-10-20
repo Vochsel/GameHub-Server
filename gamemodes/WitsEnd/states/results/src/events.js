@@ -1,5 +1,4 @@
 exports.onEnter = function () {
-    Debug.Log("Results ENTERED");
 
     //console.log(thisStage.model.clientSelections);
     for (var idx in this.parentStage.model.clientSelections) {

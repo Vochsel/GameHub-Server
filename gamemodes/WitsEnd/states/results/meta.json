@@ -1,12 +1,12 @@
 {
     "name": "Results State",
+    "src": "src/events.js",
     "model": {
         "clientsReady": {}
     },
     "controllers": [
         { "src": "controllers/main.js" }
     ],
-    "src": "src/events.js",
     "views": [
         { 
             "type": "hub",

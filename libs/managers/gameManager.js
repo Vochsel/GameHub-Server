@@ -1,14 +1,14 @@
 // -- External Dependencies
-const EventEmitter  = require('events');
-const fs            = require('fs');
-const Eval          = require('safe-eval');
+const EventEmitter = require('events');
+const fs = require('fs');
+const Eval = require('safe-eval');
 const GHAPI = require('gh-api');
 
 // -- Internal Dependencies
-const Utils         = require('../utilities/utils.js');
-const Debug         = require('../utilities/debug.js');
-const Compiler      = require('../game/compiler.js');
-const GH            = require('../gamehub.js');
+const Utils = require('../utilities/utils.js');
+const Debug = require('../utilities/debug.js');
+const Compiler = require('../game/compiler.js');
+const GH = require('../gamehub.js');
 
 
 class GameManager extends EventEmitter {
@@ -44,33 +44,47 @@ class GameManager extends EventEmitter {
                     a_device.reset();
                 }, this);
 
-                gm.on("stageChange", function(v) {
-                    console.log("CHANGED STAGE!");
+                gm.on("stageChange", function (v) {
 
                     GH.deviceManager.devices.forEach(function (a_device) {
+                        if (a_device.shouldRefreshView)
+                            a_device.refreshView();
                         if (a_device.shouldResetRole)
                             a_device.reset();
                     }, this);
                 });
 
-                for(var i = 0; i < gm.stages.length; i++) {
-                    gm.stages[i].on("stateChange", function(state) {
-                        console.log("CHANGED STATE!");
+                for (var i = 0; i < gm.stages.length; i++) {
+                    for(var j = 0; j < gm.stages[i].states.length; j++) {
+                        gm.stages[i].states[j].on("exit", function(state) {
+                            
+                        })
+                    }
+                    gm.stages[i].on("exit", function(state) {
+                        
+                    });
 
-                        GH.deviceManager.broadcastState(state, gm);
-
+                    gm.stages[i].on("stateChange", function (state) {
                         GH.deviceManager.devices.forEach(function (a_device) {
-                            console.log(a_device.name + " : " + a_device.shouldResetRole);
-                        	if (a_device.shouldResetRole)
-                        		a_device.reset();
+                            //console.log(a_device.role);
+                            
+                            //console.log(a_device.name + " : " + a_device.shouldResetRole);
+                            //if (a_device.shouldRefreshView)
+                            //    a_device.refreshView();
+                            if (a_device.shouldResetRole)
+                                a_device.reset();
+                            //console.log(a_device.name + " : " + a_device.shouldResetRole);
+                            //console.log(a_device.role);
                         }, this);
+                        
+                        GH.deviceManager.broadcastState(state, gm);
                     });
                 }
 
                 GH.activeGameMode.start();
             }
         });
-        
+
         return gm;
 
         /*fs.readFile(a_path + '/' + gmName + ".js", function read(a_err, a_data) {

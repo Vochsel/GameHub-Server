@@ -8,8 +8,8 @@ exports.isValidated = function () {
     if (numOfClients < 2)
         return false;
 
-    console.log(this.model);
-    console.log(readyClients >= numOfClients);
+    //console.log(this.model);
+    //console.log(readyClients >= numOfClients);
     //Return true if all players are ready
     return readyClients >= numOfClients;
 }
