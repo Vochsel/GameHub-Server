@@ -83,36 +83,6 @@ class GameManager extends EventEmitter {
         });
 
         return gm;
-
-        /*fs.readFile(a_path + '/' + gmName + ".js", function read(a_err, a_data) {
-            Debug.Log("[GMManager] Loading GameMode at path: " + a_path, "cyan");
-
-            //Error loading file
-            if (a_err) {
-                //Log out error message
-                Debug.Error("[GMManager] Error reading GameMode!");
-                Debug.Error("[GMManager] " + a_err);
-
-                //Throw Error?
-                throw a_err;
-            }
-
-            //Store file contents
-            var source = a_data;
-
-            var loadedGM = Eval(source, Compiler.CreateContext());
-
-            GH.deviceManager.devices.forEach(function(device) {
-                device.role = device.initialRole;
-            }, this);
-
-            Debug.Log("[GMManager] Loaded GameMode!", "cyan");
-            GH.activeGameMode = new loadedGM();
-            GH.activeGameMode.path = a_path;
-            GH.activeGameMode.start();
-            Debug.Log("[GMManager] Created and started GameMode - " + GH.activeGameMode.name, "cyan");
-            
-        });*/
     }
 }
 
