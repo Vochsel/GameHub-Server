@@ -20,23 +20,14 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    //var gmToLoad = "WitsEnd";
-    var gmToLoad = "Empires";
+    var gmToLoad = "WitsEnd";
+    //var gmToLoad = "Empires";
 
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];
 
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
-
-    Utils.GH_API.GH.GMManager = gmmanager;
-    
-
-    /*GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json", (gm) => {
-        //console.log("GM Loaded");
-        var gmmanager = new GMManager(gm);
-        gmmanager.Start();
-    });*/
-    
+    GH.GMManager = gmmanager;
 }
 
 //Helper function to access sub objects by string
@@ -80,17 +71,15 @@ stdin.addListener("data", function(d) {
                 var gmToLoad = key[1];
                 console.log("Loading %s", gmToLoad);
                 GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
+                var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + ".json");
+                GH.GMManager = gmmanager;
             break;
         case "reload" :
             {
-                var gm = GMM.loadGameMode(GH.activeGameMode.src);
-                /*var gm = GMCompiler.Compile(GH.activeGameMode.path, function(gmExport) {
-                    gmExport.log();
-            
-                    GH.activeGameMode = gmExport;
-                    //GH.activeGameMode.path = a_path;
-                    GH.activeGameMode.start();
-                });*/
+                var oldgmms = GH.GMManager.gmms;
+                console.log(oldgmms);
+                var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
+                GH.GMManager = gmmanager;
             }
             break;
         case 'c':

@@ -9,10 +9,8 @@ const GH = require('../gamehub.js');
 
 class GameModeManager {
 
-    constructor(a_gmSrc) {
-        //this.activeGM = a_gm;
-        this.LoadGM(a_gmSrc);
-
+    constructor(a_gmSrc, a_gmms) {
+        
         this.gmms = {
             currentStage: -1,
             currentState: -1,
@@ -20,6 +18,15 @@ class GameModeManager {
             currentStateRepeats: -1,
             currentFlowIdx: -1
         };
+
+        if(a_gmms) {
+            console.log("Using gmms");
+            this.gmms = a_gmms;
+        }
+        
+        //this.activeGM = a_gm;
+        this.LoadGM(a_gmSrc);
+
 
         GH.GMManager = this;
     }
@@ -73,6 +80,8 @@ class GameModeManager {
         });
         this.activeGM = gm;
         GH.activeGameMode = this.activeGM;
+
+        GHAPI.Utils.GH_API.GH.GMManager = GH.activeGameMode;
     }
 
     // -- Progress
@@ -89,8 +98,6 @@ class GameModeManager {
 
     Start() {
         console.log("Starting");
-        //this.gmms.currentStage = 0;
-        this.gmms.currentState = 0;
 
         this.gmms.currentStageRepeats = 0;
         this.gmms.currentStateRepeats = 0;
@@ -184,7 +191,8 @@ class GameModeManager {
         //Enter new stage
         this.CurrentStageObject.enter();
 
-        this.gmms.currentState = 0;
+        //Set to first state
+        this.SetState(0);
 
         GH.deviceManager.devices.forEach(function (a_device) {
             a_device.refreshView();
