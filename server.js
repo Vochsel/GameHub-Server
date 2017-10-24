@@ -20,12 +20,16 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    var gmToLoad = "WitsEnd";
+    //var gmToLoad = "WitsEnd";
+    var gmToLoad = "Empires";
 
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];
 
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
+
+    Utils.GH_API.GH.GMManager = gmmanager;
+    
 
     /*GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json", (gm) => {
         //console.log("GM Loaded");

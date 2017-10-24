@@ -103,6 +103,10 @@ class GameModeManager {
 
     }
 
+    Progress() {
+        this.NextState();
+    }
+
     // -- Nexters
 
     NextStage() {
