@@ -5,7 +5,6 @@ var Utils           = require('gh-api').Utils;
 var GH              = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
-var GMM             = require('./libs/managers/gameManager.js');
 var GMManager       = require('./libs/managers/gamemodeManager.js');
 
 const chalk         = require('chalk');
