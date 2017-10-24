@@ -27,6 +27,12 @@ class DeviceManager {
                 if(!isAlive) {
                     Debug.Log("Connection timed out, removing device", "yellow");
                     self.removeDevice(key);
+                    
+                    if (GH.GMManager.CurrentStateObject.isValidated()) {
+                        Debug.Log("Progressing");
+                        GH.GMManager.NextState();
+                        //this.progressGameMode();
+                    }
                 }
             }, self);
 
@@ -40,7 +46,7 @@ class DeviceManager {
         var newDevice = new Device(a_options);
         newDevice.on("refresh", () => {
             console.log("Refreshing");
-            newDevice.sendState(GH.activeGameMode.currentStage.currentState, GH.activeGameMode);
+            newDevice.sendState(GH.activeGameMode, GH.GMManager.CurrentStageObject, GH.GMManager.CurrentStateObject);
         })
         
         //Check for existing user
@@ -120,10 +126,10 @@ class DeviceManager {
         }, this);
     }
 
-    broadcastState(a_state, a_gm) {
+    broadcastState(a_gm, a_stage, a_state) {
         this.devices.forEach(function(device) {
             //Send state to device
-            device.sendState(a_state, a_gm);
+            device.sendState(a_gm, a_stage, a_state);
         }, this);
     }
 

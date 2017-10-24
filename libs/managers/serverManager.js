@@ -130,7 +130,9 @@ class GHSocketServer extends WebSocketServer {
                 //Call desired function
                 //TODO: Add some kind of check?
                 //var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
-                var funcToCall = GH.activeGameMode.currentStage.currentState.getControllerFunction(action);
+                
+                //var funcToCall = GH.activeGameMode.currentStage.currentState.getControllerFunction(action);
+                var funcToCall = GH.GMManager.CurrentStateObject.getControllerFunction(action);
                 if(funcToCall) {
                     //TODO: maybe move this??
                     //funcToCall.func.call(GH.activeGameMode.currentStage.currentState, device, data);
@@ -145,7 +147,12 @@ class GHSocketServer extends WebSocketServer {
                     device.shouldRefreshView = false;
                 }
 
-                GH.activeGameMode.isValidated();
+                //GH.activeGameMode.isValidated();
+                if (GH.GMManager.CurrentStateObject.isValidated()) {
+                    Debug.Log("Progressing");
+                    GH.GMManager.NextState();
+                    //this.progressGameMode();
+                }
             }
             break;
         }

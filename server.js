@@ -6,6 +6,7 @@ var GH              = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
 var ServerManager   = require('./libs/managers/serverManager.js');
 var GMM             = require('./libs/managers/gameManager.js');
+var GMManager       = require('./libs/managers/gamemodeManager.js');
 
 const chalk         = require('chalk');
 
@@ -24,7 +25,13 @@ function Setup() {
     if(Utils.Valid(process.argv[2]))
         gmToLoad = process.argv[2];
 
-    GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
+    var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
+
+    /*GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json", (gm) => {
+        //console.log("GM Loaded");
+        var gmmanager = new GMManager(gm);
+        gmmanager.Start();
+    });*/
     
 }
 

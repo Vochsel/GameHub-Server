@@ -19,7 +19,7 @@ class GameManager extends EventEmitter {
         GameManager.loadGameMode(GH.activeGameMode.path);
     }
 
-    static loadGameMode(a_path) {
+    static loadGameMode(a_path, a_loaded) {
 
         var pathDir = a_path.split('/');
         var gmName = pathDir[pathDir.length - 1];
@@ -31,7 +31,7 @@ class GameManager extends EventEmitter {
                 gm.on("deviceHandshake", (a_device) => {
                     if (!a_device)
                         return;
-                    a_device.sendState(gm.currentStage.currentState, gm);
+                    a_device.sendState(GH.activeGameMode, GH.GMManager.CurrentStageObject, GH.GMManager.CurrentStateObject);
                 });
             },
             onLoad: () => {
@@ -78,11 +78,16 @@ class GameManager extends EventEmitter {
                     });
                 }
 
-                GH.activeGameMode.start();
+                a_loaded(gm);
+                //GH.activeGameMode.start();
             }
         });
 
         return gm;
+    }
+
+    static Manage(a_gamemode) {
+        
     }
 }
 
