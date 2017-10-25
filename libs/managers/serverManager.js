@@ -20,8 +20,10 @@ class ServerManager {
         //Create express application
         this.application = Express();
 
+	console.log(__dirname);
+
         //Serve public folder
-        this.application.use(Express.static(__dirname + '/public'));
+        this.application.use(Express.static(__dirname + '/../../public'));
 
         //Create Express Server
         var self = this;
