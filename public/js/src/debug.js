@@ -9,7 +9,10 @@ function AddDebugLog() {
     return debugDiv;
 }
 
-function DebugLog(a_message, a_color = "black") {
+function DebugLog(a_message, a_color) {
+    if(a_color === "") {
+        a_color = "black";
+    }
     console.log(a_message);
     if(globalDebugDiv) {
         if(a_message.outerHTML)
