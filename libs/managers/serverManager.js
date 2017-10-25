@@ -21,7 +21,7 @@ class ServerManager {
         this.application = Express();
 
         //Serve public folder
-        this.application.use(Express.static('public'));
+        this.application.use(Express.static(__dirname + '/public'));
 
         //Create Express Server
         var self = this;
