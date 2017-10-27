@@ -1,0 +1,30 @@
+[
+    { 
+        "theme": "vehicles",
+        "options": [
+            "Car",
+            "Plane",
+            "Fire Truck",
+            "Police Car",
+            "Helicopter",
+            "Ute",
+            "Rocket Ship",
+            "Train",
+            "Bike"
+        ]
+    },
+    { 
+        "theme": "furniture",
+        "options": [
+            "Chair",
+            "Table",
+            "Lampstand",
+            "Recliner",
+            "Stool",
+            "Couch",
+            "Side Table",
+            "Drawers",
+            "Cupboard"
+        ]
+    }
+]

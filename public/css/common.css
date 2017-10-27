@@ -148,3 +148,9 @@ input {
     color: white;
 
 }
+
+canvas {
+    border: solid thin black;
+    width: 70vw;
+    height: 70vw;
+}

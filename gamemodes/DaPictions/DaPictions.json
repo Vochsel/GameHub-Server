@@ -1,0 +1,25 @@
+{
+    "name": "Da Pictions",
+    "version": "0.1.1",
+    "resources": [
+        {
+            "name": "tData", 
+            "src": "resources/general_01.json"
+        }
+    ],
+    "flow": [
+        {"stage": "gameStage", "repeats": 1},
+        {"stage": "guessStage", "repeats": 4}
+    ],
+    "stages": [
+        { "src": "stages/gameStage/meta.json" },
+        { "src": "stages/guessStage/meta.json" }
+    ], 
+    "model": {
+        "submissions": {},
+        "guesses": {},
+        "currentGuess": 0,
+        "theme": "",
+        "subthemes": {}
+    }
+}

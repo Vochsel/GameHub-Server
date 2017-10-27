@@ -85,8 +85,6 @@ function Setup(options) {
             break;
         }
     })
-
-    
 }
 
 function GetInputs() {
@@ -111,7 +109,18 @@ function SetupInput() {
         
         input.addEventListener("click", inputHandle);
     }
+
+    // -- Canvas
+    allCanvas = document.getElementsByTagName("canvas");
+    console.log("Found %s canvas'!", allCanvas.length);
+    
+    for(var i = 0; i < allCanvas.length; i++) {
+        var can = allCanvas[i];
+        SetupCanvas(can);
+    }
 }
+
+var allCanvas = [];
 
 function inputHandle(e) {
     if(e.target.type === "button" || e.target.className === "button") {
@@ -141,6 +150,14 @@ function inputHandle(e) {
                 if(e.target.getAttribute('data-value')) {
                     inputValues[inputID] = e.target.getAttribute('data-value');
                 }
+            }
+        }
+
+    
+        for(var i = 0; i < allCanvas.length; i++) {
+            var inputID = allCanvas[i].getAttribute('data-id');
+            if(inputID) {
+                inputValues[inputID] = allCanvas[i].toDataURL();
             }
         }
 

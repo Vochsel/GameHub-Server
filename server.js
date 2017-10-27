@@ -19,7 +19,8 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    var gmToLoad = "WitsEnd";
+    var gmToLoad = "DaPictions";
+    //var gmToLoad = "WitsEnd";
     //var gmToLoad = "Empires";
 
     if(Utils.Valid(process.argv[2]))
@@ -69,8 +70,8 @@ stdin.addListener("data", function(d) {
             if(key.length > 1)
                 var gmToLoad = key[1];
                 console.log("Loading %s", gmToLoad);
-                GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
-                var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + ".json");
+                //GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
+                var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
                 GH.GMManager = gmmanager;
             break;
         case "reload" :

@@ -1,14 +1,14 @@
 /* External Dependencies */
-const Express           = require('express');
-const WebSocketServer   = require('ws').Server;
+const Express = require('express');
+const WebSocketServer = require('ws').Server;
 
 /* Internal Dependencies */
-const GH                = require('../gamehub.js');
-const Debug             = require('../utilities/debug.js');
-const Message           = require('../utilities/message.js');
+const GH = require('../gamehub.js');
+const Debug = require('../utilities/debug.js');
+const Message = require('../utilities/message.js');
 //const Device            = require('../utilities/device.js');
 const Device = require('../gamehub.js').Device;
-const DeviceManager     = require('./deviceManager.js');
+const DeviceManager = require('./deviceManager.js');
 
 class ServerManager {
     constructor() {
@@ -20,22 +20,22 @@ class ServerManager {
         //Create express application
         this.application = Express();
 
-	console.log(__dirname);
+        console.log(__dirname);
 
         //Serve public folder
         this.application.use(Express.static(__dirname + '/../../public'));
 
         //Create Express Server
         var self = this;
-        this.webServer = this.application.listen(this.PORT, function() {
+        this.webServer = this.application.listen(this.PORT, function () {
             Debug.Log("[GH Web Server] Server running on port: " + self.PORT, "yellow");
             self = null;
         });
 
         /* --------- WS Server --------- */
 
-        this.socketServer = new GHSocketServer({ server : this.webServer, deviceManager: this.deviceManager });
-        
+        this.socketServer = new GHSocketServer({ server: this.webServer, deviceManager: this.deviceManager });
+
     }
 
 }
@@ -48,24 +48,24 @@ class GHSocketServer extends WebSocketServer {
         super(a_options, a_cb);
 
         // -- Assign Event Callbacks
-        
+
         //WSS has started listening
-        this.on('listening', function() {
+        this.on('listening', function () {
             Debug.Log("[GH Socket Server] Server listening", "yellow");
-            
+
         });
 
         //On Socket Error
-        this.on("error", function(a_err) {
+        this.on("error", function (a_err) {
             Debug.Log("[GH Socket Server] Server error", "yellow");
             Debug.Log("[GH Web Server] " + a_err, "yellow");
         })
 
         //Client has connected
-        this.on('connection', function(a_socket) {
+        this.on('connection', function (a_socket) {
             Debug.Log("[GH Socket Server] New connection", "yellow");
-            
-            a_socket.on('message', function(a_msg) {
+
+            a_socket.on('message', function (a_msg) {
                 GHSocketServer.RecieveMessage(a_socket, a_msg);
             });
 
@@ -81,7 +81,7 @@ class GHSocketServer extends WebSocketServer {
             a_socket.isAlive = true;
 
             //Setup pong function to check if alive
-            a_socket.on('pong', function(s) {
+            a_socket.on('pong', function (s) {
                 a_socket.isAlive = true;
             });
         });
@@ -93,70 +93,73 @@ class GHSocketServer extends WebSocketServer {
 
         var device = a_socket.attachedDevice;
 
-        switch(m.type) {
+        switch (m.type) {
             case "handshake": {
                 var opts = {};
-                
-                if(m.data.type) opts.type = m.data.type;
-                if(m.data.role) opts.role = m.data.role;
-                if(m.data.name) opts.name = m.data.name;
-                if(a_socket) opts.socket = a_socket;
+
+                if (m.data.type) opts.type = m.data.type;
+                if (m.data.role) opts.role = m.data.role;
+                if (m.data.name) opts.name = m.data.name;
+                if (a_socket) opts.socket = a_socket;
 
                 var newDevice = GH.deviceManager.addDevice(opts);
                 newDevice.emit("join");
 
                 a_socket.attachedDevice = newDevice;
-            
+
                 GH.activeGameMode.emit("deviceJoined", newDevice);
                 GH.activeGameMode.emit("deviceHandshake", newDevice);
 
                 Debug.SetLogPrefix("Device Manager");
-                    Debug.Log("Recieved device (UID: " + newDevice.uid + ") handshake!", "blue");
-                    Debug.Log(" - Device Type: " + newDevice.type + ".", "blue");
-                    Debug.Log(" - Device Role: " + newDevice.role + ".", "blue");
-                    Debug.Log(" - Device Name: " + newDevice.name + ".", "blue");
+                Debug.Log("Recieved device (UID: " + newDevice.uid + ") handshake!", "blue");
+                Debug.Log(" - Device Type: " + newDevice.type + ".", "blue");
+                Debug.Log(" - Device Role: " + newDevice.role + ".", "blue");
+                Debug.Log(" - Device Name: " + newDevice.name + ".", "blue");
                 Debug.ResetLogPrefix();
                 break;
             }
             case "controller": {
                 //Precheck 
-                if(!m.data)
+                if (!m.data)
                     return;
 
-                var action  = m.data.action;
-                var data    = m.data.data;
+                var action = m.data.action;
+                var data = m.data.data;
 
                 //Recieved function to call
                 Debug.Log("[Device Manager] Recieved controller function: " + action + ". Executing!", "blue");
-                
+
                 //Call desired function
                 //TODO: Add some kind of check?
                 //var funcToCall = GH.activeGameMode.currentStage.currentState.controller[action];
-                
+
                 //var funcToCall = GH.activeGameMode.currentStage.currentState.getControllerFunction(action);
                 var funcToCall = GH.GMManager.CurrentStateObject.getControllerFunction(action);
-                if(funcToCall) {
+                if (funcToCall) {
                     //TODO: maybe move this??
                     //funcToCall.func.call(GH.activeGameMode.currentStage.currentState, device, data);
                     funcToCall.func.call(funcToCall.controller, device, data);
+
+
+                    //Moved these to only get called when func is found
+                    //Refresh device's view if needed
+                    if (device.shouldRefreshView) {
+                        device.refreshView();
+                        device.shouldRefreshView = false;
+                    }
+
+                    //GH.activeGameMode.isValidated();
+                    if (GH.GMManager.CurrentStateObject.isValidated()) {
+                        Debug.Log("Progressing");
+                        GH.GMManager.NextState();
+                        //this.progressGameMode();
+                    }
                 } else {
                     Debug.Error("[Device Manager] No function found in state controller with declaration: " + action);
                 }
 
-                //Refresh device's view if needed
-                if(device.shouldRefreshView) {
-                    device.refreshView();
-                    device.shouldRefreshView = false;
-                }
-
-                //GH.activeGameMode.isValidated();
-                if (GH.GMManager.CurrentStateObject.isValidated()) {
-                    Debug.Log("Progressing");
-                    GH.GMManager.NextState();
-                    //this.progressGameMode();
-                }
             }
-            break;
+                break;
         }
 
         Debug.ResetLogPrefix();

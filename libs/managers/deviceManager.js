@@ -28,6 +28,7 @@ class DeviceManager {
                     Debug.Log("Connection timed out, removing device", "yellow");
                     self.removeDevice(key);
                     
+                    //TODO: This is causing crashes.....
                     if (GH.GMManager.CurrentStateObject.isValidated()) {
                         Debug.Log("Progressing");
                         GH.GMManager.NextState();

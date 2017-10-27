@@ -1,0 +1,6 @@
+{
+    "name": "gameStage",
+    "states": [
+        { "src": "states/drawState/meta.json" }
+    ]
+}

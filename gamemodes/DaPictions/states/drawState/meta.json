@@ -1,0 +1,24 @@
+{
+    "name": "drawState",
+    "controllers": [
+        {"src": "src/controller.js"}
+    ],
+    "src": "src/main.js",
+    "views": [
+        {
+            "type": "client",
+            "role": "default",
+            "src": "views/client_drawer.html"
+        },
+        {
+            "type": "client",
+            "role": "ready",
+            "src": "views/client_default.html"
+        },
+        {
+            "type": "hub",
+            "role": "default",
+            "src": "views/hub.html"
+        }
+    ]
+}

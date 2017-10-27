@@ -40,20 +40,10 @@ class GameModeManager {
 
         var gm = new GHAPI.GameMode({
             src: a_src,
-            onSetup: () => {
-                //gm.debug();
-                gm.on("deviceHandshake", (a_device) => {
-                    console.log("Hey there");
-                    if (!a_device)
-                        return;
-                    a_device.sendState(gm, selfManager.CurrentStageObject, selfManager.CurrentStateObject);
-                });
-            },
             onLoad: () => {
                 GH.activeGameMode = gm;
 
                 gm.on("deviceHandshake", (a_device) => {
-                    console.log("Hey there");
                     if (!a_device)
                         return;
                     a_device.sendState(gm, selfManager.CurrentStageObject, selfManager.CurrentStateObject);
@@ -97,8 +87,6 @@ class GameModeManager {
     // -- GM Control
 
     Start() {
-        console.log("Starting");
-
         this.gmms.currentStageRepeats = 0;
         this.gmms.currentStateRepeats = 0;
         this.gmms.currentFlowIdx = 0;
@@ -202,7 +190,7 @@ class GameModeManager {
     }
 
     SetState(a_idx) {
-        if (a_idx < 0 && a_idx >= this.CurrentStageObject.states.length) {
+        if (a_idx < 0 && a_idx > this.CurrentStageObject.states.length) {
             console.error("State index out of bounds");
             return false;
         }

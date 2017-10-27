@@ -1,0 +1,7 @@
+{
+    "name": "guessStage",
+    "states": [
+        { "src": "states/guessState/meta.json" }
+    ],
+    "src": "src/main.js"
+}
