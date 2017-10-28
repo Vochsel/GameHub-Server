@@ -1,14 +1,25 @@
 [
-    {
-        "question"  : "{stage.model.chosenName} once got arrested for what?"
-    },
-    {
-        "question"  : "If {stage.model.chosenName} was to max out their credit card, what would it be on?"
-    },
-    {
-        "question"  : "What is {stage.model.chosenName}'s favourite passtime?"
-    },
-    {
-        "question"  : "What is {stage.model.chosenName}'s secret obsession?"
-    }
+    { "question"  : "{stage.model.chosenName} once got arrested for what?" },
+    { "question"  : "If {stage.model.chosenName} was to max out their credit card, what would it be on?" },
+    { "question"  : "What is {stage.model.chosenName}'s favourite passtime?" },
+    { "question"  : "Who is {stage.model.chosenName} madly in love with this week?" },
+    { "question"  : "What is the weirdest thing {stage.model.chosenName} has done in an elevator" },
+    { "question"  : "What is {stage.model.chosenName}'s worst habit?" },
+    { "question"  : "What is {stage.model.chosenName}'s guilty pleasure?" },
+    { "question"  : "What was {stage.model.chosenName}'s nickname in school?" },
+    { "question"  : "What Disney character best represents {stage.model.chosenName}?" },
+    { "question"  : "What breakfast meal best describes {stage.model.chosenName}?" },
+    { "question"  : "What pizza topping best represents {stage.model.chosenName}?" },
+    { "question"  : "What kind of animal is {stage.model.chosenName}?" },
+    { "question"  : "Who is {stage.model.chosenName}'s celebrity crush?" },
+    { "question"  : "Would {stage.model.chosenName} have ever done a nudie run?" },
+    { "question"  : "What is {stage.model.chosenName}'s go to pickup line?" },
+    { "question"  : "What is {stage.model.chosenName} most likely to go to jail for?" },
+    { "question"  : "What is {stage.model.chosenName} most likely to be famous for?" },
+    { "question"  : "What would {stage.model.chosenName} spend $1000 dollars on?" },
+    { "question"  : "What would {stage.model.chosenName} spend $1 million dollars on?" },
+    { "question"  : "Where will {stage.model.chosenName} be in 5 years?" },
+    { "question"  : "Where will {stage.model.chosenName} be in 30 years?" },
+    { "question"  : "You turn on the TV, {stage.model.chosenName} is on the news. What have they done?" },
+    { "question"  : "You're in the movies and {stage.model.chosenName} next to you turns and whispers something... What does he say?" }
 ]

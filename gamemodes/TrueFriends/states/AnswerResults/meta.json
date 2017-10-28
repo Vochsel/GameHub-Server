@@ -1,5 +1,14 @@
 {
     "name": "AnswerResults",
+    "controllers": [
+        {
+            "src": "src/controller.js"
+        }
+    ],
+    "model": {
+        "clientsReady": {}
+    },
+    "src": "src/main.js",
     "views": [
         {
             "type": "hub",
@@ -13,7 +22,7 @@
         {
             "type": "client",
             "role": "ready",
-            "data": "<h3>Please wait for others to finish!</h3>"
+            "src": "views/client_ready.html"
         }
     ]
 }

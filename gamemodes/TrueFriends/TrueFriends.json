@@ -8,17 +8,26 @@
         },
         {
             "stage" : "GameStage",
-            "repeats": 5
+            "repeats": 8
+        },
+        {
+            "stage": "OutroStage",
+            "repeats": 0
         }
     ],
     "stages": [
         { "src": "stages/IntroStage/meta.json" },
-        { "src": "stages/GameStage/meta.json" }
+        { "src": "stages/GameStage/meta.json" },
+        { "src": "stages/OutroStage/meta.json" }
+
     ],
     "resources": [
         {
             "name": "qdata", 
             "src": "resources/pack_01.json"
         }
-    ]
+    ],
+    "model": {
+        "clientScore": {}
+    }
 }
