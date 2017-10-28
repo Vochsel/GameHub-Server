@@ -1,0 +1,23 @@
+{
+    "name": "AnswerState",
+    "src": "src/main.js",
+    "controllers": [
+        { "src": "src/controller.js" }
+    ],
+    "views": [
+        {
+            "type": "hub",
+            "src": "views/hub.html"
+        },
+        {
+            "type": "client",
+            "role": "default",
+            "src": "views/client_default.html"
+        },
+        {
+            "type": "client",
+            "role": "ready",
+            "src": "views/client_ready.html"
+        }
+    ]
+}

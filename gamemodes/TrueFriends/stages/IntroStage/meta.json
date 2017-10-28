@@ -1,0 +1,9 @@
+{
+    "name": "IntroStage",
+    "states": [
+        { "src": "states/BeginState/meta.json" }
+    ],
+    "model": {
+        "clientsReady": {}
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "name": "AnswerResults",
+    "views": [
+        {
+            "type": "hub",
+            "src": "views/hub.html"
+        },
+        {
+            "type": "client",
+            "role": "default",
+            "src": "views/client_default.html"
+        },
+        {
+            "type": "client",
+            "role": "ready",
+            "data": "<h3>Please wait for others to finish!</h3>"
+        }
+    ]
+}

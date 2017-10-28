@@ -1,0 +1,24 @@
+{
+    "name": "True Friends",
+    "version": "0.0.4",
+    "flow": [
+        {
+            "stage" : "IntroStage",
+            "repeats": 0
+        },
+        {
+            "stage" : "GameStage",
+            "repeats": 5
+        }
+    ],
+    "stages": [
+        { "src": "stages/IntroStage/meta.json" },
+        { "src": "stages/GameStage/meta.json" }
+    ],
+    "resources": [
+        {
+            "name": "qdata", 
+            "src": "resources/pack_01.json"
+        }
+    ]
+}

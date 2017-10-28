@@ -1,0 +1,13 @@
+{
+    "name": "GameStage",
+    "src": "src/main.js",
+    "states": [
+        { "src": "states/AnswerState/meta.json" },
+        { "src": "states/AnswerSelection/meta.json" },
+        { "src": "states/AnswerResults/meta.json" }
+    ],
+    "model": {
+        "clientAnswers": {},
+        "clientSelections": {}
+    }
+}
