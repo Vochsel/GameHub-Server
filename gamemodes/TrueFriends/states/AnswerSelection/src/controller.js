@@ -9,6 +9,7 @@ exports.clientSubmitSelection = function(a_device, a_data) {
         };
 
     this.parentState.model.selections[a_device.name] = "ready";                        
+    this.parentState.parentStage.model.clientSelections[a_data.answerSelection].name = this.parentState.parentStage.model.clientAnswers[a_data.answerSelection].name;
     this.parentState.parentStage.model.clientSelections[a_data.answerSelection].answer = this.parentState.parentStage.model.clientAnswers[a_data.answerSelection].answer;
     this.parentState.parentStage.model.clientSelections[a_data.answerSelection].selections += 1;
     console.log(this.parentState.parentStage.model.clientSelections);
