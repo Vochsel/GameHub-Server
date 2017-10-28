@@ -19,7 +19,7 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    var gmToLoad = "DaPictions";
+    var gmToLoad = "TrueFriends";
     //var gmToLoad = "WitsEnd";
     //var gmToLoad = "Empires";
 
