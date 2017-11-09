@@ -100,6 +100,8 @@ class GHSocketServer extends WebSocketServer {
                 if (m.data.type) opts.type = m.data.type;
                 if (m.data.role) opts.role = m.data.role;
                 if (m.data.name) opts.name = m.data.name;
+                if (m.data.uid) opts.uid = m.data.uid;
+                
                 if (a_socket) opts.socket = a_socket;
 
                 var newDevice = GH.deviceManager.addDevice(opts);

@@ -27,7 +27,8 @@ function Setup() {
         gmToLoad = process.argv[2];
 
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
-    GH.GMManager = gmmanager;
+    //var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + ".zip");
+    //GH.GMManager = gmmanager;
 }
 
 //Helper function to access sub objects by string

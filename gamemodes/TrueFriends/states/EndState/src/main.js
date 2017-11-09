@@ -2,6 +2,7 @@ exports.onEnter = function () {
     console.log("Scores");
     console.log(this.parentStage.parentGM.model);
 }
+
 exports.isValidated = function () {
     //Get number of ready clients
     var finishedClients = Utils.Length(this.model.clientsFinished);

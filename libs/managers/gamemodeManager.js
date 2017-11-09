@@ -2,6 +2,7 @@
 const EventEmitter = require('events');
 const fs = require('fs');
 const GHAPI = require('gh-api');
+const unzip = require('unzip');
 
 // -- Internal Dependencies
 const Debug = require('../utilities/debug.js');
@@ -23,12 +24,19 @@ class GameModeManager {
             console.log("Using gmms");
             this.gmms = a_gmms;
         }
-        
-        //this.activeGM = a_gm;
-        this.LoadGM(a_gmSrc);
+        if(a_gmSrc.includes(".zip"))
+            this.LoadGMZip(a_gmSrc);
+        else
+            this.LoadGM(a_gmSrc);
 
 
         GH.GMManager = this;
+    }
+
+    LoadGMZip(a_zipPath) {
+        var uz = fs.createReadStream(a_zipPath).pipe(unzip.Extract({ path: 'gamemodes/temp/' }));
+        //console.log(uz);
+        //this.LoadGM('gamemodes/temp/')
     }
 
     // -- Load GameMode

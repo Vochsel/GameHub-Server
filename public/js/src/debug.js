@@ -2,6 +2,7 @@ var globalDebugDiv = null;
 
 
 function AddDebugLog() {
+    //var container = document.getElementById("container");
     var debugDiv = document.createElement("div");
     debugDiv.className = "debug_log";
     document.body.appendChild(debugDiv);

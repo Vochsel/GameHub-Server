@@ -13,8 +13,6 @@ exports.clientSubmitSelection = function(a_device, a_data) {
     this.parentState.parentStage.model.clientSelections[a_data.answerSelection].answer = this.parentState.parentStage.model.clientAnswers[a_data.answerSelection].answer;
     this.parentState.parentStage.model.clientSelections[a_data.answerSelection].selections += 1;
     console.log(this.parentState.parentStage.model.clientSelections);
-    a_device.role = "ready";
 
-    a_device.shouldRefreshView = true;
-    a_device.shouldResetRole = true;
+    a_device.setRole("ready", true);
 }

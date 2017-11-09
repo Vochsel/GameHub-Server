@@ -4,14 +4,11 @@ exports.clientIsReady = function(a_device, a_data) {
 
     this.parentState.model.clientsReady[a_device.uid] = "ready";
 
-    a_device.role = "ready";
-    a_device.shouldRefreshView = true;
-    a_device.shouldResetRole = true;
+    a_device.setRole("ready", true);
 };
 
 exports.clientIsNotReady = function(a_device, a_data) {
     delete this.parentState.model.clientsReady[a_device.uid];
 
-    a_device.role = "default";
-    a_device.shouldRefreshView = true;
+    a_device.setRole("default", true);
 };

@@ -1,10 +1,10 @@
 /* External Dependencies */
-const EventEmitter  = require('events');
+const EventEmitter = require('events');
 
 /* Internal Dependencies */
-const GH                = require('../gamehub.js');
-const Debug         = require('../utilities/debug.js');
-const Message       = require('../utilities/message.js');
+const GH = require('../gamehub.js');
+const Debug = require('../utilities/debug.js');
+const Message = require('../utilities/message.js');
 //const Device        = require('../utilities/device.js');
 const Device = require('gh-api').Device;
 
@@ -19,15 +19,15 @@ class DeviceManager {
 
         //Start device status checker
         var self = this;
-        setInterval(function validateDevices() { 
+        setInterval(function validateDevices() {
 
             //Loop through all devices and check status
-            self.devices.forEach(function(device, key) {
+            self.devices.forEach(function (device, key) {
                 var isAlive = device.checkStatus();
-                if(!isAlive) {
+                if (!isAlive) {
                     Debug.Log("Connection timed out, removing device", "yellow");
                     self.removeDevice(key);
-                    
+
                     //TODO: This is causing crashes.....
                     if (GH.GMManager.CurrentStateObject.isValidated()) {
                         Debug.Log("Progressing");
@@ -43,29 +43,30 @@ class DeviceManager {
     // -- Add device
     addDevice(a_options) {
 
+        //Check for existing user
+        if (this.devices.has(a_options.uid)) {
+            var loadedDevice = this.devices.get(a_options.uid);
+            loadedDevice.socket = a_options.socket;
+
+            Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + a_options.uid, "blue");
+
+            return loadedDevice;
+        }
+
         //Create new device
         var newDevice = new Device(a_options);
         newDevice.on("refresh", () => {
             console.log("Refreshing");
             newDevice.sendState(GH.activeGameMode, GH.GMManager.CurrentStageObject, GH.GMManager.CurrentStateObject);
         })
-        
-        //Check for existing user
-        if(this.devices.has(newDevice.uid)) {
-            var loadedDevice = this.devices.get(newDevice.uid);
-            loadedDevice.socket = a_options.socket;
-            
-            Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + newDevice.uid, "blue");
-            
-            return loadedDevice;
-        }
 
         //Check for local connections
-        if(newDevice.clientIP == "::1") {
-            //Client is local, create fake uid
-            newDevice.uid = "local:" + this.devices.size;
+        if (!a_options.uid) {
+            if (newDevice.clientIP == "::1") {
+                //Client is local, create fake uid
+                newDevice.uid = "local:" + this.devices.size;
+            }
         }
-
         //Push new device into device array
         this.devices.set(newDevice.uid, newDevice);
 
@@ -78,9 +79,9 @@ class DeviceManager {
     // -- Remove device by devices key
     removeDevice(a_device) {
         //a_device is a key
-        if(typeof a_device === 'string') {
+        if (typeof a_device === 'string') {
             //If devices has key
-            if(this.devices.has(a_device)) {
+            if (this.devices.has(a_device)) {
                 //Delete
                 Debug.Log("Removing device by key. UID: " + a_device, "blue");
                 return this.devices.delete(a_device);
@@ -88,15 +89,15 @@ class DeviceManager {
         }
 
         //Otherwise loop all and check
-        this.devices.forEach(function(device, key) {
+        this.devices.forEach(function (device, key) {
             //a_device is uid
-            if(typeof a_device === 'number') {
-                if(device.uid === a_device) {
+            if (typeof a_device === 'number') {
+                if (device.uid === a_device) {
                     Debug.Log("Removing device by UID. UID: " + device.uid, "blue");
-                    return this.devices.delete(key);  
+                    return this.devices.delete(key);
                 }
             } else if (typeof a_device === 'object') {
-                if(device === a_device) {
+                if (device === a_device) {
                     Debug.Log("Removing device by reference. UID: " + device.uid, "blue");
                     return this.devices.delete(key);
                 }
@@ -110,7 +111,7 @@ class DeviceManager {
         var device = this.devices.get(a_uid);
 
         //Device does not exist
-        if(!device) {
+        if (!device) {
             Debug.Error("Could not find device with uid: " + a_uid);
             return;
         }
@@ -121,14 +122,14 @@ class DeviceManager {
 
     // -- Emit to all connected devices
     broadcast(a_message) {
-        this.devices.array.forEach(function(device) {
+        this.devices.array.forEach(function (device) {
             //Send message to device
             device.sendMessage(a_message);
         }, this);
     }
 
     broadcastState(a_gm, a_stage, a_state) {
-        this.devices.forEach(function(device) {
+        this.devices.forEach(function (device) {
             //Send state to device
             device.sendState(a_gm, a_stage, a_state);
         }, this);
@@ -136,9 +137,9 @@ class DeviceManager {
 
     getAllDevicesOfType(a_type) {
         var out = new Array();
-        
-        this.devices.forEach(function(d) {
-            if(d.type === a_type)
+
+        this.devices.forEach(function (d) {
+            if (d.type === a_type)
                 out.push(d);
         }, this);
 
@@ -147,16 +148,16 @@ class DeviceManager {
 
     getAllDevicesOfRole(a_role) {
         var out = new Array();
-        
-        this.devices.forEach(function(d) {
-            if(d.role === a_role)
+
+        this.devices.forEach(function (d) {
+            if (d.role === a_role)
                 out.push(d);
         }, this);
 
         return out;
     }
 
-    
+
 }
 
 module.exports = DeviceManager;
