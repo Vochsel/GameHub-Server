@@ -9,13 +9,28 @@ var GMManager       = require('./libs/managers/gamemodeManager.js');
 
 const chalk         = require('chalk');
 
+var flags = require('flags');
+
 // Remove console log in production mode
 //if(process.env.NODE_ENV == "production")
 //{
-    console.log = function(){}; 
+
 //}
 
 function Setup() {
+
+    // -- Define and parse flags
+    flags.defineString('gm', 'TrueFriends', 'Game Mode to Load');
+    flags.defineBoolean('debug', false, 'Should server start in debug mode');
+    
+    flags.parse();
+
+    var gmToLoad = flags.get('gm');
+    var isDebug  = flags.get('debug');
+
+    if(!isDebug) {
+        console.log = function(){}; 
+    }
 
     //Setup and start Managers
     GH.deviceManager = new DeviceManager();
@@ -25,16 +40,7 @@ function Setup() {
     Utils.GH_API.GH.System = new Object();
     Utils.GH_API.GH.System.deviceManager = GH.deviceManager;
 
-    var gmToLoad = "TrueFriends";
-    //var gmToLoad = "WitsEnd";
-    //var gmToLoad = "Empires";
-
-    if(Utils.Valid(process.argv[2]))
-        gmToLoad = process.argv[2];
-
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
-    //var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + ".zip");
-    //GH.GMManager = gmmanager;
 }
 
 //Helper function to access sub objects by string

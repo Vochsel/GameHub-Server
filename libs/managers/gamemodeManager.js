@@ -79,7 +79,7 @@ class GameModeManager {
         this.activeGM = gm;
         GH.activeGameMode = this.activeGM;
 
-        GHAPI.Utils.GH_API.GH.GMManager = GH.activeGameMode;
+        GHAPI.Utils.GH_API.GH.GMManager = this;
     }
 
     // -- Progress
