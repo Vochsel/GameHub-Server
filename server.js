@@ -10,10 +10,10 @@ var GMManager       = require('./libs/managers/gamemodeManager.js');
 const chalk         = require('chalk');
 
 // Remove console log in production mode
-if(process.env.NODE_ENV == "production")
-{
+//if(process.env.NODE_ENV == "production")
+//{
     console.log = function(){}; 
-}
+//}
 
 function Setup() {
 
