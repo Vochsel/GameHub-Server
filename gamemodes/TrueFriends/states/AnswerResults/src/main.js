@@ -26,7 +26,7 @@ exports.onEnter = function () {
             this.parentStage.parentGM.model.clientScore[val.uid].totalVotes += val.selections;
         }
 
-        console.log(this.parentStage.parentGM.model);
+        //console.log(this.parentStage.parentGM.model);
         
         /*this.parentStage.parentGM.model.clientScore = Array.from(this.parentStage.parentGM.model.clientScore);
         this.parentStage.parentGM.model.clientScore.sort(function (a, b) {

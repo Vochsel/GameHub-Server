@@ -58,7 +58,7 @@ class DeviceManager {
         //Create new device
         var newDevice = new Device(a_options);
         newDevice.on("refresh", () => {
-            console.log("Refreshing");
+            //console.log("Refreshing");
             newDevice.sendState(GH.activeGameMode, GH.GMManager.CurrentStageObject, GH.GMManager.CurrentStateObject);
         })
 

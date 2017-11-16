@@ -1,6 +1,6 @@
 exports.onEnter = function () {
-    console.log("Scores");
-    console.log(this.parentStage.parentGM.model);
+    //Debug.Log("Scores");
+    //Debug.Log(this.parentStage.parentGM.model);
 }
 
 exports.isValidated = function () {

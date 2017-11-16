@@ -5,7 +5,7 @@ exports.isValidated = function() {
     if(numOfClients < 2)
         return false;
 
-    console.log(readyClients + " : " + numOfClients);
+    //console.log(readyClients + " : " + numOfClients);
     
     return readyClients >= numOfClients;
 };

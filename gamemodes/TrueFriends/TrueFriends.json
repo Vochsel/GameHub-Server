@@ -28,6 +28,8 @@
         }
     ],
     "model": {
-        "clientScore": {}
+        "clientScore": {},
+        "lastPlayerChosen": -1,
+        "lastQuestionChosen": -1
     }
 }
