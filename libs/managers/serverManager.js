@@ -4,10 +4,10 @@ const WebSocketServer = require('ws').Server;
 
 /* Internal Dependencies */
 const GH = require('../gamehub.js');
-const Debug = require('../utilities/debug.js');
+const Debug     = require('gh-api').Debug;
 const Message = require('../utilities/message.js');
 //const Device            = require('../utilities/device.js');
-const Device = require('../gamehub.js').Device;
+//const Device = require('../gamehub.js').Device;
 const DeviceManager = require('./deviceManager.js');
 
 class ServerManager {
@@ -19,8 +19,6 @@ class ServerManager {
 
         //Create express application
         this.application = Express();
-
-        console.log(__dirname);
 
         //Serve public folder
         this.application.use(Express.static(__dirname + '/../../public'));

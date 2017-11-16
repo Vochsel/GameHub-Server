@@ -5,7 +5,8 @@ const GHAPI = require('gh-api');
 const unzip = require('unzip');
 
 // -- Internal Dependencies
-const Debug = require('../utilities/debug.js');
+//const Debug = require('../utilities/debug.js');
+const Debug = GHAPI.Debug;
 const GH = require('../gamehub.js');
 
 class GameModeManager {

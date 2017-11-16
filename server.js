@@ -1,6 +1,7 @@
 /* Internal Dependencies */
-var Debug           = require('./libs/utilities/debug.js');
+//var Debug           = require('./libs/utilities/debug.js');
 var Utils           = require('gh-api').Utils;
+var Debug           = require('gh-api').Debug;
 
 var GH              = require('./libs/gamehub.js');
 var DeviceManager   = require('./libs/managers/deviceManager.js');
@@ -29,7 +30,8 @@ function Setup() {
     var isDebug  = flags.get('debug');
 
     if(!isDebug) {
-        console.log = function(){}; 
+        Debug.ShouldLogToConsole = false;
+    //    console.log = function(){}; 
     }
 
     //Setup and start Managers

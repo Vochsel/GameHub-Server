@@ -3,10 +3,12 @@ const EventEmitter = require('events');
 
 /* Internal Dependencies */
 const GH = require('../gamehub.js');
-const Debug = require('../utilities/debug.js');
+
 const Message = require('../utilities/message.js');
-//const Device        = require('../utilities/device.js');
-const Device = require('gh-api').Device;
+
+const GHAPI     = require('gh-api');
+const Debug     = GHAPI.Debug;
+const Device    = GHAPI.Device;
 
 
 class DeviceManager {
