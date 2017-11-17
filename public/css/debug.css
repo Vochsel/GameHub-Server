@@ -21,13 +21,17 @@ body {
     
 }
 
+.clientFrame {
+    height: 50%;
+}
+
 .hubContainer {
     flex-grow: 2;
 }
 
 .clientContainer {
     text-align: center;
-    overflow: scroll;
+    overflow-y: scroll;
     flex-grow: 0.5;
 
 }

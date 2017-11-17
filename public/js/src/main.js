@@ -22,7 +22,7 @@ function getQueryParams(qs) {
 }
 
 function Setup(options) {
-    hideAddressBar();
+    //hideAddressBar();
     if (!options)
         options = {};
 
