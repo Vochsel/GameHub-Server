@@ -27,10 +27,11 @@ exports.onEnter = function () {
         }
 
         //console.log(this.parentStage.parentGM.model);
-        
-        /*this.parentStage.parentGM.model.clientScore = Array.from(this.parentStage.parentGM.model.clientScore);
-        this.parentStage.parentGM.model.clientScore.sort(function (a, b) {
-            return a.totalVotes - b.totalVotes;
-        });*/
+        console.log(this.parentStage.model.clientSelections)
+        this.parentStage.model.clientSelections = Object.keys(this.parentStage.model.clientSelections).map((k) => this.parentStage.model.clientSelections[k]);
+        console.log(this.parentStage.model.clientSelections)
+        this.parentStage.model.clientSelections.sort(function (a, b) {
+            return  b.selections - a.selections;
+        });
     
     }
