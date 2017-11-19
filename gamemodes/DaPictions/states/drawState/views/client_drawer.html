@@ -1,10 +1,12 @@
 <div class='bg gradient-blue'>
     <h1>Drawer</h1>
+    <h2 class="capitalize"><b>Main Theme : </b> {stage.model.themeName}</h2>
+    <h2 class="capitalize"><b>Your Theme : </b> {device.data.subTheme}</h2>
 
     <canvas data-id='canvas'></canvas>
 
     <br>
 
-    <input type='button' id='b' value='Submit' data-action='clientSubmit()' />
-
+    <!--<input type='button' id='b' value='Submit' data-action='clientSubmit()' />-->
+    <div class='button' data-action='clientSubmit()'>Submit</div>
 </div>

@@ -1,6 +1,6 @@
 exports.onEnter = function() {
     //console.log(this.parentStage.parentGM.model.submissions);
-    this.model.currentDrawing = Object.values(this.parentStage.parentGM.model.submissions)[this.parentStage.parentGM.model.currentGuess].drawing;
+    
     //this.model.currentDrawing = 10;
 }
 

@@ -61,7 +61,7 @@ input {
        -moz-user-select: none; /* Firefox */
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently*/
-    transition: background-color 0.425s ease-out;
+    /*transition: background-color 0.425s ease-out;*/
     word-wrap: break-word;
 }
 
@@ -151,6 +151,11 @@ input {
 
 canvas {
     border: solid thin black;
+    background-color: #ffffff;
     width: 70vw;
     height: 70vw;
 }
+
+.capitalize { text-transform: capitalize; }
+.uppercase { text-transform: uppercase; }
+.lowercase { text-transform: lowercase; }

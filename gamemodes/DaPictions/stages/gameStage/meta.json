@@ -2,5 +2,9 @@
     "name": "gameStage",
     "states": [
         { "src": "states/drawState/meta.json" }
-    ]
+    ],
+    "model": {
+        "themeName": "No Theme Loaded"
+    }, 
+    "src": "src/main.js"
 }
