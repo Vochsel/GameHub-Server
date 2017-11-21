@@ -17,7 +17,7 @@
     "resources": [
         {
             "name": "qData", 
-            "src": "resources/pack_01.json"
+            "src": "resources/pack_02.json"
         }
     ]
 }
