@@ -48,6 +48,9 @@ class DeviceManager {
         var tempUID = a_options.socket._socket.remoteAddress + "-" + a_options.type + "-" + a_options.role;
         Debug.Error(tempUID);
 
+        if(a_options.uid)
+            tempUID = a_options.uid;
+
         //Check for existing user
         if (this.devices.has(tempUID)) {
             var loadedDevice = this.devices.get(tempUID);

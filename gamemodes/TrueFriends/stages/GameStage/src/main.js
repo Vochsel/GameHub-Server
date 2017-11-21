@@ -14,7 +14,7 @@ exports.onEnter = function() {
     this.parentGM.model.lastPlayerChosen = chosenIdx;
 
     //Load all questions
-    console.log(this.parentGM.resources.get('qdata'));
+    //console.log(this.parentGM.resources.get('qdata'));
     var questions = this.parentGM.resources.get('qdata').data;
 
     //Choose random question
