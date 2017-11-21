@@ -21,5 +21,6 @@
         "currentGuess": 0,
         "theme": "",
         "subthemes": {}
-    }
+    },
+    "src": "src/events.js"
 }

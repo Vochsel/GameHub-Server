@@ -15,10 +15,10 @@ exports.onEnter = function () {
 
         this.parentStage.parentGM.model.clientScore[val.uid].totalVotes += val.votes;
     }
-    this.parentStage.parentGM.model.clientScore = Array.from(this.parentStage.parentGM.model.clientScore);
+    /*this.parentStage.parentGM.model.clientScore = Array.from(this.parentStage.parentGM.model.clientScore);
     this.parentStage.parentGM.model.clientScore.sort(function (a, b) {
         return a.totalVotes - b.totalVotes;
-    });
+    });*/
 
 }
 exports.isValidated = function () {

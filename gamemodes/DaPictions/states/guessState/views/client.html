@@ -1,6 +1,7 @@
 <div class='bg gradient-green'>
     <h1>Guess Client!</h1>
-    <image src='{stage.model.currentDrawing}' />
+    <h3>{stage.model.currentData.answer}</h3>
+    <image src='{stage.model.currentData.drawing}' />
     <input type='text' data-id='clientSubmission' />
     <div class='button' data-action='clientSubmit()'>
         Submit!

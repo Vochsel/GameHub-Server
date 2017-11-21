@@ -3,7 +3,7 @@
     "version": "0.0.2",
     "flow": [
         { "stage" : "IntroStage", "repeats" : 1 },
-        { "stage" : "GameStage", "repeats" : 4 },
+        { "stage" : "GameStage", "repeats" : 3 },
         { "stage" : "OutroStage", "repeats" : 1 }
     ],
     "model": {

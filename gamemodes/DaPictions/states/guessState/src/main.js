@@ -8,7 +8,7 @@ exports.isValidated = function() {
     var submissions = Utils.Length(this.parentStage.parentGM.model.submissions);
     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
     
-    var guesses = Utils.Length(Object.values(this.parentStage.parentGM.model.submissions)[this.parentStage.parentGM.model.currentGuess].guesses);
-
+    //var guesses = Utils.Length(Object.values(this.parentStage.parentGM.model.submissions)[this.parentStage.parentGM.model.currentGuess].guesses);
+    var guesses = Utils.Length(Utils.IndexObject(this.parentStage.parentGM.model.submissions, this.parentStage.parentGM.model.currentGuess).guesses);
     return guesses >= numOfClients;
 }

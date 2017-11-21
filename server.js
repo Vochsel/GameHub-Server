@@ -21,7 +21,7 @@ var flags = require('flags');
 function Setup() {
 
     // -- Define and parse flags
-    flags.defineString('gm', 'TrueFriends', 'Game Mode to Load');
+    flags.defineString('gm', 'DaPictions', 'Game Mode to Load');
     flags.defineBoolean('debug', false, 'Should server start in debug mode');
     
     flags.parse();

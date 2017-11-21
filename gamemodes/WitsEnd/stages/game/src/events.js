@@ -8,6 +8,16 @@ exports.onEnter = function () {
 
     this.model.challenger1 = shuffledClients[0].name;
     this.model.challenger2 = shuffledClients[1].name;
+    //Prevent same two peeps
+    if(this.model.challenger2 == this.parentGM.model.lastChallenger1 || this.model.challenger2 == this.parentGM.model.lastChallenger2) {
+        this.model.challenger2 = shuffledClients[2 % Utils.Length(shuffledClients)].name;
+        if(this.model.challenger2 == this.parentGM.model.lastChallenger1 || this.model.challenger2 == this.parentGM.model.lastChallenger2) {
+            this.model.challenger2 = shuffledClients[3 % Utils.Length(shuffledClients)].name;
+        }
+    }
+
+    this.parentGM.model.lastChallenger1 = this.model.challenger1;
+    this.parentGM.model.lastChallenger2 = this.model.challenger2;
 
     //console.log(this.model);
 

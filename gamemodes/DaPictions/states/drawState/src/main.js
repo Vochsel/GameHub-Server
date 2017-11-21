@@ -13,5 +13,5 @@ exports.onEnter = function() {
 exports.onExit = function() {
     var submissions = Utils.Length(this.parentStage.parentGM.model.submissions);
     
-    //this.parentStage.parentGM.flow[1].repeats = Utils.Length(submissions);
+    this.parentStage.parentGM.flow[1].repeats = Utils.Length(submissions);
 }

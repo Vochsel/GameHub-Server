@@ -1,5 +1,9 @@
 exports.clientSubmitAnswer = function(a_device, a_data) {
+    
+    if(a_data.clientAnswer === "")
+        return;
     Debug.Log("client submitted answer!");
+    
 
     //Check for existing answer
     for(var i = 0; i < Utils.Length(this.parentState.parentStage.model.clientAnswers); i++) {
