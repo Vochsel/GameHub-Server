@@ -25,16 +25,20 @@ class DeviceManager {
 
             //Loop through all devices and check status
             self.devices.forEach(function (device, key) {
-                var isAlive = device.checkStatus();
-                if (!isAlive) {
-                    Debug.Log("Connection timed out, removing device", "yellow");
-                    self.removeDevice(key);
+                if(device.type !== "idle"){
+                    
+                    var isAlive = device.checkStatus();
+                    if (!isAlive) {
+                        Debug.Log("Connection timed out, changing device to idle", "yellow");
+                        //self.removeDevice(key);
+                        device.type = "idle";
 
-                    //TODO: This is causing crashes.....
-                    if (GH.GMManager.CurrentStateObject.isValidated()) {
-                        Debug.Log("Progressing");
-                        GH.GMManager.NextState();
-                        //this.progressGameMode();
+                        //TODO: This is causing crashes.....
+                        if (GH.GMManager.CurrentStateObject.isValidated()) {
+                            Debug.Log("Progressing");
+                            GH.GMManager.NextState();
+                            //this.progressGameMode();
+                        }
                     }
                 }
             }, self);
@@ -56,6 +60,8 @@ class DeviceManager {
             var loadedDevice = this.devices.get(tempUID);
             //Debug.Warning(loadedDevice);
             loadedDevice.socket = a_options.socket;
+            if(loadedDevice.type === "idle")
+                loadedDevice.type = a_options.type;
 
             Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + a_options.uid, "blue");
 
