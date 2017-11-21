@@ -95,8 +95,8 @@ class GHSocketServer extends WebSocketServer {
             case "handshake": {
                 var opts = {};
 
-                if (m.data.type) opts.type = m.data.type;
-                if (m.data.role) opts.role = m.data.role;
+                if (m.data.type) opts.type = m.data.type;   else opts.type = "default";
+                if (m.data.role) opts.role = m.data.role;   else opts.role = "default";
                 if (m.data.name) opts.name = m.data.name;
                 if (m.data.uid) opts.uid = m.data.uid;
                 

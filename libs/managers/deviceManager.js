@@ -45,12 +45,14 @@ class DeviceManager {
     // -- Add device
     addDevice(a_options) {
 
+        var tempUID = a_options.socket._socket.remoteAddress + "-" + a_options.type + "-" + a_options.role;
+        Debug.Error(tempUID);
+
         //Check for existing user
-        if (this.devices.has(a_options.uid)) {
-            var loadedDevice = this.devices.get(a_options.uid);
+        if (this.devices.has(tempUID)) {
+            var loadedDevice = this.devices.get(tempUID);
             //Debug.Warning(loadedDevice);
             loadedDevice.socket = a_options.socket;
-            loadedDevice.name = a_options.name;
 
             Debug.Log("[Device Manager] Device already existed. LOADING! UID: " + a_options.uid, "blue");
 

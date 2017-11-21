@@ -97,6 +97,9 @@ stdin.addListener("data", function(d) {
                 GH.GMManager = gmmanager;
             }
             break;
+        case 'p':
+            GH.GMManager.NextState();
+            break;
         case 'c':
             {
                 Debug.Log(GH.deviceManager.devices.size, "red");
