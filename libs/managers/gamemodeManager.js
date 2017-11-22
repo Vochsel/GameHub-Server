@@ -5,7 +5,6 @@ const GHAPI = require('gh-api');
 const unzip = require('unzip');
 
 // -- Internal Dependencies
-//const Debug = require('../utilities/debug.js');
 const Debug = GHAPI.Debug;
 const GH = require('../gamehub.js');
 
@@ -36,8 +35,6 @@ class GameModeManager {
 
     LoadGMZip(a_zipPath) {
         var uz = fs.createReadStream(a_zipPath).pipe(unzip.Extract({ path: 'gamemodes/temp/' }));
-        //console.log(uz);
-        //this.LoadGM('gamemodes/temp/')
     }
 
     // -- Load GameMode
@@ -73,8 +70,6 @@ class GameModeManager {
                 });
 
                 this.Start();
-                //a_loaded(gm);
-                //GH.activeGameMode.start();
             }
         });
         this.activeGM = gm;

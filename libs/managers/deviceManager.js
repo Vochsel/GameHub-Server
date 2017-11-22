@@ -30,14 +30,12 @@ class DeviceManager {
                     var isAlive = device.checkStatus();
                     if (!isAlive) {
                         Debug.Log("Connection timed out, changing device to idle", "yellow");
-                        //self.removeDevice(key);
                         device.type = "idle";
 
                         //TODO: This is causing crashes.....
                         if (GH.GMManager.CurrentStateObject.isValidated()) {
                             Debug.Log("Progressing");
                             GH.GMManager.NextState();
-                            //this.progressGameMode();
                         }
                     }
                 }

@@ -6,8 +6,6 @@ const WebSocketServer = require('ws').Server;
 const GH = require('../gamehub.js');
 const Debug     = require('gh-api').Debug;
 const Message = require('../utilities/message.js');
-//const Device            = require('../utilities/device.js');
-//const Device = require('../gamehub.js').Device;
 const DeviceManager = require('./deviceManager.js');
 
 class ServerManager {

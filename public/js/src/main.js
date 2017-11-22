@@ -90,7 +90,13 @@ function Setup(options) {
             }
                 break;
         }
-    })
+    });
+    //ws.addEventListener('close', function(e) {
+       /* var checkInterval = setInterval(function () {
+            //SendWS(ws, new Message("ping", "Stayin' alive"));
+            
+        }, 5000);*/
+    //})
 }
 
 function GetInputs() {
