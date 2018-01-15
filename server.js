@@ -12,12 +12,6 @@ const chalk         = require('chalk');
 
 var flags = require('flags');
 
-// Remove console log in production mode
-//if(process.env.NODE_ENV == "production")
-//{
-
-//}
-
 function Setup() {
 
     // -- Define and parse flags
@@ -92,7 +86,7 @@ stdin.addListener("data", function(d) {
         case "reload" :
             {
                 var oldgmms = GH.GMManager.gmms;
-                console.log(oldgmms);
+                Debug.Log(oldgmms);
                 var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
                 GH.GMManager = gmmanager;
             }

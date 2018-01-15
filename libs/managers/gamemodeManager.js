@@ -22,7 +22,8 @@ class GameModeManager {
 
         if(a_gmms) {
             console.log("Using gmms");
-            this.gmms = a_gmms;
+            //this.gmms = a_gmms;
+            this.LoadProgress(a_gmms);
         }
         if(a_gmSrc.includes(".zip"))
             this.LoadGMZip(a_gmSrc);
@@ -81,7 +82,8 @@ class GameModeManager {
     // -- Progress
 
     LoadProgress(a_progress) {
-        this.gmms = JSON.parse(a_progress);
+        //this.gmms = JSON.parse(a_progress);
+        this.gmms = a_progress;
     }
 
     SaveProgress() {
@@ -96,6 +98,10 @@ class GameModeManager {
         this.gmms.currentFlowIdx = 0;
 
         this.SetStage(0);
+    }
+
+    Refresh() {
+        this.SetStage(this.gmms.currentStage);
     }
 
     Stop() {
