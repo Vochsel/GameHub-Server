@@ -128,6 +128,10 @@ class GameModeManager {
         this.SetStage(0);
     }
 
+    Refresh() {
+        this.SetStage(this.gmms.currentStage);
+    }
+
     Stop() {
 
     }
