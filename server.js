@@ -87,11 +87,7 @@ stdin.addListener("data", function(d) {
             {
                 GH.GMManager.SaveProgress();
                 var oldgmms = GH.GMManager.gmms;
-<<<<<<< HEAD
                 //console.log(oldgmms);
-=======
-                Debug.Log(oldgmms);
->>>>>>> fc5707f33cfb13da8c34958ea2901b8c9013b140
                 var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
                 GH.GMManager = gmmanager;
             }
