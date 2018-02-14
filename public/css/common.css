@@ -149,7 +149,7 @@ input {
     line-height: 5.75vw;
     font-size: 4vw;
     color: white;
-
+    z-index: 10;
 }
 
 canvas {
@@ -169,10 +169,36 @@ canvas {
 }
 
 .submission {
-    background-color: orange;
+    background-color: #d8f3f2;
     flex: 1;
     text-align: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+    margin: 2vw;
+    padding: 2vw;
+
+    box-shadow: 0 0 40px 0px black;
+
+    font-family: 'Patrick Hand', cursive;
+    border:solid 7px #41403E;
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+}
+
+.submission_main {
+    font-size: 5vw;
+    
+    display: flex;
+    flex: 1; 
+    flex-direction: column;
+    justify-content: center;
+
+    text-transform: uppercase;
+    flex-grow: 1;
+    padding: 2vw;
+}
+
+.submission_sub {
+    font-size: 2vw;
 }
