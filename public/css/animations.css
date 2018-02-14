@@ -1,0 +1,35 @@
+#slider {
+    display: block;
+    width: 2vw;
+    height: 2vw;
+    background-color: #ff6681;
+    padding: 1vw;
+    border-radius: 2vw;
+    margin-top: 0.5vw;
+    border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;
+    
+    animation: slide 30s linear forwards;
+}
+
+#slider_container {
+    background-color: #570625;
+    width: 60vw;
+    height: 5vw;
+    display: inline-block;
+    text-align: center;
+    border-radius: 2.5vw;
+    margin-top: 5vw;
+    border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;
+    
+}
+
+@keyframes slide {
+    0% {
+        transform: translate(0.5vw, 0);
+        width: 2vw;
+    }
+    100% {
+        transform: translate(0.5vw, 0);
+        width: 57vw;
+    }
+}
