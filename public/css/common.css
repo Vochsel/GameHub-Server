@@ -162,3 +162,17 @@ canvas {
 .capitalize { text-transform: capitalize; }
 .uppercase { text-transform: uppercase; }
 .lowercase { text-transform: lowercase; }
+
+.submission_container {
+    display: flex;
+    flex: 1;
+}
+
+.submission {
+    background-color: orange;
+    flex: 1;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

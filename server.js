@@ -21,7 +21,7 @@ var flags = require('flags');
 function Setup() {
 
     // -- Define and parse flags
-    flags.defineString('gm', 'TrueFriends', 'Game Mode to Load');
+    flags.defineString('gm', 'WitsEnd', 'Game Mode to Load');
     flags.defineBoolean('debug', false, 'Should server start in debug mode');
     
     flags.parse();
@@ -31,7 +31,7 @@ function Setup() {
 
     if(!isDebug) {
         Debug.ShouldLogToConsole = false;
-        console.log = function(){}; 
+        //console.log = function(){}; 
     }
 
     //Setup and start Managers
@@ -91,14 +91,30 @@ stdin.addListener("data", function(d) {
             break;
         case "reload" :
             {
+                GH.GMManager.SaveProgress();
                 var oldgmms = GH.GMManager.gmms;
-                console.log(oldgmms);
+                //console.log(oldgmms);
                 var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
                 GH.GMManager = gmmanager;
             }
             break;
         case 'p':
             GH.GMManager.NextState();
+            break;
+        case 'gmms':
+            {
+                Debug.Log(GH.GMManager.gmms);
+            }
+            break;
+        case 'currentStage':
+            {
+                Debug.Log(GH.GMManager.CurrentStageObject);
+            }
+            break;
+        case 'currentState':
+            {
+                Debug.Log(GH.GMManager.CurrentStateObject);
+            }
             break;
         case 'c':
             {

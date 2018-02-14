@@ -22,13 +22,21 @@ class GameModeManager {
 
         if(a_gmms) {
             console.log("Using gmms");
+            //this.LoadProgress(a_gmms);
             this.gmms = a_gmms;
+            //this.LoadProgress(a_gmms);
         }
         if(a_gmSrc.includes(".zip"))
             this.LoadGMZip(a_gmSrc);
         else
             this.LoadGM(a_gmSrc);
 
+        this.isReload = false;
+
+        if(a_gmms)
+        {
+            this.isReload = true;            
+        }
 
         GH.GMManager = this;
     }
@@ -47,6 +55,15 @@ class GameModeManager {
         var gm = new GHAPI.GameMode({
             src: a_src,
             onLoad: () => {
+                
+                if(selfManager.isReload) {
+                    console.log("Relading");
+                    selfManager.LoadProgress(selfManager.gmms);
+                    GH.deviceManager.devices.forEach(function (a_device) {
+                        a_device.refreshView();
+                    }, this);
+                }
+
                 GH.activeGameMode = gm;
 
                 gm.on("deviceHandshake", (a_device) => {
@@ -69,7 +86,8 @@ class GameModeManager {
                     }, this);
                 });
 
-                this.Start();
+                if(!selfManager.isReload)
+                    this.Start();
             }
         });
         this.activeGM = gm;
@@ -81,10 +99,22 @@ class GameModeManager {
     // -- Progress
 
     LoadProgress(a_progress) {
-        this.gmms = JSON.parse(a_progress);
+        console.log("Loading Progress");
+        if(GHAPI.Utils.IsString(a_progress))
+            this.gmms = JSON.parse(a_progress);
+        else
+            this.gmms = a_progress;
+
+        this.CurrentStageObject.model = this.gmms.currentStageModel;
+        this.CurrentStateObject.model = this.gmms.currentStateModel;
+        console.log(this.gmms);
     }
 
     SaveProgress() {
+        console.log("Saving Progress");
+        this.gmms.currentStageModel = this.CurrentStageObject.model;
+        this.gmms.currentStateModel = this.CurrentStateObject.model;
+        console.log(this.gmms);
         return JSON.stringify(this.gmms);
     }
 
