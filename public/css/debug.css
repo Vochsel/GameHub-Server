@@ -4,11 +4,14 @@ body {
     flex-direction: column;
     margin: 0;
     height: 100vh;
+
+    cursor: default;
 }
 
 #debugContainer {
     display:flex;
     flex-direction: row;  
+    
       padding: 2vw;
 }
 
@@ -58,8 +61,12 @@ iframe {
     width: 100%;
     bottom: 0;
     left: 0;
-    height: 20vh;
+    height: 15vh;
     background-color: #eee;
-    padding: 2.5vw;
+    padding: 1.5vw;
     overflow: auto;
+}
+
+.debug_log p {
+    font-size: 10px;
 }

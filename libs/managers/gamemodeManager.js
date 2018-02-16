@@ -20,23 +20,28 @@ class GameModeManager {
             currentFlowIdx: -1
         };
 
+        this.isReload = false;
+
         if(a_gmms) {
             console.log("Using gmms");
             //this.LoadProgress(a_gmms);
-            this.gmms = a_gmms;
+                this.isReload = true;            
+                this.gmms = a_gmms;
             //this.LoadProgress(a_gmms);
         }
         if(a_gmSrc.includes(".zip"))
             this.LoadGMZip(a_gmSrc);
         else
-            this.LoadGM(a_gmSrc);
+            this.LoadGM(a_gmSrc, (gm) => {
+                if(this.isReload) {
+                    this.SetStage(this.gmms.currentStage);
+                    this.SetState(this.gmms.currentState);
+                }
+                else
+                    gm.Start();
+            });
 
-        this.isReload = false;
-
-        if(a_gmms)
-        {
-            this.isReload = true;            
-        }
+     
 
         GH.GMManager = this;
     }
@@ -46,7 +51,7 @@ class GameModeManager {
     }
 
     // -- Load GameMode
-    LoadGM(a_src) {
+    LoadGM(a_src, a_callback) {
         var pathDir = a_src.split('/');
         var gmName = pathDir[pathDir.length - 1];
 
@@ -56,13 +61,13 @@ class GameModeManager {
             src: a_src,
             onLoad: () => {
                 
-                if(selfManager.isReload) {
+                /*if(selfManager.isReload) {
                     console.log("Relading");
                     selfManager.LoadProgress(selfManager.gmms);
                     GH.deviceManager.devices.forEach(function (a_device) {
                         a_device.refreshView();
                     }, this);
-                }
+                }*/
 
                 GH.activeGameMode = gm;
 
@@ -86,8 +91,10 @@ class GameModeManager {
                     }, this);
                 });
 
-                if(!selfManager.isReload)
-                    this.Start();
+                a_callback(this);
+
+               // if(!selfManager.isReload)
+               //     this.Start();
             }
         });
         this.activeGM = gm;

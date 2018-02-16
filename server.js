@@ -28,6 +28,8 @@ function Setup() {
         //console.log = function(){}; 
     }
 
+    Debug.DebugFlags = ["state"];
+
     //Setup and start Managers
     GH.deviceManager = new DeviceManager();
     GH.serverManager = new ServerManager();
