@@ -57,3 +57,5 @@ typings/
 # dotenv environment variables file
 .env
 
+gamemodes/WitsEnd/resources/extra_content_01.json
+gamemodes/WitsEnd/resources/extra_content_02.json
