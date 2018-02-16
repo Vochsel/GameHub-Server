@@ -25,10 +25,10 @@ function Setup() {
 
     if(!isDebug) {
         Debug.ShouldLogToConsole = false;
-        //console.log = function(){}; 
     }
+    
+    Debug.DebugFlags = ["state", "stage"];
 
-    Debug.DebugFlags = ["state"];
 
     //Setup and start Managers
     GH.deviceManager = new DeviceManager();

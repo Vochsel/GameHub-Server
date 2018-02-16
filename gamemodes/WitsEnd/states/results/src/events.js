@@ -1,5 +1,10 @@
 exports.onEnter = function () {
 
+    Utils.StartTimer(() => {
+        Debug.Log("Result State Timer finished", "white", "state");
+        GH.GMManager.Progress();
+    }, 30);
+
     //console.log(thisStage.model.clientSelections);
     for (var idx in this.parentStage.model.clientSelections) {
         var val = this.parentStage.model.clientSelections[idx];
@@ -21,6 +26,12 @@ exports.onEnter = function () {
     });*/
 
 }
+
+exports.onExit = function() {
+    Utils.ClearTimer();
+    Debug.Log("Result State Timer Cancelled", "white", "state");
+}
+
 exports.isValidated = function () {
     //Get number of ready clients
     var readyClients = Utils.Length(this.model.clientsReady);
