@@ -20,23 +20,39 @@ class GameModeManager {
             currentFlowIdx: -1
         };
 
+        this.isReload = false;
+
         if(a_gmms) {
             console.log("Using gmms");
             //this.LoadProgress(a_gmms);
-            this.gmms = a_gmms;
+                this.isReload = true;            
+                this.gmms = a_gmms;
+                
             //this.LoadProgress(a_gmms);
         }
         if(a_gmSrc.includes(".zip"))
             this.LoadGMZip(a_gmSrc);
         else
-            this.LoadGM(a_gmSrc);
+            this.LoadGM(a_gmSrc, (gm) => {
+                if(this.isReload) {
+                    this.LoadProgress(this.gmms);
+                
+                    this.SetStage(this.gmms.currentStage, false);
+                    this.SetState(this.gmms.currentState, true);
+                }
+                else {
+                    
+                    //Still need this?
+                    GH.deviceManager.devices.forEach(function (a_device) {
+                        a_device.reset();
+                    }, this);
 
-        this.isReload = false;
 
-        if(a_gmms)
-        {
-            this.isReload = true;            
-        }
+                    gm.Start();
+                }
+            });
+
+     
 
         GH.GMManager = this;
     }
@@ -46,7 +62,7 @@ class GameModeManager {
     }
 
     // -- Load GameMode
-    LoadGM(a_src) {
+    LoadGM(a_src, a_callback) {
         var pathDir = a_src.split('/');
         var gmName = pathDir[pathDir.length - 1];
 
@@ -56,13 +72,13 @@ class GameModeManager {
             src: a_src,
             onLoad: () => {
                 
-                if(selfManager.isReload) {
+                /*if(selfManager.isReload) {
                     console.log("Relading");
                     selfManager.LoadProgress(selfManager.gmms);
                     GH.deviceManager.devices.forEach(function (a_device) {
                         a_device.refreshView();
                     }, this);
-                }
+                }*/
 
                 GH.activeGameMode = gm;
 
@@ -72,9 +88,9 @@ class GameModeManager {
                     a_device.sendState(gm, selfManager.CurrentStageObject, selfManager.CurrentStateObject);
                 });
 
-                GH.deviceManager.devices.forEach(function (a_device) {
+                /*GH.deviceManager.devices.forEach(function (a_device) {
                     a_device.reset();
-                }, this);
+                }, this);*/
 
                 gm.on("stageChange", function (v) {
 
@@ -86,8 +102,10 @@ class GameModeManager {
                     }, this);
                 });
 
-                if(!selfManager.isReload)
-                    this.Start();
+                a_callback(this);
+
+               // if(!selfManager.isReload)
+               //     this.Start();
             }
         });
         this.activeGM = gm;
@@ -193,32 +211,37 @@ class GameModeManager {
 
     // -- Setters
 
-    SetStage(a_idx) {
+    SetStage(a_idx, a_shouldTransition = true) {
         //Check if a_idx exists
         if (a_idx < 0 && a_idx >= this.activeGM.stages.length) {
             console.error("Stage index out of bounds");
             return false;
         }
 
-        //Exit old stage if valid
-        if (this.ValidCurrentStage)
-            this.CurrentStageObject.exit();
+        if(a_shouldTransition) {
+            //Exit old stage if valid
+            if (this.ValidCurrentStage)
+                this.CurrentStageObject.exit();
 
-        GH.deviceManager.devices.forEach(function (a_device) {
-            if (a_device.shouldResetRole)
-                a_device.reset();
-        }, this);
-
-        
+            GH.deviceManager.devices.forEach(function (a_device) {
+                if (a_device.shouldResetRole)
+                    a_device.reset();
+            }, this);
+        }        
 
         //Set currentStage variable
         this.gmms.currentStage = a_idx;
-
-        //Enter new stage
-        this.CurrentStageObject.enter();
-
-        //Set to first state
-        this.SetState(0);
+        
+        if(a_shouldTransition) {
+            //Enter new stage
+            this.CurrentStageObject.enter();
+            
+            //@TODO: Temp fix, gm was exiting state because last stage didnt reset it... 
+            this.gmms.currentState = -1;
+    
+            //Set to first state
+            this.SetState(0);
+        }
 
         GH.deviceManager.devices.forEach(function (a_device) {
             a_device.refreshView();
@@ -227,28 +250,35 @@ class GameModeManager {
         return true;
     }
 
-    SetState(a_idx) {
+    SetState(a_idx, a_shouldTransition = true) {
         if (a_idx < 0 && a_idx > this.CurrentStageObject.states.length) {
             console.error("State index out of bounds");
             return false;
         }
 
-        if (this.ValidCurrentState)
-            this.CurrentStateObject.exit();
-
-        GH.deviceManager.devices.forEach(function (a_device) {
-            if (a_device.shouldResetRole)
+        if(a_shouldTransition) {
+            //Call exit callback on currently exited state
+            if (this.ValidCurrentState){
+                this.CurrentStateObject.exit();
+            }
+                
+            GH.deviceManager.devices.forEach(function (a_device) {
+                if (a_device.shouldResetRole)
                 a_device.reset();
-        }, this);
+            }, this);
 
-        this.gmms.currentStateRepeats = 1;
+            this.gmms.currentStateRepeats = 1;
+        }
 
         this.gmms.currentState = a_idx;
 
         if(!this.ValidCurrentState)
             return false;
         
-        this.CurrentStateObject.enter();
+        if(a_shouldTransition) {
+            //Call enter callback on newly entered state
+            this.CurrentStateObject.enter();
+        }
 
         GH.deviceManager.broadcastState(this.activeGM, this.CurrentStageObject, this.CurrentStateObject);
 

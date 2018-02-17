@@ -10,7 +10,8 @@
             "request": "launch",
             "name": "Launch Program",
             "program": "${workspaceFolder}/server.js",
-            "args": ["--debug"]
+            "args": ["--debug"],
+            "console": "externalTerminal"
         }
     ]
 }

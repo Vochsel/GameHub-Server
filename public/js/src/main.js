@@ -44,7 +44,9 @@ function Setup(options) {
 
 
     if (debug) {
-        AddDebugLog();
+        document.head.innerHTML += "<link href='css/debug.css' rel='stylesheet'/>";
+        if(debug == 2)
+            AddDebugLog();
         DebugLog("Debug connected!");
     }
 

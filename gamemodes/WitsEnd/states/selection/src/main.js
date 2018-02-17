@@ -1,11 +1,14 @@
 exports.onEnter = function () {
-    console.log("ent");    
     Utils.StartTimer(() => {
-        console.log("prog");
+        Debug.Log("Selection State Timer finished", "white", "state");
         GH.GMManager.Progress();
     }, 30);
 }
 
+exports.onExit = function() {
+    Utils.ClearTimer();
+    Debug.Log("Selection State Timer Cancelled", "white", "state");
+}
 
 exports.isValidated = function () {
     //Get number of ready clients
