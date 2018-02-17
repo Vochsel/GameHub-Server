@@ -1,0 +1,23 @@
+{
+    "name": "GS - Answer State",
+    "model": {
+        "clientsReady": {}
+    },
+    
+    "views": [
+        { 
+            "type": "hub",
+            "data": "hub"
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "data": "default client"
+        },
+        {
+            "type": "client",
+            "role": "challenger", 
+            "data": "challenger client"
+        }
+    ]
+}

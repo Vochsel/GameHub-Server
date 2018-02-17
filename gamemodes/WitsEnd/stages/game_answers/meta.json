@@ -1,0 +1,10 @@
+{
+    "name": "GameStage-Answers",
+    "model": {
+
+    },
+    "states": [
+        { "src": "states/gs_answers/answer/meta.json" }
+    ],
+    "src": "src/events.js"
+}
