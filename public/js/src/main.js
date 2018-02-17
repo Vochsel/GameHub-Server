@@ -150,6 +150,45 @@ function SetupInput() {
 
 var allCanvas = [];
 
+function RepackageInputs(a_elements) {
+    var newElements = new Object();
+
+    // Loop through all elements to find the ones formatted correctly
+    for(var i = 0; i < a_elements.length; i++) {
+        var curInput = a_elements[i];
+        // Get attribute ID - Should always exist
+        var inputID = curInput.getAttribute('data-id');
+        // Get attribute Val - Will be null if text field, canvas, etc.
+        var inputVal = curInput.getAttribute('data-value');
+
+        // Try and source other input values if needed
+        if(!inputVal) {
+            switch(curInput.type) {
+                //If element is a text element
+                case "text":
+                    {
+                        inputVal = curInput.value;
+                    }
+                    break;
+                //If element is a button, or no other type has matched, set to True
+                case "button":
+                default:
+                    {
+                        inputVal = true;
+                    }
+                    break;
+            }
+        }
+
+        // If element has ID and val, store into newElements
+        if (inputID && inputVal) {
+            newElements[inputID] = inputVal;
+        }
+    }
+
+    return newElements;
+}
+
 function inputHandle(e) {
     if (e.target.type === "button" || e.target.className === "button") {
         var inputValues = {};
@@ -189,9 +228,10 @@ function inputHandle(e) {
             }
         }
 
-        var action = input.getAttribute("data-action");
+        var action = e.target.getAttribute("data-action");
         action = action.replace('(', '');
         action = action.replace(')', '');
+        console.log(action);
 
         var functionName = action;
         //DebugLog(inputValues);

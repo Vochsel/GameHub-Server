@@ -92,6 +92,11 @@ stdin.addListener("data", function(d) {
                 GH.GMManager = gmmanager;
             }
             break;
+        case "debug":
+            {
+                Debug.ShouldLogToConsole = !Debug.ShouldLogToConsole;
+            }
+            break;
         case 'p':
             GH.GMManager.NextState();
             break;

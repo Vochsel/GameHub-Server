@@ -9,6 +9,7 @@
     ],
     "views": [
         { 
+            "name": "hubView",
             "type": "hub",
             "src": "views/hub.html" 
         },

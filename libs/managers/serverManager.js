@@ -125,7 +125,7 @@ class GHSocketServer extends WebSocketServer {
                 var data = m.data.data;
 
                 //Recieved function to call
-                Debug.Log("[Device Manager] Recieved controller function: " + action + ". Executing!", "blue");
+                Debug.Log("[Device:" + device.uid + "] Recieved controller function: " + action + ". Executing!", "blue");
 
                 //Call desired function
                 //TODO: Add some kind of check?
