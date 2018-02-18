@@ -27,7 +27,7 @@ function Setup() {
         Debug.ShouldLogToConsole = false;
     }
     
-    Debug.DebugFlags = ["state", "stage"];
+    //Debug.DebugFlags = ["state", "stage"];
 
 
     //Setup and start Managers
@@ -91,6 +91,13 @@ stdin.addListener("data", function(d) {
                 var oldgmms = GH.GMManager.gmms;
                 //console.log(oldgmms);
                 var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
+                GH.GMManager = gmmanager;
+            }
+            break;
+
+        case "hardreload" :
+            {
+                var gmmanager = new GMManager(GH.activeGameMode.src);
                 GH.GMManager = gmmanager;
             }
             break;

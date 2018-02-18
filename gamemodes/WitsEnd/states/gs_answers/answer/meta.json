@@ -3,21 +3,23 @@
     "model": {
         "clientsReady": {}
     },
-    
+    "controllers": [
+        {"src": "controllers/main.js"}
+    ],
     "views": [
         { 
             "type": "hub",
-            "data": "hub"
+            "src" : "views/hub.html"
         },
         { 
             "type": "client",
             "role": "default",
-            "data": "default client"
+            "src" : "views/client_default.html"
         },
         {
             "type": "client",
-            "role": "challenger", 
-            "data": "challenger client"
+            "role": "ready", 
+            "src" : "views/client_ready.html"
         }
     ]
 }
