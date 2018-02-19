@@ -1,12 +1,12 @@
 {
-    "name": "GS - Answer State",
+    "name": "GS - Select State",
     "model": {
         "clientsReady": {}
     },
-    "controllers": [
-        {"src": "controllers/main.js"}
-    ],
     "src": "src/events.js",
+    "controllers": [
+        {"src": "src/controller.js"}
+    ],
     "views": [
         { 
             "type": "hub",
@@ -14,7 +14,7 @@
         },
         { 
             "type": "client",
-            "role": "answering",
+            "role": "default",
             "src" : "views/client_default.html"
         },
         {

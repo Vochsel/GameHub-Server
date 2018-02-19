@@ -1,3 +1,4 @@
+
 exports.clientSubmit = function (a_device, a_data) {
     //ID of question submitted
     qid = a_data.qid;
@@ -22,6 +23,8 @@ exports.clientSubmit = function (a_device, a_data) {
             
             if(a_device.data.submitted >= 2)
                 a_device.setRole("ready", true);
+            else 
+                a_device.shouldRefreshView = false;
                 
             console.log(a_device.data.submitted);
             return;

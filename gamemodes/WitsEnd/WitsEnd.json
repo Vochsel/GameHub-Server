@@ -3,16 +3,18 @@
     "version": "0.0.2",
     "flow": [
         { "stage" : "IntroStage", "repeats" : 1 },
-        { "stage" : "GameStage-Answers", "repeats" : 5 },
+        { "stage" : "GameStage-Answers", "repeats" : 1 },
+        { "stage" : "GameStage-Selections", "repeats": 1},
         { "stage" : "OutroStage", "repeats" : 1 }
     ],
     "model": {
-        "clientScore": {}
+        "clientScore": {},
+        "currentAnswer": 0
     },
     "stages": [
         { "src": "stages/intro/meta.json" },
         { "src": "stages/game_answers/meta.json" },
-        { "src": "stages/game/meta.json" },
+        { "src": "stages/game_selections/meta.json" },
         { "src": "stages/outro/meta.json" }
     ],
     "resources": [

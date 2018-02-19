@@ -13,3 +13,10 @@ exports.isValidated = function () {
     //Return true if all players are ready
     return readyClients >= numOfClients;
 }
+
+exports.onExit = function() {
+    var clients = GH.System.deviceManager.getAllDevicesOfType("client");
+    for(var client of clients) {
+        client.setRole("answering", false, false);
+    }
+};

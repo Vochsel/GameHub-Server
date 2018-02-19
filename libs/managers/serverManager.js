@@ -147,7 +147,7 @@ class GHSocketServer extends WebSocketServer {
                     }
 
                     //GH.activeGameMode.isValidated();
-                    if (GH.GMManager.CurrentStateObject.isValidated()) {
+                    if (GH.GMManager.CurrentStateObject.isValidated() === true) {
                         Debug.Log("Progressing");
                         GH.GMManager.NextState();
                         //this.progressGameMode();

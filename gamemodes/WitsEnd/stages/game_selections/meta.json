@@ -4,8 +4,7 @@
         
     },
     "states": [
-        { "src": "states/gs_selections/select/meta.json" },
-        { "src": "states/gs_selections/review/meta.json" }
+        { "src": "states/gs_selections/select/meta.json" }
     ],
     "src": "src/events.js"
 }

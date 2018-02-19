@@ -3,8 +3,27 @@ exports.isValidated = function () {
     var readyClients = Utils.Length(this.model.clientsReady);
     //Get number of total clients
     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
-    var numOfActiveClients = GH.System.deviceManager.getAllDevicesOfRole("default").length;
 
+    var activeClients = GH.System.deviceManager.getAllDevicesOfRole("answering");
+    var numOfActiveClients = GH.System.deviceManager.getAllDevicesOfRole("answering").length;
+
+
+    console.log("Num active clients: " + numOfActiveClients);
+
+    for(var client of activeClients) {
+        console.log("sub: " + client.data.submitted);
+        if(client.data.submitted == undefined || client.data.submitted == null)
+            return false;
+        if(client.data.submitted < 2)
+            return false;
+    }
+    
     //Return true if all players are ready
-    return readyClients >= numOfClients;
+    return true;
+}
+
+exports.onExit = function() {
+    var questions = this.parentStage.parentGM.model.questions;
+    
+    this.parentStage.parentGM.flow[2].repeats = Utils.Length(questions);
 }

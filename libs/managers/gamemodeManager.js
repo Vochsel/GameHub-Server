@@ -125,15 +125,16 @@ class GameModeManager {
 
         this.CurrentStageObject.model = this.gmms.currentStageModel;
         this.CurrentStateObject.model = this.gmms.currentStateModel;
-        console.log(this.gmms);
+      //  console.log(this.gmms);
     }
 
     SaveProgress() {
         console.log("Saving Progress");
         this.gmms.currentStageModel = this.CurrentStageObject.model;
         this.gmms.currentStateModel = this.CurrentStateObject.model;
-        console.log(this.gmms);
-        return JSON.stringify(this.gmms);
+        return this.gmms;
+      //  console.log(this.gmms);
+        //return JSON.stringify(this.gmms);
     }
 
     // -- GM Control
