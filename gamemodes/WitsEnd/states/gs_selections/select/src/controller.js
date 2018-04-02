@@ -6,10 +6,21 @@ exports.clientSubmit = function (a_device, a_data) {
         if(challenger.device.uid == a_data.selection)
             selAnswer = challenger.answer;
     }
-
+    Debug.Log(curQuestion);
     Debug.Log("Voted: " + a_data.selection + ", Answer: " + selAnswer);
 
-    selAnswer.votes.push(a_device.uid);
+    for(var q of curQuestion.challengers) {
+        if(q.answer == selAnswer)
+            q.votes.push(a_device.uid);
+    }
+    
+      //console.log(this);
+    //if (Utils.Valid(a_data.clientName)) {
+        this.parentState.model.clientsReady[a_device.uid] = "ready";
+        a_device.setRole("ready", true);
+    //}
+
+    //selAnswer.votes.push(a_device.uid);
 
     /*if (!Utils.Valid(this.parentState.parentStage.model.clientSelections[a_data.selection]))
         this.parentState.parentStage.model.clientSelections[a_data.selection] = new Object();
