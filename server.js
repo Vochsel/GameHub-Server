@@ -12,6 +12,8 @@ const chalk         = require('chalk');
 
 var flags = require('flags');
 
+const path = require("path");
+
 function Setup() {
 
     // -- Define and parse flags
@@ -41,23 +43,7 @@ function Setup() {
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
 }
 
-//Helper function to access sub objects by string
-Object.byString = function(o, s) {
-    if(typeof o !== 'object')
-        return o;
-    s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-    s = s.replace(/^\./, '');           // strip a leading dot
-    var a = s.split('.');
-    for (var i = 0, n = a.length; i < n; ++i) {
-        var k = a[i];
-        if (k in o) {
-            o = o[k];
-        } else {
-            return;
-        }
-    }
-    return o;
-}
+
 var lastInput = "";
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
@@ -68,7 +54,7 @@ stdin.addListener("data", function(d) {
         console.log(input);
     }
 
-    var o = Object.byString(GH, input);
+    var o = Utils.AccessObjectWithString(GH, input);
     if(o) {
         lastInput = input;
         console.log(o);
@@ -90,7 +76,7 @@ stdin.addListener("data", function(d) {
                 GH.GMManager.SaveProgress();
                 var oldgmms = GH.GMManager.gmms;
                 //console.log(oldgmms);
-                var gmmanager = new GMManager(GH.activeGameMode.src, oldgmms);
+                var gmmanager = new GMManager(path.join(GH.activeGameMode.path, GH.activeGameMode.src), oldgmms);
                 GH.GMManager = gmmanager;
             }
             break;

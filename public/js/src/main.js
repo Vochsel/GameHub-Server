@@ -89,10 +89,13 @@ function Setup(options) {
             case "view": {
                 container.innerHTML = m.data;
                 SetupInput();
+                SetupVisuals();
             }
                 break;
         }
     });
+
+
     //ws.addEventListener('close', function(e) {
        /* var checkInterval = setInterval(function () {
             //SendWS(ws, new Message("ping", "Stayin' alive"));
@@ -148,6 +151,22 @@ function SetupInput() {
         var can = allCanvas[i];
         SetupCanvas(can);
     }
+}
+
+function SetupVisuals() {
+    // Setup sliders
+
+    var sliders = document.getElementsByClassName('slider');
+    if(sliders.length > 0) {
+        console.log("SLLIIIDERERSSS");
+        console.log(sliders);
+    }
+    for(var i = 0; i < sliders.length; i++) {
+        var dur = sliders[i].getAttribute("data-duration");
+        sliders[i].style.animationDuration = dur + "s";
+        console.log(sliders.style);
+    }
+    
 }
 
 var allCanvas = [];

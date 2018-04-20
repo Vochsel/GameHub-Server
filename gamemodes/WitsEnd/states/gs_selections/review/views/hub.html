@@ -1,0 +1,16 @@
+<div class='bg gradient-yellow'>
+    <h3>{state.model.currentQuestion.question}</h3> 
+
+    
+    <div class='submission_container'>
+        {state.model.currentQuestion.challengers}[
+        <div class='submission'>
+            <div class='submission_main'>{answer}</div>
+            <div class='badge'>{votes.length}</div>
+        </div>
+        ]
+    </div>
+    <div class='slider_container'>
+        <div class='slider' data-duration="10"></div>
+    </div>
+</div>

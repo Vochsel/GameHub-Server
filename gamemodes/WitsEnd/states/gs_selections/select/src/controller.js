@@ -11,7 +11,7 @@ exports.clientSubmit = function (a_device, a_data) {
 
     for(var q of curQuestion.challengers) {
         if(q.answer == selAnswer)
-            q.votes.push(a_device.uid);
+            q.votes.push({uid: a_device.uid, name: a_device.name});
     }
     
       //console.log(this);

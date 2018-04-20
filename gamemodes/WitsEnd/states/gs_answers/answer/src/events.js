@@ -22,7 +22,15 @@ exports.isValidated = function () {
     return true;
 }
 
+exports.onEnter = function() {
+    Utils.StartTimer(() => {
+        GH.GMManager.Progress();
+    }, 20);
+}
+
 exports.onExit = function() {
+    Utils.ClearTimer();
+    
     var questions = this.parentStage.parentGM.model.questions;
     
     this.parentStage.parentGM.flow[2].repeats = Utils.Length(questions);

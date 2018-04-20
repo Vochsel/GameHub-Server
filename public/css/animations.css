@@ -1,4 +1,4 @@
-#slider {
+.slider {
     display: block;
     width: 2vw;
     height: 2vw;
@@ -7,11 +7,11 @@
     border-radius: 2vw;
     margin-top: 0.5vw;
     border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;
-    
-    animation: slide 30s linear forwards;
+    animation: slide linear forwards;
+    animation-duration: 30s; /* Default, overridable */
 }
 
-#slider_container {
+.slider_container {
     background-color: #570625;
     width: 60vw;
     height: 5vw;
@@ -19,9 +19,12 @@
     text-align: center;
     border-radius: 2.5vw;
     margin-top: 5vw;
-    border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;
-    
+    border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;   
 }
+
+/*.slider_container:after {
+    content: "10s";
+}*/
 
 @keyframes slide {
     0% {

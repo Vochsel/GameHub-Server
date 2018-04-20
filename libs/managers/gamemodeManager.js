@@ -126,6 +126,7 @@ class GameModeManager {
         this.CurrentStageObject.model = this.gmms.currentStageModel;
         this.CurrentStateObject.model = this.gmms.currentStateModel;
         this.activeGM.model           = this.gmms.currentGMModel;
+        this.activeGM.flow = this.gmms.currentFlow;
       //  console.log(this.gmms);
     }
 
@@ -134,6 +135,8 @@ class GameModeManager {
         this.gmms.currentStageModel = this.CurrentStageObject.model;
         this.gmms.currentStateModel = this.CurrentStateObject.model;
         this.gmms.currentGMModel    = this.activeGM.model;
+        this.gmms.currentFlow = this.activeGM.flow;
+        //this.parentStage.parentGM.flow[2].repeats
         return this.gmms;
       //  console.log(this.gmms);
         //return JSON.stringify(this.gmms);
