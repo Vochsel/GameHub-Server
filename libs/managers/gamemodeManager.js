@@ -71,7 +71,7 @@ class GameModeManager {
         var gm = new GHAPI.GameMode({
             src: a_src,
             onLoad: () => {
-                
+                console.log("HEEYEYEY")
                 /*if(selfManager.isReload) {
                     console.log("Relading");
                     selfManager.LoadProgress(selfManager.gmms);
@@ -125,6 +125,7 @@ class GameModeManager {
 
         this.CurrentStageObject.model = this.gmms.currentStageModel;
         this.CurrentStateObject.model = this.gmms.currentStateModel;
+        this.activeGM.model           = this.gmms.currentGMModel;
       //  console.log(this.gmms);
     }
 
@@ -132,6 +133,7 @@ class GameModeManager {
         console.log("Saving Progress");
         this.gmms.currentStageModel = this.CurrentStageObject.model;
         this.gmms.currentStateModel = this.CurrentStateObject.model;
+        this.gmms.currentGMModel    = this.activeGM.model;
         return this.gmms;
       //  console.log(this.gmms);
         //return JSON.stringify(this.gmms);
