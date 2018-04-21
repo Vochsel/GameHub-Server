@@ -7,8 +7,12 @@
     border-radius: 2vw;
     margin-top: 0.5vw;
     border-radius: 155px 15px 125px 15px/15px 125px 15px 155px;
+
     animation: slide linear forwards;
     animation-duration: 30s; /* Default, overridable */
+
+    -webkit-animation: slide linear forwards;
+    -webkit-animation-duration: 30s; /* Default, overridable */
 }
 
 .slider_container {
@@ -28,11 +32,13 @@
 
 @keyframes slide {
     0% {
-        transform: translate(0.5vw, 0);
+                transform: translate(0.5vw, 0);
+        -webkit-transform: translate(0.5vw, 0);
         width: 2vw;
     }
     100% {
-        transform: translate(0.5vw, 0);
+                transform: translate(0.5vw, 0);
+        -webkit-transform: translate(0.5vw, 0);
         width: 57vw;
     }
 }
