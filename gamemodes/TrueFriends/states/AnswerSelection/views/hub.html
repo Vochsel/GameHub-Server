@@ -1,8 +1,15 @@
 <div class='bg gradient-blue'>
-    <h1>{stage.model.question}</h1>
-    <h3>Select the best answer!</h3>
-    <br>
-    <marquee>
-        {stage.model.clientAnswers}[<b>{name} - {answer}</b> | ]
+    <h3>{stage.model.question}</h3>
+    <p>Select the best answer!</p>
+    <marquee style='width: 100%;'>
+        <div class='submission_container'>
+            {stage.model.clientAnswers}[
+                <div class='submission'>
+                    <div class='submission_main'>{answer}</div>
+                    <div class='submission_sub no_line_height'>{name}</div>
+                </div>
+            ]
+        </div>
     </marquee>
+    
 </div>

@@ -1,3 +1,16 @@
 <div class='bg gradient-blue'>
-    <h1>Results</h1><div class='billboard_container'>{stage.model.clientSelections}[<div class='billboard'>{name} : {answer}<div class='badge'>{selections}</div>  </div>]</div>
+    <h3>{stage.model.question}</h3>
+
+        <div class='submission_container'>
+            {stage.model.clientSelections}[
+                <div class='submission'>
+                    <div class='submission_main'>{answer}</div>
+                    <div class='submission_sub'>{name}</div>
+                    <div class='badge'>{selections}</div>
+                </div>
+            ]
+        </div>
+    
 </div>
+
+
