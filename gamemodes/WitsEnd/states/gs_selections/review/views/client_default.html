@@ -1,14 +1,17 @@
 <div class='bg gradient-blue'>
     <h3>{state.model.currentQuestion.question}</h3> 
 
-    {state.model.currentQuestion.challengers@<hr/>}[
-    <div>
-        <h1>{answer} - {votes.length}</h1>
-        <ul>
+    {state.model.currentQuestion.challengers}[
+    <div class='submission'>
+        <div class='badge'>{votes.length}</div>
+        <div class='submission_main'>
+            <h2 style='line-height: 0;'>{answer}</h2>
+        </div>
+        <div class='submission_sub'>
             {votes}[
-                <li>{name}</li>
+                <h3 style='line-height: 0;'>{name}</h3>
             ]
-        </ul>
+        </div>
     </div>
     ]
 </div>

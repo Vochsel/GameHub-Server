@@ -205,4 +205,13 @@ canvas {
 
 .submission_sub {
     font-size: 2vw;
+    
+    display: flex;
+    flex: 1; 
+    flex-direction: column;
+    justify-content: left;
+
+    text-transform: uppercase;
+    flex-grow: 1;
+    padding: 2vw;
 }
