@@ -1,6 +1,7 @@
 // -- External Dependencies
 const EventEmitter = require('events');
 const fs = require('fs');
+const path = require('path');
 const GHAPI = require('gh-api');
 const unzip = require('unzip');
 
@@ -71,7 +72,6 @@ class GameModeManager {
         var gm = new GHAPI.GameMode({
             src: a_src,
             onLoad: () => {
-                console.log("HEEYEYEY")
                 /*if(selfManager.isReload) {
                     console.log("Relading");
                     selfManager.LoadProgress(selfManager.gmms);
@@ -127,6 +127,8 @@ class GameModeManager {
         this.CurrentStateObject.model = this.gmms.currentStateModel;
         this.activeGM.model           = this.gmms.currentGMModel;
         this.activeGM.flow = this.gmms.currentFlow;
+        console.log("Loaded Progress");
+        
       //  console.log(this.gmms);
     }
 
@@ -136,6 +138,9 @@ class GameModeManager {
         this.gmms.currentStateModel = this.CurrentStateObject.model;
         this.gmms.currentGMModel    = this.activeGM.model;
         this.gmms.currentFlow = this.activeGM.flow;
+        this.gmms.gmSrc = path.join(this.activeGM.path, this.activeGM.src)
+
+        console.log("Saved Progress");
         //this.parentStage.parentGM.flow[2].repeats
         return this.gmms;
       //  console.log(this.gmms);

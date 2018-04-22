@@ -1,6 +1,7 @@
 /* Internal Dependencies */
 //var Debug           = require('./libs/utilities/debug.js');
 var Utils           = require('gh-api').Utils;
+var util           = require('util');
 var Debug           = require('gh-api').Debug;
 
 var GH              = require('./libs/gamehub.js');
@@ -13,6 +14,7 @@ const chalk         = require('chalk');
 var flags = require('flags');
 
 const path = require("path");
+const fs = require("fs");
 
 function Setup() {
 
@@ -63,21 +65,58 @@ stdin.addListener("data", function(d) {
     var key = d.toString().trim().split(' ');
     switch(key[0])
     {
+        case "devices":
+            {
+                console.log(GH.deviceManager.devices.keys());
+            }
+            break;
         case "load" :
             if(key.length > 1)
                 var gmToLoad = key[1];
-                console.log("Loading %s", gmToLoad);
-                //GMM.loadGameMode(__dirname + "/gamemodes/" + gmToLoad);
-                var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
-                GH.GMManager = gmmanager;
+
+                Utils.LoadFileAsync("./saves/" + gmToLoad + ".json", false, false).then(value => {
+                    console.log(value.content);
+                    var loadGmms = JSON.parse(value.content);
+                    
+                    console.log("Loading %s", gmToLoad);
+                    
+                    var gmmanager = new GMManager(loadGmms.gmSrc, loadGmms);
+                    GH.GMManager = gmmanager;
+
+                    //TODO: reset device role on load?
+                });
+
             break;
         case "reload" :
             {
                 GH.GMManager.SaveProgress();
                 var oldgmms = GH.GMManager.gmms;
                 //console.log(oldgmms);
-                var gmmanager = new GMManager(path.join(GH.activeGameMode.path, GH.activeGameMode.src), oldgmms);
+                var gmmanager = new GMManager(oldgmms.gmSrc, oldgmms);
                 GH.GMManager = gmmanager;
+            }
+            break;
+
+        case "save" :
+            {
+                GH.GMManager.SaveProgress();
+                var oldgmms = GH.GMManager.gmms;
+                console.log(util.inspect(oldgmms, false, 5));
+                var gmmanager = new GMManager(oldgmms.gmSrc, oldgmms);
+
+                var saveFileName = key[1];
+                if(!saveFileName)
+                    saveFileName = "Untitled";
+                
+                fs.writeFile("./saves/" + saveFileName + ".json", JSON.stringify(oldgmms), function(err) {
+                    if(err) {
+                        return console.log(err);
+                    }
+                
+                    console.log("The file was saved!");
+                }); 
+
+               // GH.GMManager = gmmanager;
             }
             break;
 

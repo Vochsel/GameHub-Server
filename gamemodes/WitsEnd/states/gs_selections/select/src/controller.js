@@ -3,7 +3,7 @@ exports.clientSubmit = function (a_device, a_data) {
 
     var selAnswer = null;
     for(var challenger of curQuestion.challengers) {
-        if(challenger.device.uid == a_data.selection)
+        if(challenger.device == a_data.selection)
             selAnswer = challenger.answer;
     }
     Debug.Log(curQuestion);

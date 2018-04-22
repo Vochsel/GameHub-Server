@@ -27,8 +27,8 @@ exports.onEnter = function() {
         d2.data.questions.push({qid: i, questionText: this.parentGM.model.questions[i].question});
 
 
-        this.parentGM.model.questions[i].challengers.push({"device": d1, "answer": "blank", "votes": []});
-        this.parentGM.model.questions[i].challengers.push({"device": d2, "answer": "blank", "votes": []});
+        this.parentGM.model.questions[i].challengers.push({"device": d1.uid, "answer": "blank", "votes": []});
+        this.parentGM.model.questions[i].challengers.push({"device": d2.uid, "answer": "blank", "votes": []});
 
         console.log(this.parentGM.model.questions[i].question + " : " + this.parentGM.model.questions[i].challengers[0].device.uid + " vs " +this.parentGM.model.questions[i].challengers[1].device.uid);
     }

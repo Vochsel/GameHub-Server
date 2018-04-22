@@ -13,7 +13,7 @@ exports.clientSubmit = function (a_device, a_data) {
         var qid = Object.keys(a_data)[i].split("_")[1];
 
         for(var challenger of this.parentState.parentStage.parentGM.model.questions[qid].challengers) {
-            if(challenger.device.uid == a_device.uid) {
+            if(challenger.device == a_device.uid) {
     
                 Debug.Log("Found challenger, stored answer!");
                 Debug.Log(qid + " : " + qval);
