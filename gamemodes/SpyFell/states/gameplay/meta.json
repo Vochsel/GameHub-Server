@@ -1,0 +1,23 @@
+{
+    "name": "Gameplay State",
+    "model": {
+    },
+    "controllers": [
+    ],
+    "views": [
+        { 
+            "type": "hub",
+            "data": "<div class='bg gradient-blue'><h1>Spy Fell!</h1></div>"
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "data": "<div class='bg gradient-green'>{stage.model.location.name} : {device.data.location_role}</div>"
+        },
+        {
+            "type": "client",
+            "role": "spy", 
+            "data": "<div class='bg gradient-green'>You are the spy!</div>"
+        }
+    ]
+}

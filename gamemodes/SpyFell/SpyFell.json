@@ -1,0 +1,22 @@
+{
+    "name": "Spy Fell",
+    "version": "0.0.1",
+    "flow": [
+        { "stage" : "Lobby Stage", "repeats" : 1 },
+        { "stage" : "Gameplay Stage", "repeats" : 1 },
+        { "stage" : "Outro Stage", "repeats" : 1 }
+    ],
+    "model": {
+    },
+    "stages": [
+        { "src": "stages/lobby/meta.json" },
+        { "src": "stages/gameplay/meta.json" },
+        { "src": "stages/outro/meta.json" }
+    ],
+    "resources": [
+        {
+            "name": "locations", 
+            "src": "resources/original.json"
+        }
+    ]
+}

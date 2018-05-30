@@ -1,0 +1,7 @@
+{
+    "name": "Gameplay Stage",
+    "src": "src/events.js",
+    "states": [
+        { "src": "states/gameplay/meta.json" }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "name": "Outro State",
+    "model": {
+    },
+    "controllers": [
+    ],
+    "views": [
+        { 
+            "type": "hub",
+            "data": "Spy Fell!"
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "data": "Are you ready?"
+        },
+        {
+            "type": "client",
+            "role": "ready", 
+            "data": "You are ready?"
+        }
+    ]
+}

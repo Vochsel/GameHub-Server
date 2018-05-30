@@ -1,0 +1,28 @@
+{
+    "name": "Lobby State",
+    "model": {
+        "clientsReady" : {}
+    },
+    "src": "src/events.js",
+    "controllers": [
+        {
+            "src" : "src/controller.js"
+        }
+    ],
+    "views": [
+        { 
+            "type": "hub",
+            "data": "<div class='bg gradient-blue'>Spy Fell!</div>"
+        },
+        { 
+            "type": "client",
+            "role": "default",
+            "data": "<div class='bg gradient-green'><input type='text' data-id='clientName' placeholder='Your Name' /> <div class='button' data-action='clientIsReady()' data-value='ready'> Ready To Play!</div> </div>"
+        },
+        {
+            "type": "client",
+            "role": "ready", 
+            "data": "<div class='bg gradient-green'>You are ready?</div>"
+        }
+    ]
+}

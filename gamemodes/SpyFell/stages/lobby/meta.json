@@ -1,0 +1,6 @@
+{
+    "name": "Lobby Stage",
+    "states": [
+        { "src": "states/lobby/meta.json" }
+    ]
+}
