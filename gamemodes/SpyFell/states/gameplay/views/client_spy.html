@@ -1,0 +1,17 @@
+<div class='bg gradient-green'>
+        <div style='height: 30vw;' class='toggleable hide'>
+            <h2>You are the Spy</h2>
+        </div>
+    
+        <hr/>
+
+        <div id="suspects">
+            <h2>Suspects</h2>
+            {gm.model.players}[<div class='toggleable strike'>{name}</div>]
+        </div>
+        <div id="locations">
+            <h2>Locations</h2>
+            {gm.resources.locations.data}[<div class='toggleable strike'>{name}</div>]
+        </div>
+    
+    </div>

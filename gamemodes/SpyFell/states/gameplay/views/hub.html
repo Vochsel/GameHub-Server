@@ -1,0 +1,13 @@
+<div class='bg gradient-blue'>
+    <h1>Spy Fell!</h1>
+    <div style="width:45vw;float: left;" id="suspects">
+        <h4>Suspects</h4>
+        {gm.model.players}[
+        <div class='toggleable strike' style="font-size:2vw;">{name}</div>]
+    </div>
+    <div style="width:45vw;float: right;" id="locations">
+        <h4>Locations</h4>
+        {gm.resources.locations.data}[
+        <div class='toggleable strike' style="font-size:2vw;">{name}</div>]
+    </div>
+</div>
