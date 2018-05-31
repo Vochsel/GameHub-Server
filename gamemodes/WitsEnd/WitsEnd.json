@@ -20,7 +20,7 @@
     "resources": [
         {
             "name": "qData", 
-            "src": "resources/extra_content_01.json"
+            "src": "resources/pack_02.json"
         }
     ]
 }

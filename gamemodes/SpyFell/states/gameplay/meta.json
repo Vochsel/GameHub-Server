@@ -4,6 +4,7 @@
     },
     "controllers": [
     ],
+    "src": "src/main.js",
     "views": [
         { 
             "type": "hub",
@@ -12,7 +13,7 @@
         { 
             "type": "client",
             "role": "default",
-            "data": "<div class='bg gradient-green'>{stage.model.location.name} : {device.data.location_role}</div>"
+            "src": "views/client_default.html"
         },
         {
             "type": "client",

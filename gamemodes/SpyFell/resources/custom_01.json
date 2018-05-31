@@ -1,0 +1,206 @@
+[
+    {
+        "name": "Brewery",
+        "roles": [
+            "Customer",
+            "Drunkard",
+            "Taste Tester",
+            "Manager",
+            "Boss Brewer",
+            "Personified Yeast",
+            "Drunkard",
+            "Sales Person",
+            "Yeast Engineer"
+        ]
+    },
+    {
+        "name": "UTS Animal Logic Academy",
+        "roles": [
+            "Chris",
+            "Daniel",
+            "Matt",
+            "Rosie",
+            "Heaven",
+            "Swearing Sam",
+            "Screaming Alexis",
+            "Don't Come Near Me Chloe",
+            "Suspicious Ailisha",
+            "French Mathilde",
+            "Tomato Sauce Ben",
+            "Swag Phil",
+            "Chatty Matty",
+            "When",
+            "Longest, Most Convoluded Paragraph You Could Think Of When",
+            "Hey Hey It's Hamish",
+            "Impeccable Nut Spreading Nutella Hamish",
+            "Chana Crackers"
+        ]
+    },
+    {
+        "name": "Prison",
+        "roles": [
+            "Escaped Convict",
+            "Prison Guard",
+            "Prison Bitch",
+            "The Rat",
+            "The Mole",
+            "That Cool Guy That Gets You Shit",
+            "Warden",
+            "OJ Simpson",
+            "Schapelle Corby",
+            "Khloe Kardashian"
+        ]
+    },
+    {
+        "name": "Construction Site",
+        "roles": [
+            "Hard Hat Harry",
+            "Office",
+            "Crane Operator",
+            "Token Irish Lollipop Girl",
+            "Guy That Only Comes For A Smoko",
+            "Site Manager",
+            "Port-a-loo Guy",
+            "Safety Yellow Sam"
+        ]
+    },
+    {
+        "name": "Atlantis",
+        "roles": [
+            "Fish",
+            "Fish",
+            "Fush Broe",
+            "Fush n Chops",
+            "Chish n Fips",
+            "Person Who Has Seen The Movie Atlantis"
+        ]
+    },
+    {
+        "name": "Castle",
+        "roles": [
+            "Knight",
+            "Bishop",
+            "Raven",
+            "John Snooowwww",
+            "Richard Castle From That TV Show",
+            "Jester",
+            "Meghan Markle",
+            "Queen Vicky",
+            "Queen Lizzy",
+            "Queen Victoria's Doggie",
+            "The Corgies",
+            "Prince Willy's Bald Spot RIP"
+        ]
+    },
+    {
+        "name": "Camping/Caravan Ground",
+        "roles": [
+            "The Young Couple Who Make Love Too Loud",
+            "The Duke Of Edinburgh",
+            "School Kids At A Camp They Don't Wanna Be At",
+            "The Glampers",
+            "The Family With Two Screaming Babies That Wake Up At 5 AM",
+            "The Old Couple Judging Everyone From Their Folding Chairs"
+        ]
+    },
+    {
+        "name": "Swamp",
+        "roles": [
+            "Shrek",
+            "Donkey",
+            "Gas Clouds",
+            "Someone Who Was Just Told To Get Out Of Swamp",
+            "The Waffles Being Made In The Morning",
+            "A Nice Boulder",
+            "Fiona"
+        ]
+    },
+    {
+        "name": "Car Dealership",
+        "roles": [
+            "Car",
+            "Bumble Bee From Transformers",
+            "Greasy Italian Salesman",
+            "Danny Devito (Matilda)",
+            "Kid Buying His First Car",
+            "Family Buying Kid His First Car",
+            "Large Family Buying a Minibus"
+        ]
+    },
+    {
+        "name": "Stadium",
+        "roles": [
+            "Hot Dog Salesman",
+            "Bartender",
+            "Screaming Twelvie At Justin Bieber Concert",
+            "Celebrity Performer",
+            "Security",
+            "Bodyguard",
+            "Ticket Scanners",
+            "Usher, not the rapper",
+            "Overly Aggressive Sports Fan",
+            "The Kid Decked Out In Merch",
+            "Face Painted Megafan"
+        ]
+    },
+    {
+        "name": "Cafe",
+        "roles": [
+            "Waiter",
+            "Barista",
+            "A Nice Cup Of Coffee",
+            "Middle Aged Woman That Wants To Speak To The Manager",
+            "Exhausted UNI Student Here For Their Fifth Coffee",
+            "Chatty Cathy",
+            "The Person Who Orders The Fattiest Meal But Orders A Diet Coke",
+            "Gossiping Old Ladies",
+            "The Glutard"
+        ]
+    },
+    {
+        "name": "Fast Food Restaurant",
+        "roles": [
+            "Greasy Checkout Tween",
+            "Manager",
+            "Ronald McDonald",
+            "The Kid Their For The Toy In The Happy Meal",
+            "The Family That Only Eats Out At Maccas",
+            "Trisha Paytas In The Drive Thru",
+            "The Droning Voice Of A Drive Thru Person"
+        ]
+    },
+    {
+        "name": "The Internet",
+        "roles": [
+            "Hacker",
+            "Cyber Security Expert",
+            "Embarrasing Facebook Mum",
+            "Technophobe",
+            "Angsty Tween Snapchatter",
+            "Social Media Star",
+            "PewDiePie",
+            "Tween Fan",
+            "Fortnite Streamer",
+            "Physical Embodiment Of Memes",
+            "That Bird Video That Matty Tagged You In",
+            "That Meme You Found at 3am"
+        ]
+    },
+    {
+        "name": "Wedding",
+        "roles": [
+            "Wedding Crasher",
+            "Slightly Tipsy Family Member",
+            "Bride",
+            "Groom",
+            "Ex-Boyfriend",
+            "The Reject Kids Table You Get Put At",
+            "The MC",
+            "The Priest",
+            "The Bridesmaid That Is Prettier Than The Bride",
+            "The Groomsmen That Is Still Hungover From The Bucks Which Was 2 Weeks Ago",
+            "The Family Member Just There For Free Wine"
+        ]
+    }
+    
+]

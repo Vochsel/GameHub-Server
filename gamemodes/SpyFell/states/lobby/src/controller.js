@@ -7,6 +7,10 @@ exports.clientIsReady = function (a_device, a_data) {
         a_device.shouldRefreshView = true;
         a_device.shouldResetRole = true;
     }
+
+    this.parentState.parentStage.parentGM.model.players[a_device.uid] = {name: a_device.name};
+
+    console.log(this.parentState.parentStage.parentGM.model.players);
 }
 exports.clientIsNotReady = function (a_device) {
     delete this.parentState.model.clientsReady[a_device.uid];

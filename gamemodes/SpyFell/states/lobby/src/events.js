@@ -4,6 +4,8 @@ exports.isValidated = function () {
     //Get number of total clients
     var numOfClients = GH.System.deviceManager.getAllDevicesOfType("client").length;
 
+    
+
     //Check for min num of clients... TODO: Fix this
     if (numOfClients < 2)
         return false;
@@ -20,3 +22,11 @@ exports.onExit = function() {
         client.setRole("answering", false, false);
     }
 };
+
+
+
+
+exports.onEnter = function(){
+    //console.log(Object.byString(this.parentStage.parentGM, "resources.locations"));
+    //console.log(this.parentStage.parentGM.resources.get("locations").data);
+}

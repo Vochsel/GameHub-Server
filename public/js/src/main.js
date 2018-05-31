@@ -167,6 +167,17 @@ function SetupVisuals() {
         console.log(sliders.style);
     }
     
+    // Setup toggleables
+    console.log("Setting up toggleables");
+
+    var toggleEls = document.getElementsByClassName('toggleable');
+    for(var i = 0; i < toggleEls.length; i++) {
+        var el = toggleEls[i];
+        el.addEventListener("click", function(e) { 
+            console.log(e);
+            e.target.classList.toggle("toggled");
+        });
+    }
 }
 
 var allCanvas = [];

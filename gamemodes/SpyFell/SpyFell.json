@@ -7,6 +7,7 @@
         { "stage" : "Outro Stage", "repeats" : 1 }
     ],
     "model": {
+        "players": {}
     },
     "stages": [
         { "src": "stages/lobby/meta.json" },
@@ -16,7 +17,7 @@
     "resources": [
         {
             "name": "locations", 
-            "src": "resources/original.json"
+            "src": "resources/custom_01.json"
         }
     ]
 }
