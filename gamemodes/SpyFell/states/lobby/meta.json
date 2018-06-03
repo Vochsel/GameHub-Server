@@ -12,7 +12,7 @@
     "views": [
         { 
             "type": "hub",
-            "data": "<div class='bg gradient-blue'>Spy Fell!</div>"
+            "data": "<div class='bg gradient-blue'><h1>Spy Fell!</h1></div>"
         },
         { 
             "type": "client",

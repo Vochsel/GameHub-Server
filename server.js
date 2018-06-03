@@ -45,7 +45,6 @@ function Setup() {
     var gmmanager = new GMManager(__dirname + "/gamemodes/" + gmToLoad + "/" + gmToLoad + ".json");
 }
 
-
 var lastInput = "";
 var stdin = process.openStdin();
 stdin.addListener("data", function(d) {
@@ -70,6 +69,14 @@ stdin.addListener("data", function(d) {
                 console.log(GH.deviceManager.devices.keys());
             }
             break;
+        case "gmload": 
+            {
+                var gmsrc = path.resolve(GH.activeGameMode.path + "/../" + key[1] + "/" + key[1] + ".json");
+                console.log(gmsrc);
+                var gmmanager = new GMManager(gmsrc);
+                GH.GMManager = gmmanager;
+            }
+            break;
         case "load" :
             if(key.length > 1)
                 var gmToLoad = key[1];
@@ -86,6 +93,14 @@ stdin.addListener("data", function(d) {
                     //TODO: reset device role on load?
                 });
 
+            break;
+        case "hardreload" :
+            {
+                GH.GMManager.SaveProgress();
+                var oldgmms = GH.GMManager.gmms;
+                var gmmanager = new GMManager(oldgmms.gmSrc);
+                GH.GMManager = gmmanager;
+            }
             break;
         case "reload" :
             {
