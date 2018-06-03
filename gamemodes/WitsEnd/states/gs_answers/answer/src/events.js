@@ -25,7 +25,7 @@ exports.isValidated = function () {
 exports.onEnter = function() {
     Utils.StartTimer(() => {
         GH.GMManager.Progress();
-    }, 20);
+    }, 80);
 }
 
 exports.onExit = function() {
